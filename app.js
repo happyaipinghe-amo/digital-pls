@@ -9,7 +9,7 @@ const pillars = [
   ['口碑与患者触达','合规触达、随访与真实反馈']
 ];
 const resources = [
-  ['医院遴选打分表','内部候选医院初筛，立项前使用','Pilot Program · PLS BDM','在线评估','PLS项目项目目标医院遴选工具/index.html',['manager','bdm']],
+  ['医院遴选打分表','内部候选医院初筛；地区经济只是参考，还需综合患者基数、真实需求、医院能力和区域辐射','Pilot Program · 院长/PLS BDM','在线评估','PLS项目项目目标医院遴选工具/index.html',['manager','bdm']],
   ['运营辅导研讨会议程','院方共创会议准备与现场安排','Pilot Program · 院长/BDM','可编辑网页','全国民营眼科医院_PLS项目运营辅导研讨会_通用议程模板/index.html',['manager','bdm']],
   ['诊疗中心 59 项核查','六大支柱正式基线与复评工具','能力建设 · 管理团队','交互工具','国际PLS诊疗中心核查评估系统/国际PLS诊疗中心核查评估系统.html',['doctor','nurse','manager','bdm']],
   ['90 天行动表','明确责任人、期限和阶段输出','运营与数据 · 各职能','网页模板','PLS项目初步共识议题与90天建议行动表-通用版/index.html',['doctor','nurse','consultant','manager','bdm']],
@@ -38,7 +38,7 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&l
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));render()}
 function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.remove('show'),2700)}
 function current(){return state.patients.find(p=>p.id===state.selected)||state.patients[0]}
-function nav(view){document.body.classList.toggle('intro-mode',view==='intro');if(view!=='intro'){try{sessionStorage.setItem('digital-pls-intro-seen','1')}catch{}}document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id===view));document.querySelectorAll('#mainNav button').forEach(el=>el.classList.toggle('active',el.dataset.view===view||(view==='certification'&&el.dataset.view==='capability')||(view==='qa'&&el.dataset.view==='resources')));$('#mainNav').classList.remove('open');$('#menuButton').setAttribute('aria-expanded','false');if(['inventory','ceo','funnel','education','certification','qa'].includes(view))history.replaceState(null,'','#'+view);else if(location.hash)history.replaceState(null,'',location.pathname+location.search);window.scrollTo({top:0,behavior:'smooth'})}
+function nav(view){document.body.classList.toggle('intro-mode',view==='intro');if(view!=='intro'){try{sessionStorage.setItem('digital-pls-intro-seen','1')}catch{}}document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id===view));document.querySelectorAll('#mainNav button').forEach(el=>el.classList.toggle('active',el.dataset.view===view||(view==='certification'&&el.dataset.view==='capability')||(view==='qa'&&el.dataset.view==='resources')||(view==='revenue'&&el.dataset.view==='operations')));$('#mainNav').classList.remove('open');$('#menuButton').setAttribute('aria-expanded','false');if(['inventory','ceo','funnel','revenue','education','certification','qa'].includes(view))history.replaceState(null,'','#'+view);else if(location.hash)history.replaceState(null,'',location.pathname+location.search);window.scrollTo({top:0,behavior:'smooth'})}
 function renderHome(){
   const patient=current(),done=state.audit.filter(a=>a!=='未评估').length,open=state.tasks.filter(t=>!t.done).length;
   $('#metricPatients').textContent=state.patients.length;$('#metricTasks').textContent=open;$('#metricAudit').textContent=Math.round(done/6*100)+'%';$('#metricFollowup').textContent=state.patients.filter(p=>p.stage===7).length;
@@ -121,4 +121,4 @@ $('#menuButton').addEventListener('click',()=>{const open=$('#mainNav').classLis
 $('#toolSearch').addEventListener('input',renderResources);
 $('#toolRoleFilter').addEventListener('change',renderResources);
 $('#toolCloseButton').addEventListener('click',closeTool);
-if(!Array.from($('#roleSelect').options).some(o=>o.value===state.role))state.role='院长/CEO';$('#roleSelect').value=state.role;$('#todayDate').textContent=new Intl.DateTimeFormat('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'}).format(new Date());$('#inventory').appendChild($('.inventory-band'));render();if(['#inventory','#ceo','#funnel','#education','#certification','#qa','#home'].includes(location.hash))nav(location.hash.slice(1));else{let seen=false;try{seen=sessionStorage.getItem('digital-pls-intro-seen')==='1'}catch{}if(seen)nav('home')}
+if(!Array.from($('#roleSelect').options).some(o=>o.value===state.role))state.role='院长/CEO';$('#roleSelect').value=state.role;$('#todayDate').textContent=new Intl.DateTimeFormat('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'}).format(new Date());$('#inventory').appendChild($('.inventory-band'));render();if(['#inventory','#ceo','#funnel','#revenue','#education','#certification','#qa','#home'].includes(location.hash))nav(location.hash.slice(1));else{let seen=false;try{seen=sessionStorage.getItem('digital-pls-intro-seen')==='1'}catch{}if(seen)nav('home')}

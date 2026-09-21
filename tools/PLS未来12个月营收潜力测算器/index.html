@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PLS未来12个月营收潜力测算器">
+  <title>PLS未来12个月营收潜力测算器</title>
+  <style>
+    :root {
+      --ink: #17322e;
+      --muted: #5e706d;
+      --line: #d7e1de;
+      --paper: #f5f8f7;
+      --panel: #ffffff;
+      --teal: #0d7768;
+      --teal-dark: #075a50;
+      --blue: #2b6f9e;
+      --gold: #c77b31;
+      --coral: #bb5d55;
+      --shadow: 0 8px 24px rgba(18, 54, 48, .08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.5;
+    }
+    button, input, select { font: inherit; }
+    .app-shell { max-width: 1440px; margin: 0 auto; padding: 24px; }
+    .topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 4px 0 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1 { margin: 0; font-size: 26px; letter-spacing: 0; line-height: 1.25; }
+    .subtitle { margin: 7px 0 0; color: var(--muted); font-size: 14px; }
+    .toolbar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .tool-btn {
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: var(--panel);
+      border-radius: 6px;
+      padding: 9px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tool-btn:hover { border-color: var(--teal); color: var(--teal-dark); }
+    .tool-btn.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .usage-guide { margin-top: 20px; padding: 18px; background: #f0f7f5; border: 1px solid #cfe3dc; border-left: 4px solid var(--teal); border-radius: 8px; }
+    .usage-guide h2 { margin: 0 0 6px; color: var(--teal-dark); font-size: 17px; }
+    .usage-guide > p { margin: 0; color: #42615b; font-size: 13px; }
+    .usage-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+    .usage-step { padding: 12px; background: rgba(255,255,255,.78); border: 1px solid #dbeae5; border-radius: 6px; }
+    .usage-step strong { display: block; margin-bottom: 5px; color: var(--teal-dark); font-size: 13px; }
+    .usage-step span { display: block; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1.16fr) minmax(360px, .84fr); gap: 20px; padding-top: 20px; }
+    .inputs, .results { min-width: 0; }
+    .section {
+      margin-bottom: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid #e9efed;
+    }
+    .section-title h2 { margin: 0; font-size: 17px; }
+    .section-title span { color: var(--muted); font-size: 12px; text-align: right; }
+    .section-body { padding: 16px 18px 18px; }
+    .mode-row { display: flex; gap: 0; width: fit-content; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+    .mode-row label { padding: 8px 11px; font-size: 13px; cursor: pointer; background: #fff; border-right: 1px solid var(--line); }
+    .mode-row label:last-child { border-right: 0; }
+    .mode-row input { position: absolute; opacity: 0; pointer-events: none; }
+    .mode-row input:checked + span { color: #fff; background: var(--teal); margin: -8px -11px; padding: 8px 11px; display: block; }
+    .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px 14px; }
+    .field { min-width: 0; }
+    .field.wide { grid-column: 1 / -1; }
+    .field label { display: block; font-size: 13px; font-weight: 650; margin-bottom: 6px; }
+    .hint { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .input-wrap { display: flex; align-items: stretch; }
+    input[type="number"], input[type="text"], select {
+      width: 100%; min-width: 0; border: 1px solid #bfd0cc; background: #fff; color: var(--ink);
+      border-radius: 5px; padding: 9px 10px; outline: none;
+    }
+    input:focus, select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,119,104,.12); }
+    .unit { min-width: 62px; display: flex; align-items: center; justify-content: center; padding: 0 8px; color: var(--muted); font-size: 12px; border: 1px solid #bfd0cc; border-left: 0; border-radius: 0 5px 5px 0; background: #f3f7f6; }
+    .input-wrap input { border-radius: 5px 0 0 5px; }
+    .formula { padding: 11px 12px; background: #eef7f5; border-left: 3px solid var(--teal); font-size: 12px; color: #32554e; }
+    .result-sticky { position: sticky; top: 18px; }
+    .result-summary { padding: 19px; background: linear-gradient(140deg, #0d7768, #1d5c77); color: #fff; border-radius: 8px 8px 0 0; }
+    .result-summary p { margin: 0; opacity: .82; font-size: 13px; }
+    .big-number { margin: 7px 0 4px; font-size: 32px; font-weight: 740; line-height: 1.1; }
+    .result-summary small { opacity: .8; }
+    .scenario-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
+    .scenario-tab { padding: 11px 6px; border: 0; background: #fff; cursor: pointer; color: var(--muted); font-size: 13px; border-bottom: 3px solid transparent; }
+    .scenario-tab.active { color: var(--teal-dark); font-weight: 700; border-bottom-color: var(--teal); }
+    .metrics { padding: 13px 18px 6px; }
+    .metric { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px dashed #d9e4e1; font-size: 14px; }
+    .metric:last-child { border-bottom: 0; }
+    .metric span { color: var(--muted); }
+    .metric strong { text-align: right; }
+    .chart-block { padding: 8px 18px 18px; }
+    .chart-caption { margin: 0 0 6px; color: var(--muted); font-size: 12px; }
+    #scenarioChart { width: 100%; height: 170px; display: block; }
+    .table-wrap { overflow-x: auto; padding: 0 18px 18px; }
+    table { width: 100%; border-collapse: collapse; min-width: 500px; font-size: 12px; }
+    th, td { padding: 9px 8px; text-align: right; border-bottom: 1px solid #e4ece9; }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted); font-weight: 650; background: #f5f8f7; }
+    .notice { padding: 13px 18px 18px; color: var(--muted); font-size: 12px; }
+    .notice strong { color: var(--ink); }
+    .footer-note { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .scenario-explanation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+    .scenario-explanation div { padding: 11px 12px; background: #f5f8f7; border: 1px solid #e0ebe7; border-radius: 6px; }
+    .scenario-explanation strong { display: block; margin-bottom: 4px; color: var(--teal-dark); font-size: 13px; }
+    .scenario-explanation span { display: block; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .hidden { display: none; }
+    @media (max-width: 980px) {
+      .workspace { grid-template-columns: 1fr; }
+      .result-sticky { position: static; }
+      .usage-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .scenario-explanation { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px) {
+      .app-shell { padding: 14px; }
+      .topbar { display: block; }
+      .toolbar { justify-content: flex-start; margin-top: 14px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .usage-steps { grid-template-columns: 1fr; }
+      .big-number { font-size: 28px; }
+      h1 { font-size: 22px; }
+    }
+  .chapter-bridge{margin:0 0 1.4rem;padding:.85rem 1rem;border-left:4px solid #16806f;background:#f2f8f7;color:#244653;font-weight:600;line-height:1.8}
+</style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>PLS未来12个月营收潜力测算器</h1>
+        <p class="subtitle">以医学适配、真实选择和安全交付能力为边界，分别测算高端白内障与CLE/RLE的年度营收潜力。</p>
+      </div>
+      <div class="toolbar">
+        <button class="tool-btn" id="saveBtn" type="button" title="将当前输入保存在本浏览器">保存本地</button>
+        <button class="tool-btn" id="exportBtn" type="button" title="导出当前测算结果为CSV文件">导出CSV</button>
+        <button class="tool-btn" id="resetBtn" type="button" title="恢复示范数据">恢复示范值</button>
+        <button class="tool-btn primary" id="calculateBtn" type="button">更新测算</button>
+      </div>
+    </header>
+
+    <section class="usage-guide" aria-labelledby="usageTitle">
+      <h2 id="usageTitle">操作使用说明</h2>
+      <p>建议由院长、科主任和运营负责人共同填写。先用历史数据建立基准情景，再讨论资源投入后可能达到的审慎或进取情景。</p>
+      <div class="usage-steps">
+        <div class="usage-step"><strong>1. 选择测算口径</strong><span>选择“PLS全流程营收”或“增量自费价值”。前者用于整体经营规模评估，后者用于评估相较基础诊疗路径新增的自费价值。</span></div>
+        <div class="usage-step"><strong>2. 填写12个月基础数据</strong><span>白内障路径填写预计手术量、可讨论比例、医学适配率、选择率、平均收费与安全交付上限；CLE/RLE路径填写相关咨询量、适配率、选择率及对应容量。</span></div>
+        <div class="usage-step"><strong>3. 查看三种情景</strong><span>审慎、基准和进取情景用于敏感性分析。情景变化只能反映需求、能力和收费的合理变化，不能用于放宽适应证或降低沟通、随访标准。</span></div>
+        <div class="usage-step"><strong>4. 解读并保存结果</strong><span>系统按需求与安全交付能力中的较低值计算可实现眼数。比较两条路径和三种情景后，可保存本地或导出CSV，作为年度目标与资源配置讨论的依据。</span></div>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <section class="inputs" aria-label="测算输入">
+        <section class="section">
+          <div class="section-title">
+            <h2>测算口径</h2>
+            <span>建议同时保留全流程营收与增量自费价值</span>
+          </div>
+          <div class="section-body">
+            <div class="field-grid">
+              <div class="field wide">
+                <label>本次主显示口径</label>
+                <div class="mode-row" role="radiogroup" aria-label="营收测算口径">
+                  <label><input type="radio" name="revenueMode" value="full" checked><span>PLS全流程营收</span></label>
+                  <label><input type="radio" name="revenueMode" value="increment"><span>相对基础路径的增量自费</span></label>
+                </div>
+                <span class="hint">全流程营收为患者实际支付的PLS相关收费；增量自费为PLS收费减去同类患者选择基础路径时的收费。</span>
+              </div>
+              <div class="field"><label for="hospitalName">医院名称</label><input id="hospitalName" type="text" placeholder="例如：某某眼科医院"></div>
+              <div class="field"><label for="period">预测周期</label><select id="period"><option value="12">未来12个月</option><option value="6">未来6个月</option><option value="24">未来24个月</option></select></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title">
+            <h2>高端白内障PLS</h2>
+            <span>全部以“眼”为单位</span>
+          </div>
+          <div class="section-body">
+            <div class="formula">预计PLS眼数 = 预计白内障手术眼数 × 可进入PLS讨论比例 × 医学适配率 × 自费选择率，再受医院安全交付产能限制。</div>
+            <div class="field-grid" style="margin-top:14px">
+              <div class="field"><label for="catEyes">预计白内障手术总量</label><div class="input-wrap"><input id="catEyes" data-key="catEyes" type="number" min="0" step="1"><span class="unit">眼</span></div><span class="hint">未来12个月预计完成的所有白内障手术眼数。</span></div>
+              <div class="field"><label for="catCapacity">PLS安全交付产能上限</label><div class="input-wrap"><input id="catCapacity" data-key="catCapacity" type="number" min="0" step="1"><span class="unit">眼</span></div><span class="hint">已考虑医生、检查、手术间、随访及复杂病例处理能力。</span></div>
+              <div class="field"><label for="catDiscuss">可进入PLS讨论比例</label><div class="input-wrap"><input id="catDiscuss" data-key="catDiscuss" type="number" min="0" max="100" step="0.1"><span class="unit">%</span></div></div>
+              <div class="field"><label for="catEligible">医学适配率</label><div class="input-wrap"><input id="catEligible" data-key="catEligible" type="number" min="0" max="100" step="0.1"><span class="unit">%</span></div><span class="hint">应已排除明显眼表、角膜、眼底、视神经、预期等高风险因素。</span></div>
+              <div class="field"><label for="catChoice">充分沟通后的选择率</label><div class="input-wrap"><input id="catChoice" data-key="catChoice" type="number" min="0" max="100" step="0.1"><span class="unit">%</span></div><span class="hint">以患者真实知情和自主选择为前提。</span></div>
+              <div class="field"><label for="catPrice">每眼PLS平均实际收费</label><div class="input-wrap"><input id="catPrice" data-key="catPrice" type="number" min="0" step="100"><span class="unit">元</span></div></div>
+              <div class="field"><label for="catBase">每眼基础路径平均收费</label><div class="input-wrap"><input id="catBase" data-key="catBase" type="number" min="0" step="100"><span class="unit">元</span></div><span class="hint">仅用于“增量自费”口径。</span></div>
+              <div class="field"><label for="catDiscount">预计折扣及退费率</label><div class="input-wrap"><input id="catDiscount" data-key="catDiscount" type="number" min="0" max="100" step="0.1"><span class="unit">%</span></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title">
+            <h2>CLE/RLE老视矫正</h2>
+            <span>先按“患者”筛选，再换算为“手术眼”</span>
+          </div>
+          <div class="section-body">
+            <div class="formula">预计RLE眼数 = 预计相关咨询患者数 × 晶状体路径医学适配率 × 选择率 × 每位患者平均手术眼数，再受医院安全交付产能限制。</div>
+            <div class="field-grid" style="margin-top:14px">
+              <div class="field"><label for="rleConsult">预计老视相关咨询患者数</label><div class="input-wrap"><input id="rleConsult" data-key="rleConsult" type="number" min="0" step="1"><span class="unit">人</span></div><span class="hint">指完成初步需求沟通、可能进入手术路径评估的人群。</span></div>
+              <div class="field"><label for="rleCapacity">RLE安全交付产能上限</label><div class="input-wrap"><input id="rleCapacity" data-key="rleCapacity" type="number" min="0" step="1"><span class="unit">眼</span></div></div>
+              <div class="field"><label for="rleEligible">晶状体路径医学适配率</label><div class="input-wrap"><input id="rleEligible" data-key="rleEligible" type="number" min="0" max="100" step="0.1"><span class="unit">%</span></div><span class="hint">应在比较其他合理路径、完成风险评估后确定。</span></div>
+              <div class="field"><label for="rleChoice">充分沟通后的选择率</label><div class="input-wrap"><input id="rleChoice" data-key="rleChoice" type="number" min="0" max="100" step="0.1"><span class="unit">%</span></div></div>
+              <div class="field"><label for="rleEyesPatient">每位患者平均手术眼数</label><div class="input-wrap"><input id="rleEyesPatient" data-key="rleEyesPatient" type="number" min="1" max="2" step="0.01"><span class="unit">眼/人</span></div><span class="hint">用于反映双眼完成率及第二眼在预测期内完成的情况。</span></div>
+              <div class="field"><label for="rlePrice">每眼RLE平均实际收费</label><div class="input-wrap"><input id="rlePrice" data-key="rlePrice" type="number" min="0" step="100"><span class="unit">元</span></div></div>
+              <div class="field"><label for="rleBase">每眼基础路径对应收费</label><div class="input-wrap"><input id="rleBase" data-key="rleBase" type="number" min="0" step="100"><span class="unit">元</span></div><span class="hint">通常可设为0；仅在存在明确可比较基础路径时填入。</span></div>
+              <div class="field"><label for="rleDiscount">预计折扣及退费率</label><div class="input-wrap"><input id="rleDiscount" data-key="rleDiscount" type="number" min="0" max="100" step="0.1"><span class="unit">%</span></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-title"><h2>情景参数</h2><span>用于敏感性分析，不改变医学适应证标准</span></div>
+          <div class="section-body">
+            <div class="field-grid">
+              <div class="field"><label for="conservativeDemand">审慎：需求系数</label><div class="input-wrap"><input id="conservativeDemand" data-key="conservativeDemand" type="number" min="0" step="1"><span class="unit">%</span></div></div>
+              <div class="field"><label for="conservativePrice">审慎：收费系数</label><div class="input-wrap"><input id="conservativePrice" data-key="conservativePrice" type="number" min="0" step="1"><span class="unit">%</span></div></div>
+              <div class="field"><label for="baseDemand">基准：需求系数</label><div class="input-wrap"><input id="baseDemand" data-key="baseDemand" type="number" min="0" step="1"><span class="unit">%</span></div></div>
+              <div class="field"><label for="basePrice">基准：收费系数</label><div class="input-wrap"><input id="basePrice" data-key="basePrice" type="number" min="0" step="1"><span class="unit">%</span></div></div>
+              <div class="field"><label for="upsideDemand">进取：需求系数</label><div class="input-wrap"><input id="upsideDemand" data-key="upsideDemand" type="number" min="0" step="1"><span class="unit">%</span></div></div>
+              <div class="field"><label for="upsidePrice">进取：收费系数</label><div class="input-wrap"><input id="upsidePrice" data-key="upsidePrice" type="number" min="0" step="1"><span class="unit">%</span></div></div>
+            </div>
+            <div class="scenario-explanation" aria-label="需求系数与收费系数说明">
+              <div><strong>需求系数</strong><span>用于调整“充分沟通后的选择率”。100%表示按输入的选择率测算；80%表示该选择率按八折计算；120%表示在医学适配、知情沟通和安全产能均不变的前提下，选择率较基准上调20%。安全交付上限仍然生效，因此结果未必同比例增长。</span></div>
+              <div><strong>收费系数</strong><span>用于调整每眼平均实际收费。100%表示按输入收费测算；95%表示按95%的平均收费测算；103%表示按103%的平均收费测算。预计折扣及退费率会在此基础上另行扣除，不应重复计入收费系数。</span></div>
+            </div>
+            <p class="footer-note">两项系数仅用于审慎的敏感性分析，不应用于放宽适应证、缩短沟通、压缩随访或脱离价格合规要求设定目标。</p>
+          </div>
+        </section>
+      </section>
+
+      <aside class="results" aria-label="测算结果">
+        <div class="section result-sticky">
+          <div class="result-summary">
+            <p id="resultModeLabel">基准情景 · PLS全流程营收</p>
+            <div class="big-number" id="totalRevenue">¥0</div>
+            <small id="resultSubline">0眼 · 已扣除预计折扣及退费</small>
+          </div>
+          <div class="scenario-tabs" role="tablist" aria-label="结果情景选择">
+            <button class="scenario-tab" data-scenario="conservative" type="button">审慎</button>
+            <button class="scenario-tab active" data-scenario="base" type="button">基准</button>
+            <button class="scenario-tab" data-scenario="upside" type="button">进取</button>
+          </div>
+          <div class="metrics">
+            <div class="metric"><span>高端白内障PLS</span><strong id="catRevenue">¥0</strong></div>
+            <div class="metric"><span>CLE/RLE老视矫正</span><strong id="rleRevenue">¥0</strong></div>
+            <div class="metric"><span>预计PLS手术眼数</span><strong id="totalEyes">0 眼</strong></div>
+            <div class="metric"><span>产能约束提示</span><strong id="capacityNote">未触及上限</strong></div>
+          </div>
+          <div class="chart-block">
+            <p class="chart-caption">三种情景的年度营收对比</p>
+            <canvas id="scenarioChart" aria-label="三种情景年度营收柱状图"></canvas>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>情景</th><th>白内障</th><th>CLE/RLE</th><th>合计</th></tr></thead>
+              <tbody id="scenarioRows"></tbody>
+            </table>
+          </div>
+          <div class="notice"><strong>使用提示：</strong>本工具用于院内经营规划与敏感性分析。结果应以患者真实知情、自主选择、医学适配、收费合规和医院安全交付能力为前提；不构成对特定患者的诊疗建议或财税意见。</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const defaults = {
+      catEyes: 3000, catCapacity: 420, catDiscuss: 28, catEligible: 62, catChoice: 34, catPrice: 22000, catBase: 6500, catDiscount: 3,
+      rleConsult: 900, rleCapacity: 180, rleEligible: 22, rleChoice: 25, rleEyesPatient: 1.75, rlePrice: 30000, rleBase: 0, rleDiscount: 3,
+      conservativeDemand: 78, conservativePrice: 95, baseDemand: 100, basePrice: 100, upsideDemand: 122, upsidePrice: 103
+    };
+    const storageKey = "pls-revenue-calculator-v1";
+    let activeScenario = "base";
+
+    const $ = (id) => document.getElementById(id);
+    const n = (id) => Math.max(0, Number($(id).value) || 0);
+    const pct = (id) => n(id) / 100;
+    const yuan = (value) => new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY", maximumFractionDigits: 0 }).format(value);
+    const count = (value) => new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 0 }).format(value);
+
+    function loadDefaults() {
+      Object.entries(defaults).forEach(([key, value]) => { $(key).value = value; });
+    }
+
+    function getInputs() {
+      const saved = {};
+      document.querySelectorAll("[data-key]").forEach((input) => { saved[input.dataset.key] = Number(input.value) || 0; });
+      saved.hospitalName = $("hospitalName").value.trim();
+      saved.period = $("period").value;
+      saved.revenueMode = document.querySelector('input[name="revenueMode"]:checked').value;
+      return saved;
+    }
+
+    function scenarioFactors(scenario) {
+      const prefix = scenario === "conservative" ? "conservative" : scenario === "upside" ? "upside" : "base";
+      return { demand: n(prefix + "Demand") / 100, price: n(prefix + "Price") / 100 };
+    }
+
+    function calculateScenario(scenario, inputs = getInputs()) {
+      const factor = scenarioFactors(scenario);
+      const catDemandEyes = inputs.catEyes * pct("catDiscuss") * pct("catEligible") * Math.min(1, pct("catChoice") * factor.demand);
+      const catEyes = Math.min(catDemandEyes, inputs.catCapacity);
+      const rleDemandEyes = inputs.rleConsult * pct("rleEligible") * Math.min(1, pct("rleChoice") * factor.demand) * inputs.rleEyesPatient;
+      const rleEyes = Math.min(rleDemandEyes, inputs.rleCapacity);
+      const catPrice = Math.max(0, (inputs.revenueMode === "increment" ? inputs.catPrice - inputs.catBase : inputs.catPrice) * factor.price);
+      const rlePrice = Math.max(0, (inputs.revenueMode === "increment" ? inputs.rlePrice - inputs.rleBase : inputs.rlePrice) * factor.price);
+      const catRevenue = catEyes * catPrice * (1 - pct("catDiscount"));
+      const rleRevenue = rleEyes * rlePrice * (1 - pct("rleDiscount"));
+      return {
+        catDemandEyes, catEyes, rleDemandEyes, rleEyes,
+        catRevenue, rleRevenue, totalRevenue: catRevenue + rleRevenue,
+        capacityConstrained: catDemandEyes > inputs.catCapacity || rleDemandEyes > inputs.rleCapacity
+      };
+    }
+
+    function updateDisplay() {
+      const inputs = getInputs();
+      const results = {
+        conservative: calculateScenario("conservative", inputs),
+        base: calculateScenario("base", inputs),
+        upside: calculateScenario("upside", inputs)
+      };
+      const r = results[activeScenario];
+      const labels = { conservative: "审慎", base: "基准", upside: "进取" };
+      const mode = inputs.revenueMode === "increment" ? "相对基础路径的增量自费" : "PLS全流程营收";
+      $("resultModeLabel").textContent = labels[activeScenario] + "情景 · " + mode;
+      $("totalRevenue").textContent = yuan(r.totalRevenue);
+      $("resultSubline").textContent = count(r.catEyes + r.rleEyes) + "眼 · 已扣除预计折扣及退费";
+      $("catRevenue").textContent = yuan(r.catRevenue) + " / " + count(r.catEyes) + "眼";
+      $("rleRevenue").textContent = yuan(r.rleRevenue) + " / " + count(r.rleEyes) + "眼";
+      $("totalEyes").textContent = count(r.catEyes + r.rleEyes) + " 眼";
+      $("capacityNote").textContent = r.capacityConstrained ? "已触及至少一类产能上限" : "未触及产能上限";
+      $("scenarioRows").innerHTML = ["conservative", "base", "upside"].map((key) => {
+        const item = results[key];
+        return `<tr><td>${labels[key]}</td><td>${yuan(item.catRevenue)}</td><td>${yuan(item.rleRevenue)}</td><td><strong>${yuan(item.totalRevenue)}</strong></td></tr>`;
+      }).join("");
+      drawChart(results, labels);
+      window.currentResults = { inputs, results, labels, mode };
+    }
+
+    function drawChart(results, labels) {
+      const canvas = $("scenarioChart");
+      const rect = canvas.getBoundingClientRect();
+      const scale = window.devicePixelRatio || 1;
+      canvas.width = Math.max(1, Math.floor(rect.width * scale));
+      canvas.height = Math.max(1, Math.floor(rect.height * scale));
+      const ctx = canvas.getContext("2d");
+      ctx.scale(scale, scale);
+      const width = rect.width, height = rect.height;
+      ctx.clearRect(0, 0, width, height);
+      const items = ["conservative", "base", "upside"].map((key) => ({ key, value: results[key].totalRevenue }));
+      const max = Math.max(...items.map((item) => item.value), 1);
+      const colors = { conservative: "#c77b31", base: "#0d7768", upside: "#2b6f9e" };
+      const padding = { top: 20, right: 8, bottom: 29, left: 4 };
+      const gap = 28, barWidth = Math.max(36, (width - padding.left - padding.right - gap * 2) / 3);
+      items.forEach((item, index) => {
+        const barHeight = Math.max(4, (item.value / max) * (height - padding.top - padding.bottom));
+        const x = padding.left + index * (barWidth + gap);
+        const y = height - padding.bottom - barHeight;
+        ctx.fillStyle = colors[item.key];
+        ctx.fillRect(x, y, barWidth, barHeight);
+        ctx.fillStyle = "#33514b";
+        ctx.font = "12px -apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(labels[item.key], x + barWidth / 2, height - 9);
+        ctx.fillStyle = "#17322e";
+        ctx.font = "600 11px -apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif";
+        ctx.fillText((item.value / 100000000).toFixed(item.value >= 100000000 ? 1 : 2) + "亿元", x + barWidth / 2, Math.max(12, y - 7));
+      });
+    }
+
+    function saveLocal() {
+      localStorage.setItem(storageKey, JSON.stringify(getInputs()));
+      $("saveBtn").textContent = "已保存";
+      setTimeout(() => { $("saveBtn").textContent = "保存本地"; }, 1200);
+    }
+
+    function restoreLocal() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey));
+        if (!saved) return false;
+        document.querySelectorAll("[data-key]").forEach((input) => {
+          if (saved[input.dataset.key] !== undefined) input.value = saved[input.dataset.key];
+        });
+        $("hospitalName").value = saved.hospitalName || "";
+        $("period").value = saved.period || "12";
+        const radio = document.querySelector(`input[name="revenueMode"][value="${saved.revenueMode || "full"}"]`);
+        if (radio) radio.checked = true;
+        return true;
+      } catch { return false; }
+    }
+
+    function exportCsv() {
+      const current = window.currentResults;
+      const rows = [
+        ["医院", current.inputs.hospitalName || "未命名医院"],
+        ["预测周期", current.inputs.period + "个月"],
+        ["营收口径", current.mode],
+        [],
+        ["情景", "高端白内障PLS营收", "CLE/RLE营收", "总营收", "白内障PLS眼数", "RLE眼数"],
+        ...["conservative", "base", "upside"].map((key) => {
+          const r = current.results[key];
+          return [current.labels[key], r.catRevenue.toFixed(0), r.rleRevenue.toFixed(0), r.totalRevenue.toFixed(0), r.catEyes.toFixed(0), r.rleEyes.toFixed(0)];
+        })
+      ];
+      const csv = "\ufeff" + rows.map((row) => row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(",")).join("\n");
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      link.download = "PLS未来12个月营收潜力测算.csv";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    document.querySelectorAll("input, select").forEach((element) => element.addEventListener("input", updateDisplay));
+    document.querySelectorAll('input[name="revenueMode"]').forEach((element) => element.addEventListener("change", updateDisplay));
+    document.querySelectorAll(".scenario-tab").forEach((button) => button.addEventListener("click", () => {
+      activeScenario = button.dataset.scenario;
+      document.querySelectorAll(".scenario-tab").forEach((tab) => tab.classList.toggle("active", tab === button));
+      updateDisplay();
+    }));
+    $("calculateBtn").addEventListener("click", updateDisplay);
+    $("saveBtn").addEventListener("click", saveLocal);
+    $("exportBtn").addEventListener("click", exportCsv);
+    $("resetBtn").addEventListener("click", () => { loadDefaults(); $("hospitalName").value = ""; $("period").value = "12"; document.querySelector('input[name="revenueMode"][value="full"]').checked = true; updateDisplay(); });
+    window.addEventListener("resize", updateDisplay);
+
+    if (!restoreLocal()) loadDefaults();
+    updateDisplay();
+  </script>
+</body>
+</html>
