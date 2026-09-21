@@ -1,0 +1,88 @@
+body.intro-mode{background:#fff;color:#192d43}
+body.intro-mode>.topbar,body.intro-mode>footer{display:none}
+#intro{background:#fff}
+#intro button,#intro a{font:inherit}
+#intro .intro-topline{min-height:65px;display:flex;align-items:center;gap:18px;padding:10px clamp(18px,4vw,70px);border-bottom:1px solid #e7e9ed;background:#fff}
+#intro .intro-topline strong{font-size:17px;color:#ae271e}
+#intro .intro-topline span{font-size:12px;color:#68788b;margin-right:auto}
+#intro .intro-skip{background:none;border:0;color:#18598d;font-size:13px;font-weight:700;cursor:pointer;padding:8px 0}
+#intro .intro-hero{min-height:min(72vh,690px);display:flex;align-items:center;background:linear-gradient(90deg,rgba(9,29,47,.88) 0%,rgba(9,29,47,.72) 37%,rgba(9,29,47,.10) 78%),url('assets/hospital-illustration.png') center/cover;position:relative}
+#intro .intro-hero-inner{width:min(680px,90%);margin-left:clamp(18px,6vw,100px);padding:48px 0;color:#fff}
+#intro .intro-eyebrow{font-size:12px;font-weight:700;color:#b9e4ec;letter-spacing:0}
+#intro h1{font-size:clamp(40px,4.5vw,68px);line-height:1.15;letter-spacing:0;margin:13px 0 20px;color:#fff}
+#intro .intro-lead{font-size:clamp(19px,2vw,28px);line-height:1.45;font-weight:700;margin:0 0 13px}
+#intro .intro-sub{font-size:15px;line-height:1.75;max-width:610px;margin-bottom:24px;color:#eef5fa}
+#intro .intro-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+#intro .intro-primary{background:#bd2e24;color:#fff;border:1px solid #bd2e24;border-radius:4px;padding:13px 20px;cursor:pointer;font-size:15px;font-weight:700}
+#intro .intro-primary:hover{background:#a9231b}
+#intro .intro-primary span{padding-left:10px}
+#intro .intro-secondary{color:#fff;font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+#intro .intro-hero small{display:block;margin-top:19px;color:#e4ebf2;font-size:11px}
+#intro .intro-content,#intro .intro-partner-inner,#intro .intro-close{max-width:1320px;margin:auto;padding:55px clamp(18px,4vw,54px)}
+#intro .intro-section-head{max-width:900px}
+#intro .intro-index{color:#af3027;font-size:12px;font-weight:800}
+#intro h2{font-size:clamp(26px,2.8vw,38px);line-height:1.24;color:#152d47;margin:9px 0 12px}
+#intro .intro-section-head p{font-size:15px;color:#586879;line-height:1.7;margin-bottom:0}
+#intro .intro-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:30px}
+#intro .intro-benefits article{border-top:3px solid #bc342a;padding:17px 6px 0 0}
+#intro .intro-num{font-size:12px;color:#a43b32;font-weight:800}
+#intro h3{font-size:21px;color:#1e344b;margin:10px 0 8px}
+#intro .intro-benefits p,#intro .intro-support p{font-size:14px;color:#586b7d;line-height:1.75;margin:0}
+#intro .intro-bridge{font-size:18px;color:#9f2b22;font-weight:700;margin:36px 0 0;border-top:1px solid #e2e8ee;padding-top:19px}
+#intro .intro-partner{background:#f3f7f9;border-top:1px solid #e1e8ed;border-bottom:1px solid #e1e8ed}
+#intro .intro-support{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:27px}
+#intro .intro-support>div{border-left:3px solid #1e8b9a;padding:5px 12px 5px 17px}
+#intro .intro-support b{display:block;font-size:18px;color:#18364d;margin-bottom:8px}
+#intro .intro-close{display:flex;justify-content:space-between;align-items:center;gap:25px;padding-top:43px;padding-bottom:38px}
+#intro .intro-close h2{margin-bottom:5px}
+#intro .intro-close p{color:#5c6c7a;margin-bottom:0}
+#intro .intro-close .intro-primary{flex:none}
+#intro .intro-legal{max-width:1210px;margin:0 auto;padding:0 18px 25px;color:#718090;font-size:11px;line-height:1.65}
+@media(max-width:760px){#intro .intro-topline{gap:6px;flex-wrap:wrap;padding:10px 18px}
+#intro .intro-topline strong{font-size:15px}
+#intro .intro-topline span{font-size:11px;margin-right:0}
+#intro .intro-skip{margin-left:auto;font-size:12px}
+#intro .intro-hero{min-height:65vh;background-position:60% center;background-image:linear-gradient(90deg,rgba(9,29,47,.9),rgba(9,29,47,.52)),url('assets/hospital-illustration.png')}
+#intro .intro-hero-inner{margin-left:0;width:100%;padding:34px 20px}
+#intro h1{font-size:39px}
+#intro .intro-lead{font-size:20px}
+#intro .intro-sub{font-size:14px}
+#intro .intro-content,#intro .intro-partner-inner{padding:37px 20px}
+#intro .intro-benefits,#intro .intro-support{grid-template-columns:1fr;gap:17px}
+#intro .intro-benefits article{padding-top:10px}
+#intro .intro-close{display:block;padding:35px 20px}
+#intro .intro-close .intro-primary{margin-top:18px}
+}
+
+#intro .intro-framework{background:#173b54;color:#fff}
+#intro .intro-framework-inner,#intro .intro-roadmap-inner{max-width:1320px;margin:auto;padding:55px clamp(18px,4vw,54px)}
+#intro .intro-framework h2,#intro .intro-framework .intro-section-head p{color:#fff}
+#intro .intro-framework .intro-index{color:#8ce0df}
+#intro .intro-four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin-top:30px}
+#intro .intro-four>div{border-top:2px solid #6bcec9;padding-top:14px}
+#intro .intro-four b{display:block;font-size:19px;margin-bottom:8px}
+#intro .intro-four p{font-size:14px;line-height:1.7;color:#d9e8ee;margin:0}
+#intro .intro-path{padding-top:52px}
+#intro .intro-phases,#intro .intro-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:27px}
+#intro .intro-phases>div{border-top:2px solid #c8d8e3;padding-top:14px}
+#intro .intro-phases span{display:block;color:#af3027;font-weight:800;font-size:12px;margin-bottom:7px}
+#intro .intro-phases b,#intro .intro-three b{display:block;font-size:18px;color:#18364d;margin-bottom:7px}
+#intro .intro-phases p,#intro .intro-three p{font-size:14px;color:#586b7d;line-height:1.7;margin:0}
+#intro .intro-measure{margin:28px 0 0;padding:16px 0;border-top:1px solid #dfe7ed;color:#365570;font-size:14px;font-weight:700}
+#intro .intro-roadmap{background:#eaf5f4;border-bottom:1px solid #d7e8e6}
+#intro .intro-three>div{border-top:3px solid #249597;padding-top:15px}
+#intro .intro-three small{display:block;color:#166f72;font-weight:800;font-size:12px;margin-bottom:7px}
+@media(max-width:760px){#intro .intro-framework-inner,#intro .intro-roadmap-inner{padding:37px 20px}
+#intro .intro-four,#intro .intro-phases,#intro .intro-three{grid-template-columns:1fr;gap:18px}
+}
+
+/* Increase the red headings while preserving the main heading hierarchy. */
+#intro .intro-topline strong{font-size:22px}
+#intro .intro-index{font-size:16px}
+#intro .intro-num{font-size:16px}
+#intro .intro-bridge{font-size:22px}
+#intro .intro-phases span{font-size:16px}
+@media(max-width:760px){
+#intro .intro-topline strong{font-size:18px}
+#intro .intro-bridge{font-size:20px}
+}

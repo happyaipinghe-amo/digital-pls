@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全自费白内障手术术前心理红线评估量表</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Microsoft YaHei','PingFang SC','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#1A252F;background:#f4f5f7;padding:20px;}
+  .page{max-width:1140px;margin:0 auto;background:#fff;border-radius:8px;box-shadow:0 2px 16px rgba(0,0,0,.12);overflow:hidden;}
+
+  /* ── Header ── */
+  .page-header{background:#7B241C;color:#fff;padding:20px 32px 16px;}
+  .page-header h1{font-size:22px;font-weight:700;letter-spacing:1px;margin-bottom:5px;}
+  .page-header p{font-size:12px;opacity:.82;letter-spacing:.4px;}
+  .subtitle-bar{background:#F2F3F4;border-bottom:3px solid #922B21;padding:8px 32px;font-size:12px;color:#5D6D7E;display:flex;justify-content:space-between;align-items:center;}
+
+  /* ── Patient info ── */
+  .section{padding:18px 32px 0;}
+  .section-title{font-size:15px;font-weight:700;color:#922B21;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .section-title::before{content:'';display:inline-block;width:4px;height:16px;background:#922B21;border-radius:2px;}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid #BDC3C7;border-radius:4px;overflow:hidden;}
+  .info-cell{padding:8px 12px;background:#F9F9F9;border:1px solid #BDC3C7;font-size:13px;}
+  .info-cell.full{grid-column:1/-1;background:#fff;}
+  .info-cell label{margin-right:14px;cursor:pointer;font-size:13px;}
+  .info-cell input[type=text]{border:none;background:transparent;width:55%;font-size:13px;color:#1A252F;outline:none;border-bottom:1px dashed #aaa;}
+
+  /* ── Notice ── */
+  .notice{margin:16px 32px;background:#EBF5FB;border:2px solid #2E86C1;border-left-width:6px;border-radius:6px;padding:14px 18px;}
+  .notice h3{color:#1A5276;font-size:14px;margin-bottom:8px;}
+  .notice ol{padding-left:18px;color:#1A252F;font-size:13px;line-height:2.0;}
+
+  /* ── Score dashboard ── */
+  .dashboard{margin:0 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px 0;}
+  .dash-card{border-radius:8px;padding:12px 16px;text-align:center;}
+  .dash-card .num{font-size:30px;font-weight:700;line-height:1.1;}
+  .dash-card .lbl{font-size:11px;color:#5D6D7E;margin-top:4px;}
+  .card-total{background:#F2F3F4;border:2px solid #BDC3C7;}
+  .card-total .num{color:#1A252F;}
+  .card-warn{background:#FEF5E7;border:2px solid #E67E22;}
+  .card-warn .num{color:#E67E22;}
+  .card-int{background:#FDEDEC;border:2px solid #C0392B;}
+  .card-int .num{color:#C0392B;}
+  .card-result{border:2px solid #BDC3C7;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .card-result .verdict{font-size:13px;font-weight:700;padding:4px 10px;border-radius:4px;text-align:center;}
+  .verdict-pass{background:#EAFAF1;color:#1E8449;}
+  .verdict-caution{background:#FEF5E7;color:#E67E22;}
+  .verdict-stop{background:#FDEDEC;color:#C0392B;}
+
+  /* ── Assessment table ── */
+  .assess-section{padding:0 32px;}
+  .domain-header{background:#7B241C;color:#fff;font-size:13px;font-weight:700;padding:9px 14px;border-radius:4px 4px 0 0;margin-top:18px;}
+  table.items{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.items th{background:#2E4057;color:#fff;padding:7px 10px;text-align:center;font-size:12px;font-weight:600;}
+  table.items td{border:1px solid #DEE2E6;padding:8px 10px;vertical-align:top;}
+  table.items tr:nth-child(even) td{background:#FAFBFC;}
+  .td-no{text-align:center;font-weight:700;color:#922B21;font-size:12.5px;white-space:nowrap;width:56px;}
+  .td-item{font-weight:600;width:130px;font-size:12.5px;}
+  .td-probe{color:#2C3E50;line-height:1.75;width:32%;}
+  .td-flag{width:24%;}
+  .flag-int{background:#FDEDEC !important;color:#C0392B;font-size:12px;border-radius:3px;padding:5px 7px;line-height:1.65;}
+  .flag-warn{background:#FEF5E7 !important;color:#B7770D;font-size:12px;border-radius:3px;padding:5px 7px;line-height:1.65;}
+  .td-result{width:140px;text-align:center;}
+  .radio-group{display:flex;flex-direction:column;gap:5px;align-items:flex-start;}
+  .radio-group label{display:flex;align-items:center;gap:6px;cursor:pointer;padding:4px 8px;border-radius:4px;transition:background .15s;font-size:12.5px;width:100%;}
+  .radio-group label:hover{background:#f0f0f0;}
+  .radio-group input[type=radio]{accent-color:#922B21;cursor:pointer;}
+  label.sel-normal{background:#EAFAF1 !important;color:#1E8449;font-weight:600;}
+  label.sel-warn{background:#FEF5E7 !important;color:#E67E22;font-weight:600;}
+  label.sel-int{background:#FDEDEC !important;color:#C0392B;font-weight:600;}
+
+  /* ── Only-applicable tag ── */
+  .only-tag{display:inline-block;background:#EEF2FF;color:#3B52AC;border:1px solid #B5C0E8;border-radius:3px;padding:1px 6px;font-size:11px;margin-bottom:4px;}
+
+  /* ── Summary & sign ── */
+  .summary-wrap{padding:16px 32px 0;}
+  .sum-grid{display:grid;grid-template-columns:220px 1fr;border:1px solid #BDC3C7;border-radius:4px;overflow:hidden;}
+  .sum-lbl{background:#F2F3F4;padding:10px 14px;font-weight:600;font-size:13px;border-bottom:1px solid #BDC3C7;}
+  .sum-val{padding:10px 14px;font-size:13px;border-bottom:1px solid #BDC3C7;}
+  .sum-lbl:last-of-type,.sum-val:last-of-type{border-bottom:none;}
+  .sum-val textarea{width:100%;border:1px dashed #BDC3C7;border-radius:4px;padding:6px;font-size:13px;font-family:inherit;color:#1A252F;resize:vertical;min-height:60px;}
+  .sign-grid{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid #BDC3C7;border-radius:4px;overflow:hidden;margin-top:12px;}
+  .sign-cell{padding:10px 14px;border-right:1px solid #BDC3C7;font-size:13px;}
+  .sign-cell:last-child{border-right:none;}
+  .sign-cell .lbl{font-weight:600;color:#5D6D7E;font-size:11px;margin-bottom:22px;}
+  .sign-note{background:#FFF3CD;border:1px solid #E67E22;border-left-width:5px;border-radius:4px;padding:10px 14px;margin-top:10px;font-size:12px;color:#7D6608;line-height:1.75;}
+
+  /* ── Legend & actions ── */
+  .legend{padding:12px 32px;display:flex;gap:20px;flex-wrap:wrap;font-size:12px;border-top:1px solid #ECF0F1;margin-top:16px;}
+  .leg-item{display:flex;align-items:center;gap:6px;}
+  .leg-dot{width:10px;height:10px;border-radius:50%;}
+  .footer-note{padding:10px 32px 20px;font-size:11px;color:#BDC3C7;text-align:center;}
+  .actions{padding:14px 32px 24px;display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{padding:9px 22px;border:none;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s;}
+  .btn-reset{background:#ECF0F1;color:#5D6D7E;}
+  .btn-print{background:#2E4057;color:#fff;}
+  .btn-reset:hover,.btn-print:hover{opacity:.85;}
+
+  /* ── Print ── */
+  @media print{
+    body{background:#fff;padding:0;}
+    .page{box-shadow:none;border-radius:0;max-width:100%;}
+    .actions,.btn{display:none;}
+    .dashboard{break-inside:avoid;}
+    table.items{break-inside:auto;}
+    table.items tr{break-inside:avoid;}
+    .domain-header{break-before:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>全自费白内障手术术前心理红线评估量表</h1>
+    <p>Cataract Surgery Pre-operative Psychological Red-Line Assessment &nbsp;｜&nbsp; Version 1.0 &nbsp;｜&nbsp; 适用：全自费高端IOL（PureSee / Synergy / Odyssey）+ FLACS手术</p>
+  </div>
+  <div class="subtitle-bar">
+    <span>评估时机：手术方案最终确认前 &nbsp;｜&nbsp; 初评：宣教护士 &nbsp;｜&nbsp; 复核：主诊医生</span>
+    <span>文档编号：<input type="text" style="width:130px;border:none;border-bottom:1px dashed #aaa;background:transparent;font-size:12px;color:#5D6D7E;"></span>
+  </div>
+
+  <!-- Patient Info -->
+  <div class="section" style="padding-top:18px;">
+    <div class="section-title">患者基本信息</div>
+    <div class="info-grid">
+      <div class="info-cell">患者姓名：<input type="text" placeholder="请填写"></div>
+      <div class="info-cell">病历号 / 就诊卡：<input type="text" placeholder="请填写"></div>
+      <div class="info-cell">联系电话：<input type="text" placeholder="请填写"></div>
+      <div class="info-cell">出生日期：<input type="text" placeholder="YYYY-MM-DD"></div>
+      <div class="info-cell">职业：<input type="text" placeholder="请填写"></div>
+      <div class="info-cell">文化程度：<input type="text" placeholder="请填写"></div>
+      <div class="info-cell full">
+        拟行术式：&nbsp;
+        <label><input type="checkbox"> 超乳白内障手术 + 高端IOL（Phaco + IOL）</label>&nbsp;&nbsp;
+        <label><input type="checkbox"> FLACS飞秒激光辅助（白力士Catalys + IOL）</label>&nbsp;&nbsp;
+        <label><input type="checkbox"> 其他：<input type="text" style="width:100px;border-bottom:1px dashed #aaa;background:transparent;"></label>
+      </div>
+      <div class="info-cell full">
+        拟选高端IOL：&nbsp;
+        <label><input type="checkbox"> PureSee臻无级（EDOF）</label>&nbsp;
+        <label><input type="checkbox"> Synergy跃无级（三焦点）</label>&nbsp;
+        <label><input type="checkbox"> Odyssey奥德赛（FVR全视程）</label>&nbsp;
+        <label><input type="checkbox"> Odyssey散光版</label>&nbsp;
+        <label><input type="checkbox"> 其他：<input type="text" style="width:80px;border-bottom:1px dashed #aaa;background:transparent;"></label>
+      </div>
+      <div class="info-cell full">
+        是否同时选择FLACS（白力士 LOI耗材全自费）：&nbsp;
+        <label><input type="checkbox"> 是</label>&nbsp;&nbsp;
+        <label><input type="checkbox"> 否（传统超乳）</label>
+      </div>
+      <div class="info-cell">初评护士：<input type="text" placeholder="签名"></div>
+      <div class="info-cell">初评日期：<input type="text" id="eval-date" placeholder="YYYY-MM-DD"></div>
+      <div class="info-cell">初评时间：<input type="text" placeholder="HH:MM"></div>
+    </div>
+  </div>
+
+  <!-- Notice -->
+  <div class="notice">
+    <h3>使用说明</h3>
+    <ol>
+      <li>① &nbsp;初评：由宣教护士于术前宣教环节完成，逐项询问并勾选评估结果；</li>
+      <li>② &nbsp;复核：主诊医生在最终方案确认前独立审阅，对每项「预警」深入追问，对任何「拦截」项须专项记录；</li>
+      <li>③ &nbsp;决策：任何一项触发「拦截」，视为手术相对禁忌证——须加强沟通、调整IOL方案或建议暂缓，不得直接越过；</li>
+      <li>④ &nbsp;归档：签署完成后附入病历档案，作为知情同意过程的组成部分。</li>
+    </ol>
+  </div>
+
+  <!-- Score Dashboard -->
+  <div class="dashboard">
+    <div class="dash-card card-total">
+      <div class="num" id="cnt-total">0</div>
+      <div class="lbl">已评估项目</div>
+    </div>
+    <div class="dash-card card-warn">
+      <div class="num" id="cnt-warn">0</div>
+      <div class="lbl">预警项目数</div>
+    </div>
+    <div class="dash-card card-int">
+      <div class="num" id="cnt-int">0</div>
+      <div class="lbl">拦截项目数</div>
+    </div>
+    <div class="dash-card card-result">
+      <div class="verdict verdict-pass" id="verdict">尚未完成评估</div>
+      <div class="lbl" style="margin-top:6px;">综合结论</div>
+    </div>
+  </div>
+
+  <!-- Assessment Items -->
+  <div class="assess-section">
+
+    <!-- Domain 1: 期望值与术后视觉目标 -->
+    <div class="domain-header">第一域 &nbsp; 期望值与术后视觉目标</div>
+    <table class="items">
+      <thead><tr>
+        <th>编号</th><th>评估项目</th><th>询问 / 观察要点</th><th>判定标准</th><th>评估结果</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="td-no">C-01</td>
+          <td class="td-item">对手术目标的根本误判</td>
+          <td class="td-probe">询问：「您做这次手术最希望改善的是什么？」<br>观察：误以为手术可恢复至20岁时视力，或认为白内障手术可完全"治愈老花"；主诉「我就是要看得比年轻时更好」者。</td>
+          <td class="td-flag"><div class="flag-int">期望明显超出白内障手术光学改善范围，判定【预警/拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c01" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c01" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c01" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-02</td>
+          <td class="td-item">对光晕 / 眩光零容忍</td>
+          <td class="td-probe">询问：「夜间开车时若出现轻微光圈或星芒，您能接受吗？」<br>观察：拒绝任何光学副作用，强调「跟年轻时一样」；选择Synergy/PureSee但坚持无任何夜视干扰者。</td>
+          <td class="td-flag"><div class="flag-int">对光学副作用完全零容忍，判定【拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c02" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c02" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c02" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-03</td>
+          <td class="td-item">绝对脱镜执念</td>
+          <td class="td-probe">询问：「术后阅读时若偶尔需配薄镜片，您能接受吗？」<br>观察：明确拒绝任何场景戴镜，表示「我花这个钱就是为了再也不戴眼镜」者。</td>
+          <td class="td-flag"><div class="flag-int">明确拒绝任何场景配镜，判定【拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c03" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c03" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c03" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-04</td>
+          <td class="td-item">对FLACS效果过度期望</td>
+          <td class="td-probe"><span class="only-tag">仅限选择FLACS患者</span><br>询问：「您了解飞秒激光辅助手术的作用吗？」<br>观察：认为FLACS可确保「零误差绝对安全」；或误以为价格更高意味着视觉质量一定更好者。</td>
+          <td class="td-flag"><div class="flag-int">对FLACS技术存在根本误解或过度神化，判定【预警/拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c04" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c04" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c04" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-05</td>
+          <td class="td-item">特殊职业视力要求未核实</td>
+          <td class="td-probe">询问：职业及是否有硬性视力体检要求（职业驾驶员、飞行员、军警等）。<br>观察：误以为植入高端IOL可绕开视力体检标准，或不了解术后视力认定规则者。</td>
+          <td class="td-flag"><div class="flag-int">职业有硬性视力法规要求且未核实，判定【拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c05" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c05" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c05" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Domain 2: 全自费升级决策质量 -->
+    <div class="domain-header">第二域 &nbsp; 全自费升级决策质量</div>
+    <table class="items">
+      <thead><tr>
+        <th>编号</th><th>评估项目</th><th>询问 / 观察要点</th><th>判定标准</th><th>评估结果</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="td-no">C-06</td>
+          <td class="td-item">未理解「全自费升级」含义</td>
+          <td class="td-probe">询问：「您知道本次您放弃了医保报销的基础IOL方案，改为全自费高端IOL，是吗？」<br>观察：不清楚自己放弃了什么，或误以为高端IOL也在医保范围内；对两种方案价差无概念者。</td>
+          <td class="td-flag"><div class="flag-int">不理解全自费升级的实质内容，判定【拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c06" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c06" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c06" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-07</td>
+          <td class="td-item">对所选高端IOL存在根本性误解</td>
+          <td class="td-probe">测试：请患者用自己的话描述所选IOL的主要特点和局限性。<br>例：选PureSee但认为「可以看远中近三距离完全无光晕」；选Synergy但认为「和单焦点一样稳定」；选Odyssey但不知道属于全视程IOL者。</td>
+          <td class="td-flag"><div class="flag-int">对所选IOL存在重大临床误解，判定【预警/拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c07" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c07" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c07" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-08</td>
+          <td class="td-item">对FLACS（LOI耗材）费用认知偏差</td>
+          <td class="td-probe"><span class="only-tag">仅限选择FLACS患者</span><br>询问：「您知道每次手术需使用一个LOI耗材，费用全部自费，是吗？」<br>观察：不知晓LOI为一次性耗材，或确认价格后表现异常犹豫、沉默者。</td>
+          <td class="td-flag"><div class="flag-warn">不知晓LOI为全自费一次性消耗，判定【预警】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c08" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c08" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c08" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-09</td>
+          <td class="td-item">无法复述本次手术核心风险</td>
+          <td class="td-probe">测试：请患者用自己的话说出「这次手术最主要的两个风险是什么？」<br>观察：完全无法复述，或表示「医生说没有风险」、「您肯定给我做好」者。</td>
+          <td class="td-flag"><div class="flag-int">无法理解并复述核心手术风险，判定【拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c09" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c09" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c09" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-10</td>
+          <td class="td-item">不接受残余屈光误差的可能性</td>
+          <td class="td-probe">询问：「若术后仍有轻度近视、远视或散光，需配薄镜辅助，您能接受吗？」<br>观察：明确拒绝任何残余屈光不正，或认为花了全自费就「保证不需要戴镜」者。</td>
+          <td class="td-flag"><div class="flag-int">拒绝接受任何残余屈光可能性，判定【预警/拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c10" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c10" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c10" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Domain 3: 心理稳定性与人格特征 -->
+    <div class="domain-header">第三域 &nbsp; 心理稳定性与人格特征</div>
+    <table class="items">
+      <thead><tr>
+        <th>编号</th><th>评估项目</th><th>询问 / 观察要点</th><th>判定标准</th><th>评估结果</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="td-no">C-11</td>
+          <td class="td-item">焦虑症 / 抑郁症现病史或近期复发</td>
+          <td class="td-probe">询问：「近半年是否在服用抗焦虑或抗抑郁药物？」<br>观察：情绪明显不稳、就诊时泪目、反复纠结同一问题、言语逻辑混乱者。</td>
+          <td class="td-flag"><div class="flag-int">现症期精神科用药未停稳，判定【拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c11" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c11" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c11" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-12</td>
+          <td class="td-item">强迫型 / 完美主义人格</td>
+          <td class="td-probe">询问：「您平时对细节要求高吗？轻微的不完美会困扰很久吗？」<br>观察：反复追问同一细节，就诊3次以上仍无法决策，要求书面承诺手术效果者。</td>
+          <td class="td-flag"><div class="flag-int">极端完美主义且无法接受解释，判定【预警/拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c12" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c12" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c12" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-13</td>
+          <td class="td-item">对视觉波动的极度敏感史</td>
+          <td class="td-probe">询问：「配镜时是否因轻微度数偏差而多次退换？既往做过屈光手术且因轻微不适强烈不满者？」<br>观察：主诉对任何视觉变化极度敏感，适应期异常漫长者。</td>
+          <td class="td-flag"><div class="flag-int">有明确视觉低耐受历史，判定【拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c13" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c13" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c13" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-14</td>
+          <td class="td-item">术前过度紧张 / 极度恐惧</td>
+          <td class="td-probe">观察：就诊时手抖、大汗、无法配合基础检查；<br>主诉「非常害怕手术」但仍被劝来就诊，本人情绪极度不稳者。</td>
+          <td class="td-flag"><div class="flag-warn">无法配合术前检查或极度恐惧，判定【预警】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c14" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c14" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c14" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Domain 4: 社会心理与外部压力 -->
+    <div class="domain-header">第四域 &nbsp; 社会心理与外部压力</div>
+    <table class="items">
+      <thead><tr>
+        <th>编号</th><th>评估项目</th><th>询问 / 观察要点</th><th>判定标准</th><th>评估结果</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="td-no">C-15</td>
+          <td class="td-item">外部强迫型就诊</td>
+          <td class="td-probe">询问：「是您主动想做这个手术，还是有人劝您来的？」<br>观察：被配偶、子女或单位要求手术，本人态度被动，言语中表现出抵触者。</td>
+          <td class="td-flag"><div class="flag-int">本人无真实意愿，属被动就医，判定【拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c15" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c15" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c15" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-16</td>
+          <td class="td-item">经济压力型勉强升级</td>
+          <td class="td-probe">观察：确认全自费价格后明显犹豫，多次询问能否分期；表示「借钱来做」或「家里人说太贵了」者。<br>询问：「本次手术费用是否在您舒适的经济范围内？」</td>
+          <td class="td-flag"><div class="flag-warn">明显经济压力且有后悔风险，判定【预警】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c16" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c16" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c16" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-17</td>
+          <td class="td-item">对医疗团队的不信任</td>
+          <td class="td-probe">观察：反复质疑医生资质、设备品牌、医院动机；本院有投诉或纠纷记录。<br>询问：「您是否信任我们的手术团队？」</td>
+          <td class="td-flag"><div class="flag-int">显著不信任或有明确投诉史，判定【拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c17" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c17" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c17" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Domain 5: 术后依从性与随访意愿 -->
+    <div class="domain-header">第五域 &nbsp; 术后依从性与随访意愿</div>
+    <table class="items">
+      <thead><tr>
+        <th>编号</th><th>评估项目</th><th>询问 / 观察要点</th><th>判定标准</th><th>评估结果</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="td-no">C-18</td>
+          <td class="td-item">不能保证关键节点复诊</td>
+          <td class="td-probe">询问：「术后第1天、1周、1月须复诊，您能按时来吗？居住地距医院多远？」<br>观察：长期外地、无人陪同、明确表示「不方便复诊」者。</td>
+          <td class="td-flag"><div class="flag-warn">无法保证关键节点复诊，判定【预警】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c18" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c18" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c18" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-19</td>
+          <td class="td-item">用药依从性存疑</td>
+          <td class="td-probe">询问：「术后须严格按时滴眼药4-6周，您能做到吗？」<br>观察：有慢性病用药不规律史；高龄独居无人辅助用药者。</td>
+          <td class="td-flag"><div class="flag-warn">依从性明显不足，判定【预警】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c19" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c19" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c19" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td class="td-no">C-20</td>
+          <td class="td-item">对术后视觉适应期缺乏心理准备</td>
+          <td class="td-probe">询问：「高端IOL植入后可能需要2-4周甚至3个月适应新视觉，您有这个心理准备吗？」<br>观察：不接受任何视觉适应期，期望「手术当天就完全清晰」；选多焦点/全视程IOL但拒绝接受适应期者。</td>
+          <td class="td-flag"><div class="flag-int">完全拒绝接受视觉适应期，判定【预警/拦截】</div></td>
+          <td class="td-result"><div class="radio-group">
+            <label><input type="radio" name="c20" value="0" onchange="calc()"> 正常</label>
+            <label><input type="radio" name="c20" value="1" onchange="calc()"> 预警</label>
+            <label><input type="radio" name="c20" value="2" onchange="calc()"> 拦截</label>
+          </div></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div><!-- /assess-section -->
+
+  <!-- Summary -->
+  <div class="summary-wrap">
+    <div class="section-title" style="margin-bottom:10px;">综合评估结论</div>
+    <div class="sum-grid">
+      <div class="sum-lbl">触发拦截条目数</div>
+      <div class="sum-val" id="sum-int-count">—</div>
+      <div class="sum-lbl">预警条目数</div>
+      <div class="sum-val" id="sum-warn-count">—</div>
+      <div class="sum-lbl">综合评估结论</div>
+      <div class="sum-val" id="sum-verdict">请完成全部20项评估后系统自动给出结论</div>
+      <div class="sum-lbl">干预措施 / 备注</div>
+      <div class="sum-val"><textarea placeholder="如存在预警或拦截项，请在此记录具体沟通措施及处理方案……"></textarea></div>
+    </div>
+  </div>
+
+  <!-- Sign-off -->
+  <div class="summary-wrap" style="padding-top:14px;">
+    <div class="section-title" style="margin-bottom:10px;">签署确认</div>
+    <div class="sign-grid">
+      <div class="sign-cell"><div class="lbl">宣教护士签名</div></div>
+      <div class="sign-cell"><div class="lbl">主诊医生复核签名</div></div>
+      <div class="sign-cell"><div class="lbl">医生复核日期</div></div>
+    </div>
+    <div class="sign-note">
+      主诊医生声明：本人已独立复核以上各项评估结果，确认患者已充分知情，理解手术风险及预期效果的局限性，并在此基础上作出自主决策（含全自费升级决策）。如存在任何「拦截」项，已与患者进行充分的专项沟通，并记录于病历。
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <span style="font-weight:600;color:#5D6D7E;">图例：</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#1E8449;"></span>正常 = 无明显心理风险，手术可推进</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#E67E22;"></span>预警 = 存在潜在风险，须术前强化沟通并记录</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#C0392B;"></span>拦截 = 相对禁忌证，须经医生专项干预后重新评估</span>
+  </div>
+
+  <div class="footer-note">本量表 V1.0 ｜ 适用产品：Tecnis PureSee / Synergy / Odyssey / Odyssey散光 ｜ Catalys白力士（FLACS）｜ 制订：JJSV培训部</div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <button class="btn btn-reset" onclick="resetAll()">重置所有评估</button>
+    <button class="btn btn-print" onclick="window.print()">打印 / 导出PDF</button>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+var ITEMS = ['c01','c02','c03','c04','c05','c06','c07','c08','c09','c10',
+             'c11','c12','c13','c14','c15','c16','c17','c18','c19','c20'];
+var TOTAL_ITEMS = ITEMS.length;
+
+function calc() {
+  var total = 0, warns = 0, intercepts = 0;
+  ITEMS.forEach(function(name) {
+    var sel = document.querySelector('input[name="'+name+'"]:checked');
+    if (!sel) return;
+    total++;
+    var v = parseInt(sel.value);
+    if (v === 1) warns++;
+    if (v === 2) intercepts++;
+    // Highlight selected label
+    var group = sel.closest('.radio-group');
+    group.querySelectorAll('label').forEach(function(lbl){
+      lbl.classList.remove('sel-normal','sel-warn','sel-int');
+    });
+    var lbl = sel.parentElement;
+    if (v === 0) lbl.classList.add('sel-normal');
+    else if (v === 1) lbl.classList.add('sel-warn');
+    else if (v === 2) lbl.classList.add('sel-int');
+  });
+
+  document.getElementById('cnt-total').textContent = total;
+  document.getElementById('cnt-warn').textContent = warns;
+  document.getElementById('cnt-int').textContent = intercepts;
+
+  var vEl = document.getElementById('verdict');
+  var sumInt = document.getElementById('sum-int-count');
+  var sumWarn = document.getElementById('sum-warn-count');
+  var sumV = document.getElementById('sum-verdict');
+
+  if (total < TOTAL_ITEMS) {
+    vEl.className = 'verdict';
+    vEl.style.background = '#ECF0F1';
+    vEl.style.color = '#5D6D7E';
+    vEl.textContent = '已评 ' + total + ' / ' + TOTAL_ITEMS + ' 项';
+    sumInt.textContent = '—';
+    sumWarn.textContent = '—';
+    sumV.textContent = '请完成全部' + TOTAL_ITEMS + '项评估后系统自动给出结论';
+    return;
+  }
+
+  sumInt.textContent = intercepts + ' 项';
+  sumWarn.textContent = warns + ' 项';
+
+  if (intercepts === 0 && warns === 0) {
+    vEl.className = 'verdict verdict-pass';
+    vEl.style.background = ''; vEl.style.color = '';
+    vEl.textContent = '✅ 通过，可推进手术';
+    sumV.innerHTML = '<strong style="color:#1E8449;">✅ 通过，可推进手术</strong><br><span style="font-size:12px;color:#5D6D7E;">全部'+TOTAL_ITEMS+'项均为正常，无心理禁忌，可按计划推进全自费白内障手术。</span>';
+  } else if (intercepts === 0 && warns > 0) {
+    vEl.className = 'verdict verdict-caution';
+    vEl.style.background = ''; vEl.style.color = '';
+    vEl.textContent = '⚠️ 有条件通过（' + warns + '项预警）';
+    sumV.innerHTML = '<strong style="color:#E67E22;">⚠️ 有条件通过</strong><br><span style="font-size:12px;color:#5D6D7E;">存在 '+warns+' 项预警，须在术前完成专项沟通并记录后方可推进手术。</span>';
+  } else if (intercepts === 1) {
+    vEl.className = 'verdict verdict-stop';
+    vEl.style.background = ''; vEl.style.color = '';
+    vEl.textContent = '🚫 拦截（' + intercepts + '项）须专项沟通';
+    sumV.innerHTML = '<strong style="color:#C0392B;">🚫 触发拦截（1项）——需加强沟通或调整方案</strong><br><span style="font-size:12px;color:#5D6D7E;">存在1项拦截，视为相对禁忌证，须由主诊医生进行专项沟通并记录，必要时调整IOL选择或暂缓手术。</span>';
+  } else {
+    vEl.className = 'verdict verdict-stop';
+    vEl.style.background = ''; vEl.style.color = '';
+    vEl.textContent = '🚫 建议暂缓（' + intercepts + '项拦截）';
+    sumV.innerHTML = '<strong style="color:#C0392B;">🚫 建议暂缓手术（'+intercepts+'项拦截）</strong><br><span style="font-size:12px;color:#5D6D7E;">存在多项拦截，风险等级高。建议本次暂缓手术，经多学科会诊或心理干预后重新评估。</span>';
+  }
+}
+
+function resetAll() {
+  ITEMS.forEach(function(name){
+    document.querySelectorAll('input[name="'+name+'"]').forEach(function(r){ r.checked=false; });
+  });
+  document.querySelectorAll('.radio-group label').forEach(function(l){
+    l.classList.remove('sel-normal','sel-warn','sel-int');
+  });
+  document.getElementById('cnt-total').textContent = '0';
+  document.getElementById('cnt-warn').textContent = '0';
+  document.getElementById('cnt-int').textContent = '0';
+  var vEl = document.getElementById('verdict');
+  vEl.className = 'verdict';
+  vEl.style.background = '#ECF0F1'; vEl.style.color = '#5D6D7E';
+  vEl.textContent = '尚未完成评估';
+  document.getElementById('sum-int-count').textContent = '—';
+  document.getElementById('sum-warn-count').textContent = '—';
+  document.getElementById('sum-verdict').textContent = '请完成全部'+TOTAL_ITEMS+'项评估后系统自动给出结论';
+}
+
+// Auto-fill today's date
+document.getElementById('eval-date').value = new Date().toISOString().slice(0,10);
+</script>
+</body>
+</html>

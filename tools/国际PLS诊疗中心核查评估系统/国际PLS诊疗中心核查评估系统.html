@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>国际PLS诊疗中心 核查评估系统</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft YaHei","Arial",sans-serif;font-size:13px;color:#2C3E50;background:#F0F3F7;line-height:1.5}
+.page{max-width:1180px;margin:0 auto;padding:24px 20px}
+
+/* ── Header ── */
+.report-header{background:linear-gradient(135deg,#1A3A5C 0%,#2D6A9F 100%);color:white;padding:28px 36px;border-radius:10px;margin-bottom:18px;box-shadow:0 4px 16px rgba(26,58,92,.3)}
+.report-title{font-size:24px;font-weight:bold;letter-spacing:3px}
+.report-en{font-size:13px;color:#AED6F1;margin-top:4px;letter-spacing:1px}
+.report-meta{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px}
+.meta-field{display:flex;align-items:center;gap:8px}
+.meta-label{color:#AED6F1;font-size:12px;white-space:nowrap}
+.meta-input{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:white;padding:5px 10px;border-radius:5px;font-size:13px;width:160px;font-family:inherit}
+.meta-input::placeholder{color:rgba(255,255,255,.45)}
+
+/* ── Buttons ── */
+.btn-bar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.btn{padding:10px 22px;border:none;border-radius:7px;font-size:14px;font-weight:bold;cursor:pointer;transition:.2s;letter-spacing:.5px;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.btn-print{background:#1A3A5C;color:white}
+.btn-print:hover{background:#2D6A9F;transform:translateY(-1px)}
+.btn-clear{background:#C0392B;color:white}
+.btn-clear:hover{background:#E74C3C;transform:translateY(-1px)}
+
+/* ── Legend ── */
+.legend-box{background:#EBF5FB;border-left:5px solid #1A3A5C;padding:12px 20px;margin-bottom:18px;border-radius:0 8px 8px 0}
+.legend-box p{margin:3px 0;font-size:12px;color:#2C3E50}
+
+/* ── Score Summary ── */
+.section-title{font-size:15px;font-weight:bold;color:#1A3A5C;margin:20px 0 10px;display:flex;align-items:center;gap:6px}
+.section-title::before{content:"▌";color:#2D6A9F}
+table.score-table{width:100%;border-collapse:collapse;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.1);border-radius:8px;overflow:hidden}
+table.score-table th{background:#1A3A5C;color:white;padding:9px 12px;text-align:center;font-size:13px}
+table.score-table th:first-child{text-align:left;padding-left:16px}
+table.score-table td{padding:8px 12px;border:1px solid #D5DBDB;font-size:13px;text-align:center;background:white}
+table.score-table td:first-child{text-align:left;padding-left:16px}
+table.score-table tr:nth-child(even) td{background:#F4F6F7}
+
+/* ── Grand Score ── */
+.grand-score-box{background:linear-gradient(135deg,#1A3A5C,#2D6A9F);color:white;padding:24px 36px;border-radius:10px;text-align:center;margin:20px 0;box-shadow:0 4px 16px rgba(26,58,92,.3)}
+.grand-score-label{font-size:14px;opacity:.8;letter-spacing:1px}
+.grand-score-val{font-size:56px;font-weight:bold;margin:6px 0;line-height:1}
+.grand-score-sub{font-size:14px;opacity:.6;margin-bottom:8px}
+.grand-pct{font-size:24px;font-weight:bold;color:#F9E79F}
+.grade-bar{margin-top:12px;font-size:12px;opacity:.7}
+
+/* ── Module Banner ── */
+.module-banner{padding:14px 24px;margin-top:28px;border-radius:8px 8px 0 0}
+.mod-num{font-size:20px;font-weight:bold;opacity:.6;margin-right:6px}
+.mod-title{font-size:20px;font-weight:bold;color:white}
+.mod-sub{font-size:11px;color:rgba(255,255,255,.75);font-style:italic;margin-top:5px}
+.note-box{padding:10px 18px;border-left:5px solid;margin-bottom:0;border-radius:0}
+.note-box p{font-size:12px;color:#2C3E50;line-height:1.6}
+
+/* ── Check Table ── */
+table.check-table{width:100%;border-collapse:collapse;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+table.check-table th{padding:9px 10px;font-size:12px;color:white;text-align:center}
+table.check-table th.col-item,table.check-table th.col-detail{text-align:left}
+table.check-table td{padding:9px 10px;border:1px solid #D5DBDB;vertical-align:top;font-size:12px}
+.col-no{width:44px;text-align:center;font-weight:bold;color:#5D6D7E;font-size:11.5px}
+.col-item{width:155px;vertical-align:middle}
+.col-detail{color:#5D6D7E;line-height:1.55;font-size:11.5px}
+.col-status{width:96px;text-align:center;vertical-align:middle}
+.col-pri{width:60px;text-align:center;vertical-align:middle}
+.col-notes{width:195px}
+
+/* ── Status Select ── */
+.status-select{width:90px;padding:5px 4px;border-radius:5px;border:1px solid #BDC3C7;font-size:12px;font-weight:bold;cursor:pointer;text-align:center;transition:.2s;font-family:inherit}
+.status-select.v2{background:#EAFAF1;color:#1E8449;border-color:#1E8449}
+.status-select.v1{background:#FEF9E7;color:#D35400;border-color:#D35400}
+.status-select.v0{background:#FDEDEC;color:#C0392B;border-color:#C0392B}
+.status-select.ve{background:#F5F7FA;color:#BDC3C7;border-color:#D5DBDB}
+
+/* ── Priority ── */
+.pri-high{color:#C0392B;font-weight:bold;background:#FDEDEC;padding:2px 7px;border-radius:4px;font-size:12px;display:inline-block}
+.pri-mid{color:#D35400;font-weight:bold;background:#FEF9E7;padding:2px 7px;border-radius:4px;font-size:12px;display:inline-block}
+.pri-low{color:#1E8449;font-weight:bold;background:#EAFAF1;padding:2px 7px;border-radius:4px;font-size:12px;display:inline-block}
+
+/* ── Notes textarea ── */
+.notes-input{width:100%;min-height:52px;border:1px solid #D5DBDB;border-radius:4px;padding:5px 7px;font-size:11px;resize:vertical;font-family:inherit;color:#2C3E50;background:#FDFEFE}
+.notes-input:focus{outline:none;border-color:#2D6A9F;background:white;box-shadow:0 0 0 2px rgba(45,106,159,.15)}
+
+/* ── Action Plan ── */
+.action-table{width:100%;border-collapse:collapse;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.action-table th{padding:9px 12px;color:white;font-size:13px;text-align:center}
+.action-table th:nth-child(2){text-align:left}
+.action-table td{padding:8px 12px;border:1px solid #CCCCCC;font-size:12px;text-align:center;background:white}
+.action-table td:nth-child(2){text-align:left}
+.action-table tr:nth-child(even) td{background:#F5F7FA}
+.action-input{width:100%;border:none;background:transparent;font-size:12px;font-family:inherit;color:#2C3E50;min-height:30px;resize:vertical}
+.action-input:focus{outline:1px solid #AED6F1;border-radius:2px}
+
+/* ── Footer ── */
+.report-footer{text-align:center;color:#95A5A6;font-size:11px;margin-top:30px;padding:20px;border-top:1px solid #D5DBDB;font-style:italic}
+.definition-intro{background:#F8F9F9;border-left:4px solid #2D6A9F;padding:10px 14px;margin:10px 0 14px;font-size:12px;line-height:1.7;color:#34495E}
+.definition-table{width:100%;border-collapse:collapse;margin-bottom:20px}
+.definition-table th{background:#34495E;color:white;padding:8px 10px;font-size:12px;text-align:left}
+.definition-table td{border:1px solid #D5DBDB;padding:7px 10px;font-size:11.5px;line-height:1.55;vertical-align:top}
+.definition-table td:first-child{width:52px;text-align:center;color:#2D6A9F;font-weight:bold;white-space:nowrap}
+.definition-table td:nth-child(2){width:180px;font-weight:bold;color:#1A3A5C}
+
+/* ── Print ── */
+@media print{
+  @page{size:A4;margin:12mm 10mm}
+  body{background:white;font-size:10.5px}
+  .btn-bar{display:none!important}
+  .page{max-width:none;padding:0}
+  .module-banner,.check-table th,.grand-score-box,.report-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  tr{page-break-inside:avoid}
+  .module-banner{page-break-before:auto}
+  .status-select{border:1px solid #999;font-size:11px}
+  .notes-input{border:1px solid #CCC;min-height:40px}
+  table.check-table td,.col-notes{width:auto}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ████ HEADER ████ -->
+<div class="report-header">
+  <div class="report-title">国际PLS诊疗中心  核查评估系统</div>
+  <div class="report-en">International Premium Lens Surgery (PLS) Center — Audit &amp; Evaluation System</div>
+  <div class="report-meta">
+    <div class="meta-field"><span class="meta-label">核查机构：</span>
+      <input class="meta-input" id="org-name" type="text" placeholder="请输入医院名称"></div>
+    <div class="meta-field"><span class="meta-label">核查日期：</span>
+      <input class="meta-input" id="inspect-date" type="date"></div>
+    <div class="meta-field"><span class="meta-label">核查人：</span>
+      <input class="meta-input" id="inspector" type="text" placeholder="核查人姓名"></div>
+    <div class="meta-field"><span class="meta-label">陪同人员：</span>
+      <input class="meta-input" id="attendees" type="text" placeholder="陪同人员姓名"></div>
+  </div>
+</div>
+
+<!-- ████ BUTTONS ████ -->
+<div class="btn-bar">
+  <button class="btn btn-print" onclick="window.print()">🖨️ 打印 / 另存为 PDF</button>
+  <button class="btn btn-clear" onclick="clearAll()">🗑️ 一键清空</button>
+</div>
+
+<!-- ████ LEGEND ████ -->
+<div class="legend-box">
+  <p><strong>【现状评估评分】</strong>&emsp;✓ 达标 = <strong>2分</strong>，运营良好 &emsp; △ 需改进 = <strong>1分</strong>，已有但不完善 &emsp; ✗ 缺失 = <strong>0分</strong>，需从零建立 &emsp; — 未评估 = 0分（不计入达标率）</p>
+  <p><strong>【优先级说明】</strong>&emsp;高 = 直接影响患者转化，本次重点关注 &emsp; 中 = 影响体验，建议3个月内完成 &emsp; 低 = 长期建设项目</p>
+  <p><strong>【总分标准】</strong>&emsp;满分 <strong>118分</strong>（59项 × 2分）&emsp; 优秀：≥95分（80%） &emsp; 合格：≥71分（60%） &emsp; 重点改进：&lt;71分</p>
+</div>
+
+<!-- ████ SCORE SUMMARY ████ -->
+<div class="section-title">核查评分汇总（实时自动计算）</div>
+<table class="score-table">
+  <thead>
+    <tr>
+      <th style="text-align:left;width:220px">核查模块</th>
+      <th>核查项数</th>
+      <th>✓ 达标</th>
+      <th>△ 需改进</th>
+      <th>✗ 缺失</th>
+      <th>— 未评估</th>
+      <th>得分</th>
+      <th>满分</th>
+      <th>达标率</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td style="font-weight:bold">A. 支柱一：临床卓越基础建设</td>
+        <td>12</td>
+        <td id="s-A-c" style="color:#1E8449;font-weight:bold">0</td>
+        <td id="s-A-p" style="color:#D35400;font-weight:bold">0</td>
+        <td id="s-A-m" style="color:#C0392B;font-weight:bold">0</td>
+        <td id="s-A-u" style="color:#95A5A6">12</td>
+        <td id="s-A-s" style="font-weight:bold;color:#1A3A5C;font-size:15px">0</td>
+        <td style="color:#5D6D7E">24</td>
+        <td id="s-A-r" style="color:#2D6A9F;font-weight:bold">0%</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">B. 支柱二：MDT团队建设与管理机制</td>
+        <td>11</td>
+        <td id="s-B-c" style="color:#1E8449;font-weight:bold">0</td>
+        <td id="s-B-p" style="color:#D35400;font-weight:bold">0</td>
+        <td id="s-B-m" style="color:#C0392B;font-weight:bold">0</td>
+        <td id="s-B-u" style="color:#95A5A6">11</td>
+        <td id="s-B-s" style="font-weight:bold;color:#1A3A5C;font-size:15px">0</td>
+        <td style="color:#5D6D7E">22</td>
+        <td id="s-B-r" style="color:#2D6A9F;font-weight:bold">0%</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">C. 支柱三：标准化诊疗SOP与风险合规</td>
+        <td>15</td>
+        <td id="s-C-c" style="color:#1E8449;font-weight:bold">0</td>
+        <td id="s-C-p" style="color:#D35400;font-weight:bold">0</td>
+        <td id="s-C-m" style="color:#C0392B;font-weight:bold">0</td>
+        <td id="s-C-u" style="color:#95A5A6">15</td>
+        <td id="s-C-s" style="font-weight:bold;color:#1A3A5C;font-size:15px">0</td>
+        <td style="color:#5D6D7E">30</td>
+        <td id="s-C-r" style="color:#2D6A9F;font-weight:bold">0%</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">D. 支柱四：患者教育与体验设计</td>
+        <td>8</td>
+        <td id="s-D-c" style="color:#1E8449;font-weight:bold">0</td>
+        <td id="s-D-p" style="color:#D35400;font-weight:bold">0</td>
+        <td id="s-D-m" style="color:#C0392B;font-weight:bold">0</td>
+        <td id="s-D-u" style="color:#95A5A6">8</td>
+        <td id="s-D-s" style="font-weight:bold;color:#1A3A5C;font-size:15px">0</td>
+        <td style="color:#5D6D7E">16</td>
+        <td id="s-D-r" style="color:#2D6A9F;font-weight:bold">0%</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">E. 支柱五：全自费定价体系与成交沟通</td>
+        <td>5</td>
+        <td id="s-E-c" style="color:#1E8449;font-weight:bold">0</td>
+        <td id="s-E-p" style="color:#D35400;font-weight:bold">0</td>
+        <td id="s-E-m" style="color:#C0392B;font-weight:bold">0</td>
+        <td id="s-E-u" style="color:#95A5A6">5</td>
+        <td id="s-E-s" style="font-weight:bold;color:#1A3A5C;font-size:15px">0</td>
+        <td style="color:#5D6D7E">10</td>
+        <td id="s-E-r" style="color:#2D6A9F;font-weight:bold">0%</td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold">F. 支柱六：患者获客体系与数字化流量</td>
+        <td>8</td>
+        <td id="s-F-c" style="color:#1E8449;font-weight:bold">0</td>
+        <td id="s-F-p" style="color:#D35400;font-weight:bold">0</td>
+        <td id="s-F-m" style="color:#C0392B;font-weight:bold">0</td>
+        <td id="s-F-u" style="color:#95A5A6">8</td>
+        <td id="s-F-s" style="font-weight:bold;color:#1A3A5C;font-size:15px">0</td>
+        <td style="color:#5D6D7E">16</td>
+        <td id="s-F-r" style="color:#2D6A9F;font-weight:bold">0%</td>
+      </tr>
+
+
+      <tr style="background:#1A3A5C">
+        <td style="color:white;font-weight:bold">📊 合计总分</td>
+        <td style="color:white;text-align:center">59</td>
+        <td id="s-T-c" style="color:#A9DFBF;font-weight:bold">0</td>
+        <td id="s-T-p" style="color:#FAD7A0;font-weight:bold">0</td>
+        <td id="s-T-m" style="color:#F1948A;font-weight:bold">0</td>
+        <td id="s-T-u" style="color:#AEB6BF">59</td>
+        <td id="s-T-s" style="color:#F9E79F;font-weight:bold;font-size:20px">0</td>
+        <td style="color:#AEB6BF">118</td>
+        <td id="s-T-r" style="color:#F9E79F;font-weight:bold;font-size:16px">0%</td>
+      </tr>
+  </tbody>
+</table>
+
+<!-- ████ GRAND SCORE ████ -->
+<div class="grand-score-box">
+  <div class="grand-score-label">综合核查得分</div>
+  <div class="grand-score-val"><span id="grand-score">0</span><span style="font-size:22px;opacity:.5"> / 118</span></div>
+  <div class="grand-score-sub">共 59 项核查指标（按六大支柱编排）</div>
+  <div class="grand-pct">达标率：<span id="grand-pct">0%</span></div>
+  <div class="grade-bar">≥95分（80%）= 优秀 &nbsp;|&nbsp; ≥71分（60%）= 合格 &nbsp;|&nbsp; &lt;71分 = 需重点改进</div>
+</div>
+
+<!-- ████ MODULES ████ -->
+
+  <!-- MODULE A -->
+  <div class="module-banner" style="background:#2D6A9F">
+    <span class="mod-num">A</span>
+    <span class="mod-title">支柱一：临床卓越基础建设</span>
+    <div class="mod-sub">硬件设备配置 · 诊疗场景设计 · 客观眼部条件筛查</div>
+  </div>
+  <div class="note-box" style="border-left-color:#2D6A9F;background:#EBF5FB">
+    <p>💡 核查重点：临床卓越首先来自精准检查、稳定手术平台与可信赖的诊疗场景，直接影响IOL选型准确率、患者体验与纠纷防控能力。</p>
+  </div>
+  <table class="check-table">
+    <thead>
+      <tr>
+        <th class="col-no" style="background:#2D6A9F">序号</th>
+        <th class="col-item" style="background:#2D6A9F">核查项目</th>
+        <th class="col-detail" style="background:#2D6A9F">详细检查要点</th>
+        <th class="col-status" style="background:#2D6A9F">现状评估</th>
+        <th class="col-pri" style="background:#2D6A9F">优先级</th>
+        <th class="col-notes" style="background:#2D6A9F">改进建议 / 现场记录</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">A-1</td>
+        <td class="col-item"><strong>SS-OCT 扫频光学相干断层仪</strong></td>
+        <td class="col-detail">是否配备（非TD-OCT）？能否在晶体混浊条件下完成精准眼轴测量？扫频速度是否满足临床需求？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-1" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">A-2</td>
+        <td class="col-item"><strong>角膜地形图仪</strong></td>
+        <td class="col-detail">能否测量Kappa角、Alpha角？是否配备Placido盘及Scheimpflug联合系统（如Pentacam/Sirius）以全面评估角膜形态？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-2" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">A-3</td>
+        <td class="col-item"><strong>波前像差分析仪</strong></td>
+        <td class="col-detail">是否配备（如iTrace/OPD-III）？能否完整测量角膜高阶像差（HOAs），建立术前视觉质量基线？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-3" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">A-4</td>
+        <td class="col-item"><strong>视觉模拟试镜设备</strong></td>
+        <td class="col-detail">是否有试镜片组或数字视觉模拟器？能否在术前模拟单眼视/多焦点效果？让患者「先看后决定」？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-4" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">A-5</td>
+        <td class="col-item"><strong>干眼综合分析仪</strong></td>
+        <td class="col-detail">是否配备LipiView/眼表综合分析仪？干眼症是生物测量误差的主要来源，术前必须排查处理。</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-5" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">A-6</td>
+        <td class="col-item"><strong>FLACS 飞秒辅助白内障手术系统</strong></td>
+        <td class="col-detail">是否配备或可转诊至配备机构？是否向患者主动介绍FLACS作为高端手术选项的附加价值？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-6" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">A-7</td>
+        <td class="col-item"><strong>数字化手术导航系统</strong></td>
+        <td class="col-detail">Toric IOL轴向定位是否有导航辅助？还是依赖手工标记？导航有助于减少对轴误差，提升患者满意度。</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-7" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">A-8</td>
+        <td class="col-item"><strong>超声乳化手术平台</strong></td>
+        <td class="col-detail">机器型号及年限？能否实现微切口（2.2mm以下）？能量管理模式是否已更新至最新版本？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-8" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">A-9</td>
+        <td class="col-item"><strong>眼底与青光眼筛查设备</strong></td>
+        <td class="col-detail">能否完成眼底OCT/眼底照相、眼压及视神经风险筛查？能否识别黄斑病变、视网膜前膜、青光眼等影响老视矫正方案安全性的合并眼病？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-9" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">A-10</td>
+        <td class="col-item"><strong>视觉质量随访评估工具</strong></td>
+        <td class="col-detail">术后随访是否标准化评估远/中/近视力、屈光状态、散光、对比敏感度、眩光/光晕主诉、干眼状态及PROM等视觉质量指标？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-10" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+
+      <tr style="background:#FDFEFE">
+        <td class="col-no">A-11</td>
+        <td class="col-item"><strong>老视诊疗中心独立品牌标识</strong></td>
+        <td class="col-detail">是否有独立的「老视矫正中心/老视专病门诊」标识？与普通白内障门诊是否有明确的视觉区分？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-11" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">A-12</td>
+        <td class="col-item"><strong>候诊区高端体验设计</strong></td>
+        <td class="col-detail">候诊区环境是否体现「视觉会所」质感（舒适座椅/专属材料/低焦虑环境）？是否有私密等候区？</td>
+        <td class="col-status"><select class="status-select" data-module="A" id="sel-A-12" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>    </tbody>
+  </table>
+  <!-- MODULE B -->
+  <div class="module-banner" style="background:#0B6B55">
+    <span class="mod-num">B</span>
+    <span class="mod-title">支柱二：MDT团队建设与管理机制</span>
+    <div class="mod-sub">MDT多学科协作 · 组织重视度 · KPI与标杆管理</div>
+  </div>
+  <div class="note-box" style="border-left-color:#0B6B55;background:#E8F8F5">
+    <p>💡 核查重点：屈光、白内障、视光、眼表/角膜、眼底、青光眼等多专科协作团队，与宣教、咨询、随访及管理岗位共同构成PLS全流程管理基础。</p>
+  </div>
+  <table class="check-table">
+    <thead>
+      <tr>
+        <th class="col-no" style="background:#0B6B55">序号</th>
+        <th class="col-item" style="background:#0B6B55">核查项目</th>
+        <th class="col-detail" style="background:#0B6B55">详细检查要点</th>
+        <th class="col-status" style="background:#0B6B55">现状评估</th>
+        <th class="col-pri" style="background:#0B6B55">优先级</th>
+        <th class="col-notes" style="background:#0B6B55">改进建议 / 现场记录</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">B-1</td>
+        <td class="col-item"><strong>专业视光师（OD）配置</strong></td>
+        <td class="col-detail">是否有专职视光师负责SS-OCT生物测量、Kappa角评估、调节功能评估？还是由护士兼任？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-1" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">B-2</td>
+        <td class="col-item"><strong>宣教护士专职配置</strong></td>
+        <td class="col-detail">是否有专职宣教护士？职责是否清晰（心理评估、患教、期望值管理）？是否接受过专项培训？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-2" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">B-3</td>
+        <td class="col-item"><strong>手术医生老视矫正专项培训</strong></td>
+        <td class="col-detail">主刀医生是否参加过PCIOL/LBV专项培训班（如CSCRS/ASCRS）？高端IOL年手术量是否达到50例以上？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-3" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">B-4</td>
+        <td class="col-item"><strong>MDT联合会诊机制</strong></td>
+        <td class="col-detail">是否有固定的MDT会诊时间和流程？三元团队能否实现「一次就诊，全周期闭环」？还是患者需多次往返？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-4" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">B-5</td>
+        <td class="col-item"><strong>团队老视矫正学习氛围</strong></td>
+        <td class="col-detail">科室内是否定期开展老视矫正案例分享/学习活动？院长/科主任是否展现出对该项目的热情与支持？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-5" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">B-6</td>
+        <td class="col-item"><strong>咨询顾问（视觉顾问）配置</strong></td>
+        <td class="col-detail">是否有专职视觉顾问/咨询员负责接待、费用说明和方案沟通？还是由护士兼任？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-6" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">B-7</td>
+        <td class="col-item"><strong>视觉康复师或随访专员</strong></td>
+        <td class="col-detail">术后神经适应期是否有专人跟进指导？能否识别异常并及时处置？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-7" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">B-8</td>
+        <td class="col-item"><strong>商保对接专员</strong></td>
+        <td class="col-detail">是否有人负责与商业保险公司对接？能否协助患者完成理赔？这是提升自费意愿的重要工具。</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-8" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-low">低</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+
+      <tr style="background:#FDFEFE">
+        <td class="col-no">B-9</td>
+        <td class="col-item"><strong>院长/科主任对项目的重视度</strong></td>
+        <td class="col-detail">院长是否将老视矫正项目列为战略重点？是否有专项预算？是否参与MDT建设决策？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-9" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">B-10</td>
+        <td class="col-item"><strong>KPI考核体系</strong></td>
+        <td class="col-detail">老视矫正业务（手术量/收入/高端IOL占比）是否纳入科室和个人绩效考核？激励机制是否明确？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-10" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">B-11</td>
+        <td class="col-item"><strong>竞品学习与标杆对标</strong></td>
+        <td class="col-detail">管理团队是否定期研究区域标杆民营眼科机构的老视矫正模式？是否有跟岗学习或对标复盘计划？</td>
+        <td class="col-status"><select class="status-select" data-module="B" id="sel-B-11" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-low">低</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>    </tbody>
+  </table>
+  <!-- MODULE C -->
+  <div class="module-banner" style="background:#D35400">
+    <span class="mod-num">C</span>
+    <span class="mod-title">支柱三：标准化诊疗SOP与风险合规</span>
+    <div class="mod-sub">个性化决策树 · MDT流程 · 知情同意 · 技术红线 · 证据闭环</div>
+  </div>
+  <div class="note-box" style="border-left-color:#D35400;background:#FEF5E7">
+    <p>💡 核查重点：流程混乱和风险边界不清，是患者流失、投诉和转化率低的首要原因。重点核查「初诊→检查→评估→方案→手术→随访」六步是否规范闭环。</p>
+  </div>
+  <table class="check-table">
+    <thead>
+      <tr>
+        <th class="col-no" style="background:#D35400">序号</th>
+        <th class="col-item" style="background:#D35400">核查项目</th>
+        <th class="col-detail" style="background:#D35400">详细检查要点</th>
+        <th class="col-status" style="background:#D35400">现状评估</th>
+        <th class="col-pri" style="background:#D35400">优先级</th>
+        <th class="col-notes" style="background:#D35400">改进建议 / 现场记录</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">C-1</td>
+        <td class="col-item"><strong>初诊接待与需求识别</strong></td>
+        <td class="col-detail">初诊时是否主动询问老视需求？是否有标准化问卷收集生活方式、职业、用眼习惯？还是直接进入验光流程？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-1" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">C-2</td>
+        <td class="col-item"><strong>精密检查流程规范化</strong></td>
+        <td class="col-detail">检查项目是否标准化？是否有书面的「老视矫正专项检查清单」确保Kappa角/像差等关键指标不遗漏？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-2" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">C-3</td>
+        <td class="col-item"><strong>个性化方案决策树</strong></td>
+        <td class="col-detail">是否基于患者年龄、眼部条件、职业/生活需求、用眼距离和风险耐受度，在框架镜/接触镜、角膜屈光、晶状体手术等方案之间进行分层评估和共同决策？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-3" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">C-4</td>
+        <td class="col-item"><strong>术前单眼视耐受测试与记录</strong></td>
+        <td class="col-detail">是否仅对拟采用单眼视/微单眼视方案的患者进行足够时长的模拟测试，并将耐受情况、不适症状和最终选择形成书面记录？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-4" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">C-5</td>
+        <td class="col-item"><strong>视觉模拟与光晕预演</strong></td>
+        <td class="col-detail">术前是否向患者展示多焦点IOL的光晕/眩光模拟图？是否获得专项告知签字（而非通用知情同意书）？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-5" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">C-6</td>
+        <td class="col-item"><strong>心理红线筛查与留痕</strong></td>
+        <td class="col-detail">是否筛查明显完美主义、不切实际期望、决策反复或沟通障碍等风险，并有书面记录和升级处理规则？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-6" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">C-7</td>
+        <td class="col-item"><strong>DLS模型患者教育嵌入</strong></td>
+        <td class="col-detail">在诊疗流程的哪个环节向患者介绍DLS三期模型（老视→白内障前期→白内障）？有无标准化教育材料？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-7" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+
+      <tr style="background:#FDFEFE">
+        <td class="col-no">C-8</td>
+        <td class="col-item"><strong>术后神经适应期引导SOP</strong></td>
+        <td class="col-detail">术后是否有书面的神经适应期指导材料？随访节点是否固定（1天/1周/1月/3月）？是否告知3-6个月适应期？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-8" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">C-9</td>
+        <td class="col-item"><strong>患者全周期档案与证据闭环</strong></td>
+        <td class="col-detail">从首次咨询、术前检查与决策、知情同意到术后随访的数据是否完整归档，可支持长期追踪、质量改进和医疗争议举证？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-9" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+
+      <tr style="background:#F5F7FA">
+        <td class="col-no">C-10</td>
+        <td class="col-item"><strong>Kappa角技术硬性门槛</strong></td>
+        <td class="col-detail">是否对多焦点IOL植入设立Kappa角<0.5mm的硬性禁忌？是否有书面记录和医生签字确认机制？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-10" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">C-11</td>
+        <td class="col-item"><strong>角膜HOAs技术红线</strong></td>
+        <td class="col-detail">角膜高阶像差>0.5μm的患者是否被禁止植入衍射型多焦点IOL？门槛设置是否清晰？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-11" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">C-12</td>
+        <td class="col-item"><strong>专项知情同意书</strong></td>
+        <td class="col-detail">是否有针对老视矫正（尤其RLE/高端IOL）的专项知情同意书？是否明确告知光晕/眩光/权衡关系？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-12" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">C-13</td>
+        <td class="col-item"><strong>RLE透明晶状体手术特殊告知</strong></td>
+        <td class="col-detail">对透明晶状体置换（RLE）患者，是否额外说明手术不可逆、调节力丧失、残余屈光误差、光学不良现象以及感染、视网膜脱离等少见但严重风险，并讨论非手术替代方案？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-13" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">C-14</td>
+        <td class="col-item"><strong>医疗事件复盘机制</strong></td>
+        <td class="col-detail">是否有定期的「不满意案例复盘会」制度？每例投诉是否系统性转化为SOP改进？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-14" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">C-15</td>
+        <td class="col-item"><strong>手术全流程与时间优化</strong></td>
+        <td class="col-detail">是否形成安全、连续、高效的手术日流程，明确预约、术前准备、手术、观察和离院节点；是否持续监测等待时间并减少无价值等待？</td>
+        <td class="col-status"><select class="status-select" data-module="C" id="sel-C-15" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>    </tbody>
+  </table>
+  <!-- MODULE D -->
+  <div class="module-banner" style="background:#6C3483">
+    <span class="mod-num">D</span>
+    <span class="mod-title">支柱四：患者教育与体验设计</span>
+    <div class="mod-sub">老视患者教育 · 体验触点 · 数字化科普工具</div>
+  </div>
+  <div class="note-box" style="border-left-color:#6C3483;background:#F5EEF8">
+    <p>💡 核查重点：患者教育不足是自费老视业务量不理想的最深层原因。重点核查DLS框架、去标签化沟通、多维教育渠道是否到位。</p>
+  </div>
+  <table class="check-table">
+    <thead>
+      <tr>
+        <th class="col-no" style="background:#6C3483">序号</th>
+        <th class="col-item" style="background:#6C3483">核查项目</th>
+        <th class="col-detail" style="background:#6C3483">详细检查要点</th>
+        <th class="col-status" style="background:#6C3483">现状评估</th>
+        <th class="col-pri" style="background:#6C3483">优先级</th>
+        <th class="col-notes" style="background:#6C3483">改进建议 / 现场记录</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">D-1</td>
+        <td class="col-item"><strong>DLS模型宣教材料</strong></td>
+        <td class="col-detail">是否有专门的「晶状体功能失调综合征（DLS）」三期模型宣传册/展板/视频？是否向40岁以上患者常规介绍？</td>
+        <td class="col-status"><select class="status-select" data-module="D" id="sel-D-1" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">D-2</td>
+        <td class="col-item"><strong>「去老化」语言体系</strong></td>
+        <td class="col-detail">接诊时是否避免「老花」「老眼」等标签化称谓？是否使用「视觉素质优化」「第二视觉人生」等积极话语？</td>
+        <td class="col-status"><select class="status-select" data-module="D" id="sel-D-2" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">D-3</td>
+        <td class="col-item"><strong>院内科普展示材料</strong></td>
+        <td class="col-detail">候诊区是否有老视矫正相关的展架/屏幕/二维码？内容是否吸引40-60岁中产群体？更新频率如何？</td>
+        <td class="col-status"><select class="status-select" data-module="D" id="sel-D-3" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">D-4</td>
+        <td class="col-item"><strong>离焦曲线可视化工具</strong></td>
+        <td class="col-detail">是否有打印版或平板电脑版的离焦曲线对比图（单焦点 vs. EDOF vs. 三焦点）？是否在沟通中常规使用？</td>
+        <td class="col-status"><select class="status-select" data-module="D" id="sel-D-4" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+
+      <tr style="background:#F5F7FA">
+        <td class="col-no">D-5</td>
+        <td class="col-item"><strong>数字化科普内容（微信/短视频）</strong></td>
+        <td class="col-detail">是否运营微信公众号或视频号定向输出老视矫正科普？内容是否面向40-60岁中产？发布频率如何？</td>
+        <td class="col-status"><select class="status-select" data-module="D" id="sel-D-5" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">D-6</td>
+        <td class="col-item"><strong>成功案例故事分享</strong></td>
+        <td class="col-detail">是否有真实患者案例（文字+视频）用于诊室展示？案例是否涵盖「术前担忧→术后获益」的情感转变？</td>
+        <td class="col-status"><select class="status-select" data-module="D" id="sel-D-6" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">D-7</td>
+        <td class="col-item"><strong>数字眼疲劳（DES）切入点</strong></td>
+        <td class="col-detail">是否将数字眼疲劳（DES，发病率68%-74.3%）作为患教切入点？能否从DES延伸至老视矫正方案讨论？</td>
+        <td class="col-status"><select class="status-select" data-module="D" id="sel-D-7" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">D-8</td>
+        <td class="col-item"><strong>非手术矫正方案咨询机制</strong></td>
+        <td class="col-detail">是否建立非手术矫正方案咨询机制，包括框架镜、渐进多焦镜、接触镜及经批准药物等选择，并明确适应证、局限性和转诊边界？</td>
+        <td class="col-status"><select class="status-select" data-module="D" id="sel-D-8" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-low">低</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- MODULE E -->
+  <div class="module-banner" style="background:#9A7D0A">
+    <span class="mod-num">E</span>
+    <span class="mod-title">支柱五：全自费定价体系与成交沟通</span>
+    <div class="mod-sub">价值定价话术模板 · 分层套餐 · 透明价格沟通</div>
+  </div>
+  <div class="note-box" style="border-left-color:#9A7D0A;background:#FEFBD8">
+    <p>💡 核查重点：「价格太贵」是患者最常见的异议。核查咨询团队是否掌握价值定价逻辑，能否有效呈现终身ROI而非单纯报价。</p>
+  </div>
+  <table class="check-table">
+    <thead>
+      <tr>
+        <th class="col-no" style="background:#9A7D0A">序号</th>
+        <th class="col-item" style="background:#9A7D0A">核查项目</th>
+        <th class="col-detail" style="background:#9A7D0A">详细检查要点</th>
+        <th class="col-status" style="background:#9A7D0A">现状评估</th>
+        <th class="col-pri" style="background:#9A7D0A">优先级</th>
+        <th class="col-notes" style="background:#9A7D0A">改进建议 / 现场记录</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">E-1</td>
+        <td class="col-item"><strong>价值定价与沟通培训</strong></td>
+        <td class="col-detail">医护及咨询团队是否接受统一培训，能基于患者需求、方案获益、局限与费用进行合规沟通，避免只报价格或承诺效果？</td>
+        <td class="col-status"><select class="status-select" data-module="E" id="sel-E-1" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+
+      <tr style="background:#FDFEFE">
+        <td class="col-no">E-2</td>
+        <td class="col-item"><strong>分层方案、套餐与透明定价</strong></td>
+        <td class="col-detail">是否根据适应证和患者需求设置清晰的分层方案，明确包含项目、价格、可选项与退改规则，并用中立对比帮助患者自主选择？</td>
+        <td class="col-status"><select class="status-select" data-module="E" id="sel-E-2" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+
+      <tr style="background:#FDFEFE">
+        <td class="col-no">E-3</td>
+        <td class="col-item"><strong>分期付款/商保方案</strong></td>
+        <td class="col-detail">是否与金融机构合作提供分期付款？是否联系商业保险公司开通老视手术理赔渠道？是否向患者主动介绍？</td>
+        <td class="col-status"><select class="status-select" data-module="E" id="sel-E-3" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+
+      <tr style="background:#FDFEFE">
+        <td class="col-no">E-4</td>
+        <td class="col-item"><strong>竞品价格与差异化定位</strong></td>
+        <td class="col-detail">是否了解区域内同类民营眼科机构的定价水平？是否有清晰的差异化价值定位而非价格竞争？</td>
+        <td class="col-status"><select class="status-select" data-module="E" id="sel-E-4" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-low">低</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+
+      <tr style="background:#F5F7FA">
+        <td class="col-no">E-5</td>
+        <td class="col-item"><strong>全自费定价公示与沟通环境</strong></td>
+        <td class="col-detail">费用沟通是否在私密空间进行？是否有专用的VIP咨询室避免在开放区域谈钱？</td>
+        <td class="col-status"><select class="status-select" data-module="E" id="sel-E-5" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>    </tbody>
+  </table>
+  <!-- MODULE F -->
+  <div class="module-banner" style="background:#C0392B">
+    <span class="mod-num">F</span>
+    <span class="mod-title">支柱六：患者获客体系与数字化流量</span>
+    <div class="mod-sub">全渠道患者触达 · 院内筛查 · 转诊网络 · 内容营销</div>
+  </div>
+  <div class="note-box" style="border-left-color:#C0392B;background:#FDEDEC">
+    <p>💡 核查重点：全自费老视患者来源是否多元化？是否有主动获客机制？仅靠自然到诊无法支撑业务量目标。</p>
+  </div>
+  <table class="check-table">
+    <thead>
+      <tr>
+        <th class="col-no" style="background:#C0392B">序号</th>
+        <th class="col-item" style="background:#C0392B">核查项目</th>
+        <th class="col-detail" style="background:#C0392B">详细检查要点</th>
+        <th class="col-status" style="background:#C0392B">现状评估</th>
+        <th class="col-pri" style="background:#C0392B">优先级</th>
+        <th class="col-notes" style="background:#C0392B">改进建议 / 现场记录</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">F-1</td>
+        <td class="col-item"><strong>院内老视筛查主动触达</strong></td>
+        <td class="col-detail">是否对所有40岁以上门诊患者（无论主诉）主动询问老视困扰？是否部署候诊区自助筛查设备或二维码？</td>
+        <td class="col-status"><select class="status-select" data-module="F" id="sel-F-1" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">F-2</td>
+        <td class="col-item"><strong>基层/视光转诊网络</strong></td>
+        <td class="col-detail">是否与周边眼镜店、基层医疗机构建立老视矫正转诊合作机制？转诊量占比多少？</td>
+        <td class="col-status"><select class="status-select" data-module="F" id="sel-F-2" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">F-3</td>
+        <td class="col-item"><strong>白内障患者升级转化</strong></td>
+        <td class="col-detail">是否系统性地向白内障手术候诊患者介绍高端IOL（老视矫正型）的额外价值？升级转化率是多少？</td>
+        <td class="col-status"><select class="status-select" data-module="F" id="sel-F-3" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-high">高</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">F-4</td>
+        <td class="col-item"><strong>数字媒体内容营销</strong></td>
+        <td class="col-detail">是否运营微信公众号/视频号/抖音？是否有定向触达40-60岁中产人群的内容计划和发布频率？</td>
+        <td class="col-status"><select class="status-select" data-module="F" id="sel-F-4" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">F-5</td>
+        <td class="col-item"><strong>患者口碑与复诊推荐机制</strong></td>
+        <td class="col-detail">是否建立满意患者口碑管理和复诊推荐机制？是否基于真实体验、规范授权和合规内容，引导患者分享就诊体验与长期随访价值？</td>
+        <td class="col-status"><select class="status-select" data-module="F" id="sel-F-5" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">F-6</td>
+        <td class="col-item"><strong>企业/团体健康合作</strong></td>
+        <td class="col-detail">是否与区域内高净值人群企业/机关单位建立健康合作关系？是否提供企业眼健康筛查服务？</td>
+        <td class="col-status"><select class="status-select" data-module="F" id="sel-F-6" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#FDFEFE">
+        <td class="col-no">F-7</td>
+        <td class="col-item"><strong>医院品牌与专家影响力协同</strong></td>
+        <td class="col-detail">是否充分利用本院品牌知名度、专家学术影响力和区域患者口碑，形成合规、可信的PLS项目宣传内容？</td>
+        <td class="col-status"><select class="status-select" data-module="F" id="sel-F-7" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+      <tr style="background:#F5F7FA">
+        <td class="col-no">F-8</td>
+        <td class="col-item"><strong>术后疗效、生活质量与患者报告结局追踪</strong></td>
+        <td class="col-detail">是否系统性追踪术后视觉疗效、生活质量、患者满意度、NPS/PROM量表及不满意原因？结果是否用于服务改进、质量控制和口碑管理？</td>
+        <td class="col-status"><select class="status-select" data-module="F" id="sel-F-8" onchange="updateScores()">
+              <option value="" selected>— 未评估</option>
+              <option value="2">✓ 达标</option>
+              <option value="1">△ 需改进</option>
+              <option value="0">✗ 缺失</option>
+            </select></td>
+        <td class="col-pri"><span class="pri-mid">中</span></td>
+        <td class="col-notes"><textarea class="notes-input" placeholder="现场记录…"></textarea></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+<!-- ████ DEFINITIONS ████ -->
+<div class="section-title" style="margin-top:36px">核查项目定义与评分口径</div>
+<div class="definition-intro">
+  <strong>供运营总监使用：</strong>“定义与核查口径”说明该项目实际核查的能力和证据。统一评分原则：<strong>2分</strong>＝制度、人员或工具已建立，现场可提供证据，且近3个月有稳定执行记录；<strong>1分</strong>＝已建立但覆盖不全、执行不稳定或证据不完整；<strong>0分</strong>＝尚未建立、仅有口头说明或无法提供证据。确实不适用时先保留“未评估”，并在现场记录中写明原因，不建议直接按缺失计分。
+</div>
+<table class="definition-table">
+  <thead><tr><th>编号</th><th>项目名称</th><th>定义与核查口径</th></tr></thead>
+  <tbody id="definition-body"></tbody>
+</table>
+
+<!-- ████ ACTION PLAN ████ -->
+<div class="section-title" style="margin-top:36px">核查总结与优先改进行动计划</div>
+<div class="legend-box">
+  <p>请在完成全部核查后，根据「高优先级」且「✗缺失」的项目，确定最需要立即启动的3—5项改进行动，分「90天冲刺」与「6个月深化」两阶段列出。</p>
+</div>
+
+<p style="font-weight:bold;color:#C0392B;margin:16px 0 8px;font-size:14px">▌ 90天冲刺改进计划（立即启动，可快速见效）</p>
+<table class="action-table">
+  <thead><tr>
+    <th style="background:#C0392B;width:40px">#</th>
+    <th style="background:#C0392B;text-align:left">改进行动</th>
+    <th style="background:#C0392B;width:140px">负责人</th>
+    <th style="background:#C0392B;width:160px">预期完成时间</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="color:#C0392B;font-weight:bold">1</td>
+    <td><textarea class="action-input" placeholder="填写改进行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr><tr><td style="color:#C0392B;font-weight:bold">2</td>
+    <td><textarea class="action-input" placeholder="填写改进行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr><tr><td style="color:#C0392B;font-weight:bold">3</td>
+    <td><textarea class="action-input" placeholder="填写改进行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr><tr><td style="color:#C0392B;font-weight:bold">4</td>
+    <td><textarea class="action-input" placeholder="填写改进行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr><tr><td style="color:#C0392B;font-weight:bold">5</td>
+    <td><textarea class="action-input" placeholder="填写改进行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr>
+  </tbody>
+</table>
+
+<p style="font-weight:bold;color:#2D6A9F;margin:20px 0 8px;font-size:14px">▌ 6个月深化建设计划</p>
+<table class="action-table">
+  <thead><tr>
+    <th style="background:#2D6A9F;width:40px">#</th>
+    <th style="background:#2D6A9F;text-align:left">建设行动</th>
+    <th style="background:#2D6A9F;width:140px">负责人</th>
+    <th style="background:#2D6A9F;width:160px">预期完成时间</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="color:#2D6A9F;font-weight:bold">1</td>
+    <td><textarea class="action-input" placeholder="填写建设行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr><tr><td style="color:#2D6A9F;font-weight:bold">2</td>
+    <td><textarea class="action-input" placeholder="填写建设行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr><tr><td style="color:#2D6A9F;font-weight:bold">3</td>
+    <td><textarea class="action-input" placeholder="填写建设行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr><tr><td style="color:#2D6A9F;font-weight:bold">4</td>
+    <td><textarea class="action-input" placeholder="填写建设行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr><tr><td style="color:#2D6A9F;font-weight:bold">5</td>
+    <td><textarea class="action-input" placeholder="填写建设行动..."></textarea></td>
+    <td><textarea class="action-input" placeholder="负责人"></textarea></td>
+    <td><textarea class="action-input" placeholder="完成时间"></textarea></td></tr>
+  </tbody>
+</table>
+
+<!-- ████ FOOTER ████ -->
+<div class="report-footer">
+  <p>本系统参考老视矫正多专科管理相关专家共识、老视诊疗中心建设与评估标准及PLS项目实践框架设计制定</p>
+  <p>由强生眼力健（Johnson &amp; Johnson Surgical Vision）全国销售培训部&emsp;何爱平（Happy老师）编制&emsp;|&emsp;仅供内部使用</p>
+</div>
+
+</div><!-- /page -->
+
+<!-- ████ JAVASCRIPT ████ -->
+<script>
+const MODULE_IDS = {"A": ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6", "A-7", "A-8", "A-9", "A-10", "A-11", "A-12"], "B": ["B-1", "B-2", "B-3", "B-4", "B-5", "B-6", "B-7", "B-8", "B-9", "B-10", "B-11"], "C": ["C-1", "C-2", "C-3", "C-4", "C-5", "C-6", "C-7", "C-8", "C-9", "C-10", "C-11", "C-12", "C-13", "C-14", "C-15"], "D": ["D-1", "D-2", "D-3", "D-4", "D-5", "D-6", "D-7", "D-8"], "E": ["E-1", "E-2", "E-3", "E-4", "E-5"], "F": ["F-1", "F-2", "F-3", "F-4", "F-5", "F-6", "F-7", "F-8"]};
+const MERGED_IDS = [];
+
+function removeMergedRows() {
+  MERGED_IDS.forEach(id => document.getElementById('sel-'+id)?.closest('tr')?.remove());
+}
+
+function syncSummaryStructure() {
+  let total=0;
+  Object.entries(MODULE_IDS).forEach(([mod,ids]) => {
+    total += ids.length;
+    const row=document.getElementById('s-'+mod+'-c').closest('tr');
+    row.cells[1].textContent=ids.length;
+    row.cells[5].textContent=ids.length;
+    row.cells[7].textContent=ids.length*2;
+  });
+  const totalRow=document.getElementById('s-T-c').closest('tr');
+  totalRow.cells[1].textContent=total;
+  totalRow.cells[5].textContent=total;
+  totalRow.cells[7].textContent=total*2;
+}
+
+function buildDefinitions() {
+  const body=document.getElementById('definition-body');
+  body.innerHTML='';
+  Object.values(MODULE_IDS).flat().forEach(id => {
+    const row=document.getElementById('sel-'+id).closest('tr');
+    const item=row.querySelector('.col-item').textContent.trim();
+    const detail=row.querySelector('.col-detail').textContent.trim();
+    const tr=document.createElement('tr');
+    [id,item,'本项是指：'+detail].forEach(value => {
+      const td=document.createElement('td'); td.textContent=value; tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+}
+
+function getSelectClass(val) {
+  if(val==='2') return 'v2';
+  if(val==='1') return 'v1';
+  if(val==='0') return 'v0';
+  return 've';
+}
+
+function updateScores() {
+  let grandScore=0, grandMax=0, grandC=0, grandP=0, grandM=0, grandU=0;
+  Object.entries(MODULE_IDS).forEach(([mod, ids]) => {
+    let score=0,c=0,p=0,m=0,u=0;
+    const max = ids.length*2;
+    ids.forEach(id => {
+      const sel = document.getElementById('sel-'+id);
+      if(!sel) return;
+      const v = sel.value;
+      sel.className = 'status-select '+getSelectClass(v);
+      if(v==='2'){score+=2;c++;}
+      else if(v==='1'){score+=1;p++;}
+      else if(v==='0'){m++;}
+      else{u++;}
+    });
+    document.getElementById('s-'+mod+'-c').textContent=c;
+    document.getElementById('s-'+mod+'-p').textContent=p;
+    document.getElementById('s-'+mod+'-m').textContent=m;
+    document.getElementById('s-'+mod+'-u').textContent=u;
+    document.getElementById('s-'+mod+'-s').textContent=score;
+    const evaluated = ids.length - u;
+    const pct = evaluated>0 ? Math.round(score/(evaluated*2)*100)+'%' : '—';
+    document.getElementById('s-'+mod+'-r').textContent=pct;
+    grandScore+=score; grandMax+=max;
+    grandC+=c; grandP+=p; grandM+=m; grandU+=u;
+  });
+  document.getElementById('s-T-c').textContent=grandC;
+  document.getElementById('s-T-p').textContent=grandP;
+  document.getElementById('s-T-m').textContent=grandM;
+  document.getElementById('s-T-u').textContent=grandU;
+  document.getElementById('s-T-s').textContent=grandScore;
+  document.getElementById('grand-score').textContent=grandScore;
+  const evaluatedTotal = grandMax/2 - grandU;
+  const pctTotal = evaluatedTotal>0 ? Math.round(grandScore/(evaluatedTotal*2)*100)+'%' : '0%';
+  document.getElementById('s-T-r').textContent=pctTotal;
+  document.getElementById('grand-pct').textContent=pctTotal;
+  // Color grade
+  const grandScoreBox = document.querySelector('.grand-score-box');
+  if(grandScore >= 95) grandScoreBox.style.background='linear-gradient(135deg,#0B6B55,#1E8449)';
+  else if(grandScore >= 71) grandScoreBox.style.background='linear-gradient(135deg,#9A7D0A,#D4AC0D)';
+  else grandScoreBox.style.background='linear-gradient(135deg,#1A3A5C,#2D6A9F)';
+}
+
+function clearAll() {
+  if(!confirm('确定要清空所有填写内容？\n\n此操作将重置所有评估结果、现场记录和行动计划，不可撤销。')) return;
+  document.querySelectorAll('.status-select').forEach(s=>{s.value='';s.className='status-select ve';});
+  document.querySelectorAll('.notes-input').forEach(t=>t.value='');
+  document.querySelectorAll('.action-input').forEach(t=>t.value='');
+  document.getElementById('org-name').value='';
+  document.getElementById('inspect-date').value='';
+  document.getElementById('inspector').value='';
+  document.getElementById('attendees').value='';
+  document.querySelector('.grand-score-box').style.background='linear-gradient(135deg,#1A3A5C,#2D6A9F)';
+  updateScores();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Init
+removeMergedRows();
+syncSummaryStructure();
+buildDefinitions();
+document.querySelectorAll('.status-select').forEach(s=>{s.className='status-select ve';});
+// Set today's date
+document.getElementById('inspect-date').valueAsDate=new Date();
+</script>
+</body>
+</html>

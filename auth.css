@@ -1,0 +1,12 @@
+.login-gate{display:none;min-height:100vh;background:#fff;color:#17324c}
+body.auth-locked{overflow:hidden}
+body.auth-locked>.login-gate{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(390px,.65fr)}
+body.auth-locked>.topbar,body.auth-locked>main,body.auth-locked>footer,body.auth-locked>#toast{display:none}
+.login-visual{display:flex;align-items:flex-end;min-height:100vh;padding:clamp(30px,6vw,90px);background:linear-gradient(90deg,rgba(6,31,53,.24),rgba(6,31,53,.7)),url('assets/hospital-illustration.png') center/cover;color:#fff}
+.login-visual div{max-width:680px}.login-visual span{display:block;font-size:15px;font-weight:800;margin-bottom:15px}.login-visual strong{display:block;font-size:clamp(30px,3.4vw,52px);line-height:1.22}
+.login-panel{display:flex;flex-direction:column;justify-content:center;padding:clamp(30px,5vw,72px);background:#f7fafc}
+.login-brand{display:flex;align-items:center;gap:12px;margin-bottom:55px}.login-mark{font-size:38px;color:#0878c9}.login-brand strong,.login-brand small{display:block}.login-brand strong{font-size:18px}.login-brand small{font-size:11px;color:#6b7f91;margin-top:3px}
+.login-form{max-width:440px;width:100%}.login-form h1{font-size:34px;margin:8px 0}.login-form>p{color:#65798b;margin-bottom:28px}.login-form label{display:grid;gap:7px;margin-bottom:17px;font-size:13px;font-weight:700}.login-form input{width:100%;padding:13px 14px;border:1px solid #bfcfdd;border-radius:5px;background:#fff;color:#17324c;font:inherit}.login-form input:focus{outline:3px solid #70b7e9;outline-offset:1px;border-color:#247dbd}
+.login-button{width:100%;padding:13px 16px;border:1px solid #075fbd;border-radius:5px;background:#075fbd;color:#fff;font-weight:800;font-size:15px}.login-button:hover{background:#064e9b}.login-error{min-height:21px!important;margin:-3px 0 10px!important;color:#b42d28!important;font-size:13px}.login-boundary{max-width:440px;margin-top:34px;color:#7a8996;font-size:11px;line-height:1.6}
+.signed-in-user{font-size:11px;color:#526b84;font-weight:700}.logout-button{border:0;background:transparent;color:#0757ba;font-size:12px;font-weight:700;padding:6px 4px}
+@media(max-width:820px){body.auth-locked>.login-gate{grid-template-columns:1fr}.login-visual{display:none}.login-panel{min-height:100vh;padding:30px 7%}.login-brand{margin-bottom:42px}.login-form{max-width:none}}

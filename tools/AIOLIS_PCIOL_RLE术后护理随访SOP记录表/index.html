@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老视矫正手术术后护理随访 SOP 记录表（AIOLIS 版）</title>
+<style>
+  /* ── Variables ─────────────────────────── */
+  :root {
+    --c-dark:   #0D3F6E;
+    --c-mid:    #1F5C99;
+    --c-blue2:  #2A85CC;
+    --c-blue3:  #4A9FD4;
+    --c-light:  #D5E8F0;
+    --c-bg:     #EBF3FB;
+    --c-gray:   #F2F7FB;
+    --c-white:  #FFFFFF;
+    --c-text:   #1A1A1A;
+    --c-sub:    #5B7FA6;
+    --c-warn:   #E65100;
+    --c-green:  #2E7D32;
+    --c-red:    #C62828;
+  }
+
+  /* ── Reset & base ──────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', Arial, sans-serif;
+    font-size: 11px;
+    color: var(--c-text);
+    background: #f0f4f8;
+    padding: 16px;
+  }
+
+  /* ── Page wrapper ─────────────────────── */
+  .page {
+    background: var(--c-white);
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 32px 36px;
+    border-radius: 6px;
+    box-shadow: 0 2px 16px rgba(13,63,110,.12);
+  }
+
+  /* ── Title block ─────────────────────── */
+  .doc-title {
+    text-align: center;
+    margin-bottom: 4px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--c-dark);
+    letter-spacing: .5px;
+  }
+  .doc-sub {
+    text-align: center;
+    font-size: 11px;
+    color: var(--c-sub);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  /* ── Section label above table ─────────── */
+  .sec-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--c-dark);
+    margin: 18px 0 6px;
+  }
+
+  /* ── Tables ───────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-bottom: 0;
+  }
+  td, th {
+    border: 1px solid #B0C8DC;
+    padding: 5px 7px;
+    vertical-align: middle;
+    line-height: 1.45;
+    word-break: break-all;
+  }
+
+  /* Info table */
+  .tbl-info td {
+    font-size: 11px;
+    background: var(--c-gray);
+  }
+  .tbl-info .lbl {
+    font-weight: 700;
+    color: var(--c-dark);
+    white-space: nowrap;
+  }
+
+  /* Section header row */
+  .row-sec th {
+    background: var(--c-dark);
+    color: var(--c-white);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    padding: 7px 10px;
+    border-color: var(--c-dark);
+  }
+  .row-sec th span.eng {
+    font-size: 10px;
+    font-weight: 400;
+    color: #BDD9F0;
+    font-style: italic;
+    margin-left: 8px;
+  }
+
+  /* Column header row */
+  .row-col th {
+    background: var(--c-mid);
+    color: var(--c-white);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-align: center;
+    padding: 5px 4px;
+    border-color: #1a4d87;
+  }
+  .row-col th.lbl-col { text-align: left; padding-left: 8px; }
+
+  /* Data rows */
+  .row-data td { font-size: 10.5px; }
+  .row-data td.item {
+    text-align: left;
+    font-weight: 500;
+    color: var(--c-dark);
+    white-space: pre-line;
+  }
+  .row-data td.val {
+    text-align: center;
+    color: #333;
+    font-size: 10px;
+  }
+  .row-alt { background: var(--c-gray); }
+
+  /* Score radio row */
+  .score-opts {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 3px;
+  }
+  .score-opts span {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 9.5px;
+    color: #444;
+  }
+  .score-opts input[type=radio] { cursor: pointer; accent-color: var(--c-mid); }
+
+  /* Total / grade rows */
+  .row-total td.item { font-weight: 700; color: var(--c-dark); }
+  .row-total td.val  { font-weight: 600; color: var(--c-mid); }
+
+  /* Sign-off row */
+  .row-signoff { background: var(--c-bg); }
+  .row-signoff td { font-size: 10.5px; }
+  .row-signoff td.lbl { font-weight: 700; color: var(--c-dark); }
+
+  /* Notes table */
+  .tbl-notes { margin-top: 0; }
+  .tbl-notes td.tag-cell {
+    text-align: center;
+    color: var(--c-white);
+    font-weight: 700;
+    font-size: 11px;
+    width: 130px;
+    white-space: nowrap;
+    padding: 8px 6px;
+  }
+  .tbl-notes td.tag-cell .tag-eng {
+    font-size: 9px;
+    font-weight: 400;
+    font-style: italic;
+    color: #BDD9F0;
+    display: block;
+    margin-top: 2px;
+  }
+  .tbl-notes td.note-body {
+    font-size: 10.5px;
+    line-height: 1.6;
+    color: var(--c-text);
+    text-align: left;
+    padding: 8px 12px;
+  }
+
+  /* ── Print styles ─────────────────────── */
+  @media print {
+    body { background: white; padding: 0; font-size: 9px; }
+    .page { box-shadow: none; padding: 12mm 14mm; max-width: none; }
+    @page { size: A4 landscape; margin: 10mm 12mm; }
+    .doc-title { font-size: 16px; }
+    .no-print { display: none; }
+  }
+
+  /* ── Toolbar ─────────────────────────── */
+  .toolbar {
+    max-width: 1120px;
+    margin: 0 auto 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .btn {
+    padding: 6px 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 600;
+  }
+  .btn-print { background: var(--c-dark); color: white; }
+  .btn-reset { background: var(--c-gray); color: var(--c-dark); border: 1px solid var(--c-light); }
+  .toolbar-note { font-size: 10.5px; color: var(--c-sub); margin-left: auto; }
+</style>
+</head>
+<body>
+
+<!-- Toolbar -->
+<div class="toolbar no-print">
+  <button class="btn btn-print" onclick="window.print()">🖨 打印 / 导出 PDF</button>
+  <button class="btn btn-reset" onclick="resetForm()">↺ 清空表单</button>
+  <span class="toolbar-note">打印建议：A4 横向 · 缩放"适合页面宽度" · 启用背景图形</span>
+</div>
+
+<div class="page">
+
+  <!-- ── Title ─────────────────────────────── -->
+  <div class="doc-title">老视矫正手术（PCIOL / RLE）术后护理随访 SOP 记录表</div>
+  <div class="doc-sub">整合 AIOLIS 视觉质量评估版 &nbsp;|&nbsp; Post-operative Nursing Follow-up SOP with AIOLIS Integration</div>
+
+  <!-- ══ 患者基本信息 ════════════════════════════════════════════════ -->
+  <div class="sec-label">【患者基本信息】</div>
+  <table class="tbl-info">
+    <col style="width:50%"><col style="width:50%">
+    <tr>
+      <td><span class="lbl">患者姓名：</span><input type="text" style="width:180px;border:none;border-bottom:1px solid #aaa;outline:none;font-size:11px;"></td>
+      <td><span class="lbl">病案号 / MRN：</span><input type="text" style="width:160px;border:none;border-bottom:1px solid #aaa;outline:none;font-size:11px;"></td>
+    </tr>
+    <tr>
+      <td><span class="lbl">手术日期：</span><input type="date" style="border:none;border-bottom:1px solid #aaa;outline:none;font-size:11px;"></td>
+      <td><span class="lbl">手术医师：</span><input type="text" style="width:180px;border:none;border-bottom:1px solid #aaa;outline:none;font-size:11px;"></td>
+    </tr>
+    <tr>
+      <td><span class="lbl">手术眼别：</span>
+        <label><input type="checkbox"> OD</label> &nbsp;
+        <label><input type="checkbox"> OS</label> &nbsp;
+        <label><input type="checkbox"> OU</label>
+      </td>
+      <td><span class="lbl">IOL 品牌 / 型号：</span><input type="text" style="width:200px;border:none;border-bottom:1px solid #aaa;outline:none;font-size:11px;"></td>
+    </tr>
+    <tr>
+      <td><span class="lbl">IOL 度数（OD / OS）：</span><input type="text" placeholder="___/___  D" style="width:100px;border:none;border-bottom:1px solid #aaa;outline:none;font-size:11px;"></td>
+      <td><span class="lbl">手术方式：</span>
+        <label><input type="checkbox"> PCIOL</label> &nbsp;
+        <label><input type="checkbox"> RLE</label> &nbsp;
+        <label><input type="checkbox"> FLACS</label>
+      </td>
+    </tr>
+  </table>
+
+  <!-- ══ SECTION 1 ════════════════════════════════════════════════════ -->
+  <table style="margin-top:16px;">
+    <col style="width:26%">
+    <col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%">
+    <tr class="row-sec"><th colspan="5">第一部分&nbsp;&nbsp;客观临床检查 <span class="eng">Objective Clinical Examination</span></th></tr>
+    <tr class="row-col">
+      <th class="lbl-col">评估项目 / Assessment</th>
+      <th>术后1天 D1</th><th>术后1周 W1</th><th>术后1月 M1</th><th>术后3月 M3</th>
+    </tr>
+
+    <!-- rows -->
+    <tr class="row-data row-alt">
+      <td class="item">裸眼远视力 UDVA<br><small style="color:#888">（LogMAR / 小数，双眼）</small></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">裸眼近视力 UNVA（40 cm）</td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">裸眼中距离视力 UIVA（80 cm）</td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">最佳矫正远视力 CDVA</td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">眼压 IOP（mmHg）</td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">角膜水肿分级（0–3级）</td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">前节裂隙灯检查</td>
+      <td class="val"><select class="fs"><option>正常</option><option>异常</option></select><input type="text" placeholder="描述" class="fi" style="width:70%;"></td>
+      <td class="val"><select class="fs"><option>正常</option><option>异常</option></select></td>
+      <td class="val"><select class="fs"><option>正常</option><option>异常</option></select></td>
+      <td class="val"><select class="fs"><option>正常</option><option>异常</option></select></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">IOL 位置居中度</td>
+      <td class="val"><select class="fs"><option>居中</option><option>偏位</option></select><input type="text" placeholder="___mm" class="fi" style="width:50%;"></td>
+      <td class="val"><select class="fs"><option>居中</option><option>偏位</option></select></td>
+      <td class="val"><select class="fs"><option>居中</option><option>偏位</option></select></td>
+      <td class="val"><select class="fs"><option>居中</option><option>偏位</option></select></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">后囊膜状态<small style="color:#888">（M1起）</small></td>
+      <td class="val" style="color:#aaa">——</td>
+      <td class="val" style="color:#aaa">——</td>
+      <td class="val"><select class="fs"><option>透明</option><option>PCO</option></select><input type="text" placeholder="级___" class="fi" style="width:40%;"></td>
+      <td class="val"><select class="fs"><option>透明</option><option>PCO</option></select></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">屈光度复核<small style="color:#888">（M1起）</small></td>
+      <td class="val" style="color:#aaa">——</td>
+      <td class="val" style="color:#aaa">——</td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+      <td class="val"><input type="text" placeholder="OD___  OS___" class="fi"></td>
+    </tr>
+  </table>
+
+  <!-- ══ SECTION 2 ════════════════════════════════════════════════════ -->
+  <table style="margin-top:10px;">
+    <col style="width:26%">
+    <col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%">
+    <tr class="row-sec"><th colspan="5">第二部分&nbsp;&nbsp;AIOLIS 视觉干扰症状评价 <span class="eng">0 = 无，4 = 严重影响日常生活</span></th></tr>
+    <tr class="row-col">
+      <th class="lbl-col">视觉干扰项目（AIOLIS 条目）</th>
+      <th>术后1天 D1</th><th>术后1周 W1</th><th>术后1月 M1</th><th>术后3月 M3</th>
+    </tr>
+
+    <!-- AIOLIS items via radio buttons -->
+    <tr class="row-data row-alt">
+      <td class="item">眩光 Glare<br><small style="color:#888">（强光下刺眼感）</small></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="g_d1" value="0">0</span><span><input type="radio" name="g_d1" value="1">1</span><span><input type="radio" name="g_d1" value="2">2</span><span><input type="radio" name="g_d1" value="3">3</span><span><input type="radio" name="g_d1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="g_w1" value="0">0</span><span><input type="radio" name="g_w1" value="1">1</span><span><input type="radio" name="g_w1" value="2">2</span><span><input type="radio" name="g_w1" value="3">3</span><span><input type="radio" name="g_w1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="g_m1" value="0">0</span><span><input type="radio" name="g_m1" value="1">1</span><span><input type="radio" name="g_m1" value="2">2</span><span><input type="radio" name="g_m1" value="3">3</span><span><input type="radio" name="g_m1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="g_m3" value="0">0</span><span><input type="radio" name="g_m3" value="1">1</span><span><input type="radio" name="g_m3" value="2">2</span><span><input type="radio" name="g_m3" value="3">3</span><span><input type="radio" name="g_m3" value="4">4</span>
+      </div></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">光晕 Halo<br><small style="color:#888">（光源周围环状光圈）</small></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="h_d1" value="0">0</span><span><input type="radio" name="h_d1" value="1">1</span><span><input type="radio" name="h_d1" value="2">2</span><span><input type="radio" name="h_d1" value="3">3</span><span><input type="radio" name="h_d1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="h_w1" value="0">0</span><span><input type="radio" name="h_w1" value="1">1</span><span><input type="radio" name="h_w1" value="2">2</span><span><input type="radio" name="h_w1" value="3">3</span><span><input type="radio" name="h_w1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="h_m1" value="0">0</span><span><input type="radio" name="h_m1" value="1">1</span><span><input type="radio" name="h_m1" value="2">2</span><span><input type="radio" name="h_m1" value="3">3</span><span><input type="radio" name="h_m1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="h_m3" value="0">0</span><span><input type="radio" name="h_m3" value="1">1</span><span><input type="radio" name="h_m3" value="2">2</span><span><input type="radio" name="h_m3" value="3">3</span><span><input type="radio" name="h_m3" value="4">4</span>
+      </div></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">星芒 Starbursts<br><small style="color:#888">（光芒放射状扩散）</small></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="s_d1" value="0">0</span><span><input type="radio" name="s_d1" value="1">1</span><span><input type="radio" name="s_d1" value="2">2</span><span><input type="radio" name="s_d1" value="3">3</span><span><input type="radio" name="s_d1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="s_w1" value="0">0</span><span><input type="radio" name="s_w1" value="1">1</span><span><input type="radio" name="s_w1" value="2">2</span><span><input type="radio" name="s_w1" value="3">3</span><span><input type="radio" name="s_w1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="s_m1" value="0">0</span><span><input type="radio" name="s_m1" value="1">1</span><span><input type="radio" name="s_m1" value="2">2</span><span><input type="radio" name="s_m1" value="3">3</span><span><input type="radio" name="s_m1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="s_m3" value="0">0</span><span><input type="radio" name="s_m3" value="1">1</span><span><input type="radio" name="s_m3" value="2">2</span><span><input type="radio" name="s_m3" value="3">3</span><span><input type="radio" name="s_m3" value="4">4</span>
+      </div></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">重影 / 鬼影 Ghosting<br><small style="color:#888">（图像边缘叠影）</small></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="gh_d1" value="0">0</span><span><input type="radio" name="gh_d1" value="1">1</span><span><input type="radio" name="gh_d1" value="2">2</span><span><input type="radio" name="gh_d1" value="3">3</span><span><input type="radio" name="gh_d1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="gh_w1" value="0">0</span><span><input type="radio" name="gh_w1" value="1">1</span><span><input type="radio" name="gh_w1" value="2">2</span><span><input type="radio" name="gh_w1" value="3">3</span><span><input type="radio" name="gh_w1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="gh_m1" value="0">0</span><span><input type="radio" name="gh_m1" value="1">1</span><span><input type="radio" name="gh_m1" value="2">2</span><span><input type="radio" name="gh_m1" value="3">3</span><span><input type="radio" name="gh_m1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="gh_m3" value="0">0</span><span><input type="radio" name="gh_m3" value="1">1</span><span><input type="radio" name="gh_m3" value="2">2</span><span><input type="radio" name="gh_m3" value="3">3</span><span><input type="radio" name="gh_m3" value="4">4</span>
+      </div></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">模糊感 Blurring<br><small style="color:#888">（视觉清晰度下降）</small></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="b_d1" value="0">0</span><span><input type="radio" name="b_d1" value="1">1</span><span><input type="radio" name="b_d1" value="2">2</span><span><input type="radio" name="b_d1" value="3">3</span><span><input type="radio" name="b_d1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="b_w1" value="0">0</span><span><input type="radio" name="b_w1" value="1">1</span><span><input type="radio" name="b_w1" value="2">2</span><span><input type="radio" name="b_w1" value="3">3</span><span><input type="radio" name="b_w1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="b_m1" value="0">0</span><span><input type="radio" name="b_m1" value="1">1</span><span><input type="radio" name="b_m1" value="2">2</span><span><input type="radio" name="b_m1" value="3">3</span><span><input type="radio" name="b_m1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="b_m3" value="0">0</span><span><input type="radio" name="b_m3" value="1">1</span><span><input type="radio" name="b_m3" value="2">2</span><span><input type="radio" name="b_m3" value="3">3</span><span><input type="radio" name="b_m3" value="4">4</span>
+      </div></td>
+    </tr>
+    <tr class="row-data row-total">
+      <td class="item">AIOLIS 视觉干扰总分（0–20分）</td>
+      <td class="val" id="sc2_d1">—/20</td>
+      <td class="val" id="sc2_w1">—/20</td>
+      <td class="val" id="sc2_m1">—/20</td>
+      <td class="val" id="sc2_m3">—/20</td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">干扰程度分级<br><small style="color:#888">（轻 &lt;8 ／ 中 8–14 ／ 重 &gt;14）</small></td>
+      <td class="val" id="gr2_d1">—</td>
+      <td class="val" id="gr2_w1">—</td>
+      <td class="val" id="gr2_m1">—</td>
+      <td class="val" id="gr2_m3">—</td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">夜间驾驶 / 行走受影响评估</td>
+      <td class="val"><select class="fs"><option></option><option>无</option><option>轻</option><option>中</option><option>重</option></select></td>
+      <td class="val"><select class="fs"><option></option><option>无</option><option>轻</option><option>中</option><option>重</option></select></td>
+      <td class="val"><select class="fs"><option></option><option>无</option><option>轻</option><option>中</option><option>重</option></select></td>
+      <td class="val"><select class="fs"><option></option><option>无</option><option>轻</option><option>中</option><option>重</option></select></td>
+    </tr>
+  </table>
+
+  <!-- ══ SECTION 3 ════════════════════════════════════════════════════ -->
+  <table style="margin-top:10px;">
+    <col style="width:26%">
+    <col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%">
+    <tr class="row-sec"><th colspan="5">第三部分&nbsp;&nbsp;AIOLIS 脱镜独立性评价 <span class="eng">Spectacle Independence  |  0 = 完全依赖眼镜，4 = 完全独立</span></th></tr>
+    <tr class="row-col">
+      <th class="lbl-col">脱镜独立性评分（AIOLIS 条目）</th>
+      <th>术后1天 D1</th><th>术后1周 W1</th><th>术后1月 M1</th><th>术后3月 M3</th>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">远距离脱镜（&gt;6 m）<br><small style="color:#888">驾驶 / 看黑板 / 看电视</small></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="fd_d1" value="0">0</span><span><input type="radio" name="fd_d1" value="1">1</span><span><input type="radio" name="fd_d1" value="2">2</span><span><input type="radio" name="fd_d1" value="3">3</span><span><input type="radio" name="fd_d1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="fd_w1" value="0">0</span><span><input type="radio" name="fd_w1" value="1">1</span><span><input type="radio" name="fd_w1" value="2">2</span><span><input type="radio" name="fd_w1" value="3">3</span><span><input type="radio" name="fd_w1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="fd_m1" value="0">0</span><span><input type="radio" name="fd_m1" value="1">1</span><span><input type="radio" name="fd_m1" value="2">2</span><span><input type="radio" name="fd_m1" value="3">3</span><span><input type="radio" name="fd_m1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="fd_m3" value="0">0</span><span><input type="radio" name="fd_m3" value="1">1</span><span><input type="radio" name="fd_m3" value="2">2</span><span><input type="radio" name="fd_m3" value="3">3</span><span><input type="radio" name="fd_m3" value="4">4</span>
+      </div></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">中距离脱镜（60–80 cm）<br><small style="color:#888">电脑 / 餐桌 / 洗漱台</small></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="mi_d1" value="0">0</span><span><input type="radio" name="mi_d1" value="1">1</span><span><input type="radio" name="mi_d1" value="2">2</span><span><input type="radio" name="mi_d1" value="3">3</span><span><input type="radio" name="mi_d1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="mi_w1" value="0">0</span><span><input type="radio" name="mi_w1" value="1">1</span><span><input type="radio" name="mi_w1" value="2">2</span><span><input type="radio" name="mi_w1" value="3">3</span><span><input type="radio" name="mi_w1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="mi_m1" value="0">0</span><span><input type="radio" name="mi_m1" value="1">1</span><span><input type="radio" name="mi_m1" value="2">2</span><span><input type="radio" name="mi_m1" value="3">3</span><span><input type="radio" name="mi_m1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="mi_m3" value="0">0</span><span><input type="radio" name="mi_m3" value="1">1</span><span><input type="radio" name="mi_m3" value="2">2</span><span><input type="radio" name="mi_m3" value="3">3</span><span><input type="radio" name="mi_m3" value="4">4</span>
+      </div></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">近距离脱镜（&lt;40 cm）<br><small style="color:#888">阅读 / 手机 / 针线</small></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="nd_d1" value="0">0</span><span><input type="radio" name="nd_d1" value="1">1</span><span><input type="radio" name="nd_d1" value="2">2</span><span><input type="radio" name="nd_d1" value="3">3</span><span><input type="radio" name="nd_d1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="nd_w1" value="0">0</span><span><input type="radio" name="nd_w1" value="1">1</span><span><input type="radio" name="nd_w1" value="2">2</span><span><input type="radio" name="nd_w1" value="3">3</span><span><input type="radio" name="nd_w1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="nd_m1" value="0">0</span><span><input type="radio" name="nd_m1" value="1">1</span><span><input type="radio" name="nd_m1" value="2">2</span><span><input type="radio" name="nd_m1" value="3">3</span><span><input type="radio" name="nd_m1" value="4">4</span>
+      </div></td>
+      <td class="val"><div class="score-opts">
+        <span><input type="radio" name="nd_m3" value="0">0</span><span><input type="radio" name="nd_m3" value="1">1</span><span><input type="radio" name="nd_m3" value="2">2</span><span><input type="radio" name="nd_m3" value="3">3</span><span><input type="radio" name="nd_m3" value="4">4</span>
+      </div></td>
+    </tr>
+    <tr class="row-data row-total">
+      <td class="item">AIOLIS 脱镜功能总分（0–12分）</td>
+      <td class="val" id="sc3_d1">—/12</td>
+      <td class="val" id="sc3_w1">—/12</td>
+      <td class="val" id="sc3_m1">—/12</td>
+      <td class="val" id="sc3_m3">—/12</td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">脱镜程度评级<br><small style="color:#888">（优 &gt;9 ／ 良 6–9 ／ 中 3–6 ／ 差 &lt;3）</small></td>
+      <td class="val" id="gr3_d1">—</td>
+      <td class="val" id="gr3_w1">—</td>
+      <td class="val" id="gr3_m1">—</td>
+      <td class="val" id="gr3_m3">—</td>
+    </tr>
+  </table>
+
+  <!-- ══ SECTION 4 ════════════════════════════════════════════════════ -->
+  <table style="margin-top:10px;">
+    <col style="width:26%">
+    <col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%">
+    <tr class="row-sec"><th colspan="5">第四部分&nbsp;&nbsp;视觉质量与综合满意度评价 <span class="eng">Visual Quality & Satisfaction  |  0 = 极差，10 = 完美</span></th></tr>
+    <tr class="row-col">
+      <th class="lbl-col">满意度评估项目</th>
+      <th>术后1天 D1</th><th>术后1周 W1</th><th>术后1月 M1</th><th>术后3月 M3</th>
+    </tr>
+
+    <tr class="row-data row-alt"><td class="item">总体视觉质量满意度（0–10分）</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni" id="sat_d1"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+    </tr>
+    <tr class="row-data"><td class="item">远距离视觉舒适度（0–10分）</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+    </tr>
+    <tr class="row-data row-alt"><td class="item">中距离视觉舒适度（0–10分）</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+    </tr>
+    <tr class="row-data"><td class="item">近距离阅读舒适度（0–10分）</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+    </tr>
+    <tr class="row-data row-alt"><td class="item">夜间视觉适应满意度（0–10分）</td>
+      <td class="val" style="color:#aaa">——</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+    </tr>
+    <tr class="row-data"><td class="item">脱镜生活自由度（0–10分）</td>
+      <td class="val" style="color:#aaa">——</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+    </tr>
+    <tr class="row-data row-alt"><td class="item">NPS 净推荐值（推荐意愿 0–10）</td>
+      <td class="val" style="color:#aaa">——</td>
+      <td class="val" style="color:#aaa">——</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+      <td class="val"><input type="number" min="0" max="10" class="ni"> / 10</td>
+    </tr>
+    <tr class="row-data row-total"><td class="item">屈光误差是否在 ±0.50 D 内</td>
+      <td class="val" style="color:#aaa">——</td>
+      <td class="val"><select class="fs"><option></option><option>是</option><option>否</option><option>待查</option></select></td>
+      <td class="val"><select class="fs"><option></option><option>是</option><option>否</option></select></td>
+      <td class="val"><select class="fs"><option></option><option>是</option><option>否</option></select></td>
+    </tr>
+    <tr class="row-data row-alt row-total"><td class="item">3月满意度评级（目标 ≥90%）</td>
+      <td class="val" style="color:#aaa" colspan="3">——</td>
+      <td class="val"><select class="fs"><option></option><option style="color:green">达标</option><option style="color:red">未达标</option></select></td>
+    </tr>
+  </table>
+
+  <!-- ══ SECTION 5 ════════════════════════════════════════════════════ -->
+  <table style="margin-top:10px;">
+    <col style="width:28%"><col style="width:28%"><col style="width:44%">
+    <tr class="row-sec"><th colspan="3">第五部分&nbsp;&nbsp;护士宣教 · 干眼管理 · 心理干预 <span class="eng">Nursing Education & Psychosocial Support</span></th></tr>
+    <tr class="row-col">
+      <th class="lbl-col">宣教 / 干预项目</th>
+      <th>完成情况与日期</th>
+      <th>随访要点 / 患者反馈</th>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">神经适应期宣教<br><small style="color:#888">（4–8周视觉波动属正常适应过程）</small></td>
+      <td class="val" style="text-align:left;"><label><input type="checkbox"> 已完成</label><br>日期：<input type="text" class="fi" placeholder="___"><br>执行护士：<input type="text" class="fi" placeholder="___"></td>
+      <td class="val" style="text-align:left;">理解度：<select class="fs"><option></option><option>好</option><option>中</option><option>差</option></select>&nbsp;
+        焦虑：<select class="fs"><option></option><option>无</option><option>有</option></select><br>
+        <textarea rows="1" class="ta" placeholder="备注"></textarea></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">干眼用药指导<br><small style="color:#888">（人工泪液TID，睑板腺热敷）</small></td>
+      <td class="val" style="text-align:left;"><label><input type="checkbox"> 已完成</label><br>日期：<input type="text" class="fi" placeholder="___"><br>执行护士：<input type="text" class="fi" placeholder="___"></td>
+      <td class="val" style="text-align:left;">OSDI评分：<input type="text" class="fi" style="width:50px;" placeholder="___">&nbsp;
+        干眼分级：<select class="fs"><option></option><option>轻</option><option>中</option><option>重</option></select><br>
+        <textarea rows="1" class="ta" placeholder="备注"></textarea></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">神经适应辅导记录<br><small style="color:#888">（疑虑解答 · 案例分享 · 家属参与）</small></td>
+      <td class="val" style="text-align:left;"><label><input type="checkbox"> 已完成</label><br>日期：<input type="text" class="fi" placeholder="___"><br>执行护士：<input type="text" class="fi" placeholder="___"></td>
+      <td class="val" style="text-align:left;">家属参与：<select class="fs"><option></option><option>是</option><option>否</option></select>&nbsp;
+        情绪状态：<select class="fs"><option></option><option>稳定</option><option>轻度焦虑</option><option>需转介</option></select><br>
+        <textarea rows="1" class="ta" placeholder="备注"></textarea></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">屈光结果解读宣教<br><small style="color:#888">（IOL预期 vs 实际偏差说明）</small></td>
+      <td class="val" style="text-align:left;"><label><input type="checkbox"> 已完成</label><br>日期：<input type="text" class="fi" placeholder="___"><br>执行护士：<input type="text" class="fi" placeholder="___"></td>
+      <td class="val" style="text-align:left;">接受度：<select class="fs"><option></option><option>高</option><option>中</option><option>低</option></select><br>
+        <textarea rows="1" class="ta" placeholder="调整建议 / 备注"></textarea></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">下次随访时间确认<br><small style="color:#888">（1天→1周→1月→3月→1年）</small></td>
+      <td class="val" style="text-align:left;"><label><input type="checkbox"> 已完成</label><br>下次：<input type="date" style="border:none;border-bottom:1px solid #aaa;outline:none;font-size:10px;"></td>
+      <td class="val" style="text-align:left;">提醒方式：<select class="fs"><option></option><option>电话</option><option>短信</option><option>微信</option></select>&nbsp;
+        预约单：<select class="fs"><option></option><option>已发</option><option>未发</option></select></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">异常情况预警宣教<br><small style="color:#888">（视力骤降 · 眼红眼痛 · 急性高眼压）</small></td>
+      <td class="val" style="text-align:left;"><label><input type="checkbox"> 已完成</label><br>日期：<input type="text" class="fi" placeholder="___"></td>
+      <td class="val" style="text-align:left;">患者知晓急诊联系：<select class="fs"><option></option><option>是</option><option>否</option></select><br>
+        紧急电话已告知：<select class="fs"><option></option><option>是</option><option>否</option></select></td>
+    </tr>
+    <tr class="row-data row-alt">
+      <td class="item">生活方式指导<br><small style="color:#888">（1月内避免揉眼 · 游泳 · 重体力劳动）</small></td>
+      <td class="val" style="text-align:left;"><label><input type="checkbox"> 已完成</label><br>日期：<input type="text" class="fi" placeholder="___"></td>
+      <td class="val" style="text-align:left;">注意事项手册：<select class="fs"><option></option><option>已发放</option><option>未发放</option></select></td>
+    </tr>
+    <tr class="row-data">
+      <td class="item">转介绍意愿评估<br><small style="color:#888">（NPS≥8 → 主动询问推荐意愿）</small></td>
+      <td class="val" style="text-align:left;"><label><input type="checkbox"> 已完成</label><br>日期：<input type="text" class="fi" placeholder="___"></td>
+      <td class="val" style="text-align:left;">NPS：<input type="text" class="fi" style="width:40px;" placeholder="___">&nbsp;
+        转介意愿：<select class="fs"><option></option><option>有</option><option>无</option></select>&nbsp;
+        已推荐人数：<input type="text" class="fi" style="width:40px;" placeholder="___"></td>
+    </tr>
+  </table>
+
+  <!-- ══ 签名质控 ════════════════════════════════════════════════════ -->
+  <table style="margin-top:10px;">
+    <col style="width:26%"><col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%"><col style="width:18.5%">
+    <tr class="row-sec"><th colspan="5">签名与质控 <span class="eng">Sign-off & QC</span></th></tr>
+    <tr class="row-signoff">
+      <td class="lbl">主诊医师确认签字</td>
+      <td><input type="text" class="fi" placeholder="签名___________"></td>
+      <td class="lbl">随访护士签字</td>
+      <td><input type="text" class="fi" placeholder="签名___________"></td>
+      <td>记录日期：<input type="date" style="border:none;border-bottom:1px solid #aaa;outline:none;font-size:10px;"></td>
+    </tr>
+    <tr class="row-signoff">
+      <td class="lbl">患者 / 家属签字</td>
+      <td colspan="2"><input type="text" class="fi" placeholder="签名___________"></td>
+      <td>协调员核查：<label><input type="checkbox"> 完成</label></td>
+      <td>运营经理归档：<label><input type="checkbox"> 完成</label></td>
+    </tr>
+  </table>
+
+  <!-- ══ 临床质控要点 ══════════════════════════════════════════════════ -->
+  <div class="sec-label" style="margin-top:16px;">【临床质控要点 — 护士必读】</div>
+  <table class="tbl-notes">
+    <col style="width:130px"><col>
+    <tr>
+      <td class="tag-cell" style="background:var(--c-dark);">证据闭环<span class="tag-eng">Evidence Loop</span></td>
+      <td class="note-body">AIOLIS与PROM问卷须在同一随访时点完成，视觉干扰分项评分须与屈光结果（±0.50D达成率）、NPS形成纵向追踪，作为PDCA质量改进的核心数据输入。所有数据实时录入EHR，BI看板月度审查。</td>
+    </tr>
+    <tr>
+      <td class="tag-cell" style="background:var(--c-mid);">神经适应期管理<span class="tag-eng">Neuroadaptation</span></td>
+      <td class="note-body">多焦/EDOF IOL神经适应期通常为4–8周。D1–W1阶段光晕/眩光评分偏高属正常生理现象，护士须主动宣教，避免患者焦虑导致提前要求换镜或二次手术。若M3时AIOLIS干扰总分仍&gt;14分，须启动MDT会诊评估。</td>
+    </tr>
+    <tr>
+      <td class="tag-cell" style="background:var(--c-blue2);">干眼协同管理<span class="tag-eng">Dry Eye Co-Management</span></td>
+      <td class="note-body">术前OSDI≥23的患者须全程追踪干眼状态。干眼处理可使IOL屈光误差减少约30%，±0.50D达成率从65%提升至82%（ASCRS 2024）。M1前须复评DEWS II分级，若仍为中重度须强化LipiFlow或睑板腺热敷，方可启动屈光终止评估。</td>
+    </tr>
+    <tr>
+      <td class="tag-cell" style="background:var(--c-blue3);">MDT模式 &amp; 质控<span class="tag-eng">MDT & QC</span></td>
+      <td class="note-body">以下情况须即时启动MDT会诊：眼压&gt;25 mmHg持续48h、CDVA下降≥2行、IOL偏位&gt;0.5 mm、AIOLIS干扰总分M3仍&gt;14。季度PDCA质控会议须提交各指标趋势报告，目标：NPS≥65，3月满意度≥90%，并发症率≤0.8%。</td>
+    </tr>
+  </table>
+
+  <!-- footer -->
+  <div style="text-align:center;margin-top:14px;font-size:9.5px;color:#999;font-style:italic;">
+    本表遵循 DEWS II &middot; ESCRS 2024 &middot; ASCRS PROM 标准 &nbsp;|&nbsp; 表格版本 V1.0 &nbsp;|&nbsp; Johnson &amp; Johnson Surgical Vision 培训部
+  </div>
+</div>
+
+<style>
+  /* Shared inline input styles */
+  input.fi {
+    width: 90%;
+    border: none;
+    border-bottom: 1px solid #bbb;
+    outline: none;
+    font-size: 10px;
+    font-family: inherit;
+    background: transparent;
+    padding: 1px 2px;
+  }
+  select.fs {
+    font-size: 10px;
+    font-family: inherit;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 1px 2px;
+    background: white;
+  }
+  input.ni {
+    width: 36px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 10px;
+    font-family: inherit;
+  }
+  textarea.ta {
+    width: 98%;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 10px;
+    font-family: inherit;
+    resize: none;
+    padding: 2px 4px;
+    margin-top: 2px;
+  }
+</style>
+
+<script>
+// ── Auto-calculate AIOLIS scores ─────────────────────────────
+const TIMES = ['d1', 'w1', 'm1', 'm3'];
+
+// Section 2: Disturbance (5 items, 0-4 each, max 20)
+const S2_ITEMS = ['g', 'h', 's', 'gh', 'b'];
+
+function calcScores() {
+  TIMES.forEach(t => {
+    // Sec 2
+    let s2 = 0, s2n = 0;
+    S2_ITEMS.forEach(item => {
+      const sel = document.querySelector(`input[name="${item}_${t}"]:checked`);
+      if (sel) { s2 += parseInt(sel.value); s2n++; }
+    });
+    if (s2n === S2_ITEMS.length) {
+      document.getElementById(`sc2_${t}`).textContent = s2 + '/20';
+      const g2 = s2 < 8 ? '轻度' : s2 <= 14 ? '中度' : '重度';
+      const gc = s2 < 8 ? '#2E7D32' : s2 <= 14 ? '#E65100' : '#C62828';
+      const el = document.getElementById(`gr2_${t}`);
+      el.textContent = g2;
+      el.style.color = gc;
+      el.style.fontWeight = '700';
+    }
+
+    // Sec 3
+    const S3 = ['fd', 'mi', 'nd'];
+    let s3 = 0, s3n = 0;
+    S3.forEach(item => {
+      const sel = document.querySelector(`input[name="${item}_${t}"]:checked`);
+      if (sel) { s3 += parseInt(sel.value); s3n++; }
+    });
+    if (s3n === S3.length) {
+      document.getElementById(`sc3_${t}`).textContent = s3 + '/12';
+      const g3 = s3 > 9 ? '优' : s3 >= 6 ? '良' : s3 >= 3 ? '中' : '差';
+      const gc3 = s3 > 9 ? '#2E7D32' : s3 >= 6 ? '#1F5C99' : s3 >= 3 ? '#E65100' : '#C62828';
+      const el3 = document.getElementById(`gr3_${t}`);
+      el3.textContent = g3;
+      el3.style.color = gc3;
+      el3.style.fontWeight = '700';
+    }
+  });
+}
+
+document.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', calcScores));
+
+// ── Reset form ───────────────────────────────────────────────
+function resetForm() {
+  if (!confirm('确认清空所有已填写内容？')) return;
+  document.querySelectorAll('input[type=text], input[type=date], input[type=number], textarea').forEach(el => el.value = '');
+  document.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(el => el.checked = false);
+  document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+  ['d1','w1','m1','m3'].forEach(t => {
+    ['sc2_','sc3_','gr2_','gr3_'].forEach(p => {
+      const el = document.getElementById(p + t);
+      if (el) { el.textContent = '—'; el.style.color = ''; el.style.fontWeight = ''; }
+    });
+    const sc2 = document.getElementById('sc2_'+t);
+    if (sc2) sc2.textContent = '—/20';
+    const sc3 = document.getElementById('sc3_'+t);
+    if (sc3) sc3.textContent = '—/12';
+  });
+}
+</script>
+</body>
+</html>

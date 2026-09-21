@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PLS全自费项目首批医院遴选打分表</title>
+<style>
+:root{--navy:#173a5e;--blue:#2d6d9f;--pale:#eaf3f9;--ink:#25384a;--muted:#6f7f8e;--line:#d8e1e8;--green:#218457;--amber:#bd6b12;--red:#bd3d35;--bg:#f2f5f8;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;line-height:1.55}
+.page{max-width:1040px;margin:auto;padding:22px 16px 48px}
+.hero{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:14px;padding:26px 30px;box-shadow:0 8px 24px rgba(23,58,94,.23)}
+.eyebrow{color:#b9d7eb;font-size:12px;letter-spacing:1.4px}.hero h1{font-size:28px;line-height:1.25;margin:6px 0}.hero p{margin:0;color:#d8e9f4;font-size:13px}
+.meta{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px;margin-top:18px}.meta label{font-size:11px;color:#b9d7eb}.meta input{display:block;width:100%;margin-top:4px;padding:9px 10px;border-radius:7px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.14);color:#fff;font:inherit}.meta input::placeholder{color:#c6d7e2}.meta input:focus{outline:2px solid #b9d7eb}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.btn{border:0;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer;font:inherit}.btn-primary{background:var(--navy);color:#fff}.btn-light{background:#fff;color:var(--navy);border:1px solid var(--line)}.btn-danger{background:#fff;color:var(--red);border:1px solid #ecc4c1}
+.intro{background:var(--pale);border-left:5px solid var(--blue);padding:12px 16px;border-radius:0 9px 9px 0;font-size:13px;margin:14px 0}.intro strong{color:var(--navy)}
+.priority{display:grid;grid-template-columns:7fr 2fr 1fr;gap:8px;margin:14px 0}.priority div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}.priority strong{display:block;color:var(--navy);font-size:14px}.priority span{font-size:12px;color:var(--muted)}
+.result{display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:16px 0;box-shadow:0 4px 14px rgba(31,55,74,.07)}.score{text-align:center;border-right:1px solid var(--line)}.score strong{font-size:52px;line-height:1;color:var(--navy)}.score span{font-size:17px;color:var(--muted)}.grade{display:inline-block;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700;margin-bottom:8px;background:#edf1f4;color:var(--muted)}.result h2{margin:0 0 5px;font-size:23px;color:var(--navy)}.result p{margin:0;color:var(--muted);font-size:13px}.progress{height:7px;background:#e5ebef;border-radius:999px;margin-top:13px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:var(--blue);transition:.25s}.progress-note{margin-top:5px!important;font-size:11px!important}
+.section{background:#fff;border:1px solid var(--line);border-radius:13px;margin:16px 0;overflow:hidden}.section-head{padding:17px 20px;background:#f8fafc;border-bottom:1px solid var(--line)}.section-head h3{margin:0;color:var(--navy);font-size:18px}.section-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.gate-list,.question-list{padding:5px 20px 14px}.gate,.question{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;padding:15px 0;border-bottom:1px solid #edf1f4}.gate:last-child,.question:last-child{border-bottom:0}.q-title{font-weight:700;font-size:14px}.q-help{font-size:12px;color:var(--muted);margin-top:3px}.critical{color:var(--red);font-size:11px;font-weight:700;margin-left:6px}.weight{color:var(--blue);font-size:11px;font-weight:700;margin-left:6px}
+.choices{display:flex;background:#eef2f5;border-radius:8px;padding:3px;white-space:nowrap}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice span{display:block;padding:7px 10px;border-radius:6px;font-size:12px;color:#647586;cursor:pointer;min-width:64px;text-align:center}.choice input:focus-visible+span{outline:2px solid var(--blue)}.choice input:checked+span{background:#fff;color:var(--navy);font-weight:700;box-shadow:0 1px 5px rgba(0,0,0,.13)}.choice.pass input:checked+span,.choice.good input:checked+span{color:var(--green)}.choice.fix input:checked+span,.choice.mid input:checked+span{color:var(--amber)}.choice.fail input:checked+span,.choice.bad input:checked+span{color:var(--red)}
+.module-title{display:flex;align-items:center;justify-content:space-between;background:#edf4f9;color:var(--navy);padding:10px 20px;font-size:13px;font-weight:700}.module-title small{font-weight:400;color:var(--muted)}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.summary-box{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}.summary-box h3{font-size:16px;color:var(--navy);margin:0 0 10px}.summary-box ul{margin:0;padding-left:19px;font-size:13px}.summary-box li{margin:7px 0}.empty{color:var(--muted);list-style:none;margin-left:-18px}.next{border-left:5px solid var(--blue)}
+.module-score{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}.module-score div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}.module-score strong{color:var(--navy);font-size:20px}.module-score span{color:var(--muted);font-size:12px}
+.notes{width:100%;min-height:88px;resize:vertical;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;color:var(--ink)}.notes:focus{outline:2px solid #b9d7eb}.footer{text-align:center;color:#8b98a3;font-size:11px;margin-top:28px}
+.grade-a{background:#e8f6ef;color:var(--green)}.grade-b{background:#fff4df;color:#95600e}.grade-c{background:#fff0e5;color:var(--amber)}.grade-d{background:#fdeceb;color:var(--red)}
+@media(max-width:760px){.page{padding:12px}.hero{padding:21px 18px}.hero h1{font-size:23px}.meta{grid-template-columns:1fr 1fr}.priority,.module-score{grid-template-columns:1fr}.result{grid-template-columns:1fr;text-align:center}.score{border-right:0;border-bottom:1px solid var(--line);padding-bottom:15px}.gate,.question{grid-template-columns:1fr}.choices{width:100%}.choice{flex:1}.choice span{min-width:0;padding:8px 5px}.summary-grid{grid-template-columns:1fr}}
+@media print{@page{size:A4;margin:10mm}body{background:#fff}.page{max-width:none;padding:0}.toolbar{display:none}.hero,.section,.result,.summary-box,.priority div,.module-score div{box-shadow:none}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}.section,.result,.summary-grid,.priority,.module-score{break-inside:avoid}.gate,.question{padding:9px 0}.q-help{font-size:10.5px}.choice span{padding:5px 7px}.footer{margin-top:16px}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <div class="eyebrow">JJSV｜PLS 全自费项目内部遴选工具</div>
+    <h1>PLS 全自费项目首批医院遴选打分表</h1>
+    <p>候选医院初筛版｜约 8–10 分钟完成｜自动评分、自动判断、自动提示短板</p>
+    <div class="meta">
+      <label>候选医院<input id="hospital" placeholder="请输入医院名称"></label>
+      <label>城市<input id="city" placeholder="城市"></label>
+      <label>评估人<input id="owner" placeholder="姓名"></label>
+      <label>评估日期<input id="date" type="date"></label>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="btn btn-primary" onclick="window.print()">打印 / 另存为 PDF</button>
+    <button class="btn btn-light" onclick="scrollToFirstMissing()">找到未完成项</button>
+    <button class="btn btn-danger" onclick="clearAll()">一键清空</button>
+  </div>
+
+  <div class="intro"><strong>遴选顺序：</strong>先看人和动机，再看权力和行动，然后核验临床与合规底线，最后看团队、设备、规模与品牌。口头承诺没有负责人、数据或现场行动，不能算“完全符合”。</div>
+
+  <div class="priority" aria-label="评分权重">
+    <div><strong>四项主标准｜70分</strong><span>转型压力、最高领导、实际权力、医院主体责任</span></div>
+    <div><strong>底线能力｜20分</strong><span>临床、患者价值、合规、团队</span></div>
+    <div><strong>第二层｜10分</strong><span>硬件、规模、品牌</span></div>
+  </div>
+
+  <section class="result" aria-live="polite">
+    <div class="score"><strong id="score">0</strong><span> / 100</span></div>
+    <div>
+      <div id="grade" class="grade">尚未完成</div>
+      <h2 id="decision">请先完成评估</h2>
+      <p id="decisionText">完成全部底线核验和评分问题后，系统将自动判断。</p>
+      <div class="progress"><i id="progressBar"></i></div>
+      <p class="progress-note" id="progressText">已完成 0 / 20 项</p>
+    </div>
+  </section>
+
+  <div class="module-score">
+    <div><strong id="primaryScore">0 / 70</strong><br><span>四项主标准</span></div>
+    <div><strong id="floorScore">0 / 20</strong><br><span>底线能力</span></div>
+    <div><strong id="secondaryScore">0 / 10</strong><br><span>第二层因素</span></div>
+  </div>
+
+  <section class="section" id="gates">
+    <div class="section-head"><h3>第一步｜4 项底线核验</h3><p>任何“不通过”均直接判为 D；“需整改”必须明确负责人和期限，其中红线项整改完成前不得启动。</p></div>
+    <div class="gate-list" id="gateList"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h3>第二步｜16 个评分问题</h3><p>主标准占 70 分，底线能力占 20 分，设备、规模和品牌等第二层因素仅占 10 分。</p></div>
+    <div id="questionModules"></div>
+  </section>
+
+  <section class="summary-grid">
+    <div class="summary-box"><h3>关键短板</h3><ul id="gaps"><li class="empty">完成评估后自动生成</li></ul></div>
+    <div class="summary-box next"><h3>建议下一步</h3><ul id="actions"><li class="empty">完成评估后自动生成</li></ul></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h3>证据与补充说明（建议填写）</h3><p>记录最高决策者原话和行动、授权边界、经营事实、负责人、短板及补齐日期。</p></div>
+    <div style="padding:16px 20px"><textarea class="notes" id="notes" placeholder="例如：董事长亲自担任Sponsor；单院可决定人员与流程，预算需集团审批；项目负责人已指定；眼表检查设备计划于8月补齐……"></textarea></div>
+  </section>
+
+  <div class="intro"><strong>重要边界：</strong>本工具用于内部候选医院初筛，不代替医学、HCC/合规、法务或正式项目评审。必须坚持适应证优先、患者自主选择、价格透明、充分知情与长期随访；不得保证脱镜、夸大疗效或诱导消费。</div>
+  <footer class="footer">依据《PLS全自费项目首批医院遴选要素》制作｜内部工作文件</footer>
+</main>
+
+<script>
+const gates=[
+ {id:'g1',title:'临床安全底线可靠',help:'有胜任的首席术者、规范筛查、并发症处理与必要转诊能力。',fail:'临床安全或术者能力存在不可接受风险',critical:true},
+ {id:'g2',title:'患者价值导向正确',help:'以真实需求、充分患教、共同决策和预期管理为核心，不以销售结果替代医学判断。',fail:'患者价值导向或医学决策存在明显偏差',critical:true},
+ {id:'g3',title:'合规与患者权益底线可靠',help:'价格透明、充分知情、患者自主选择；无保证脱镜、诱导消费或不合规获客。',fail:'合规或患者权益存在不可接受风险',critical:true},
+ {id:'g4',title:'基本执行团队可以到位',help:'至少有项目负责人、首席术者、检查、谈话/患教、护理和随访角色。',fail:'项目负责人或基本执行团队尚未落实'}
+];
+
+const modules=[
+ {key:'primary',name:'A. 四项主标准',max:70,items:[
+  {id:'q1',w:10,title:'经营转型压力真实且有事实支撑',help:'能说清医保、DIP或传统业务对手术量、收入、利润或经营自主性的具体影响。'},
+  {id:'q2',w:10,title:'医院必须“现在转型”，而不是以后再说',help:'即使短期没有明显回报或JJSV不提供额外市场资源，院方仍愿意启动。'},
+  {id:'q3',w:12,title:'最高决策者本人迫切想做',help:'董事长、老板、CEO或总院长亲自表达、亲自推动，不是仅由医生或中层感兴趣。'},
+  {id:'q4',w:8,title:'最高领导具有长期主人翁精神与正确价值观',help:'把PLS视为医院未来5–10年的战略工程，理解全自费服务的患者价值，而非简单推销。'},
+  {id:'q5',w:10,title:'最高决策者拥有实际拍板权',help:'能够决定或有效影响人员、预算、空间、患者动线和跨部门流程。'},
+  {id:'q6',w:10,title:'从决定到行动的速度和资源调动能力强',help:'首次沟通后能够迅速指定负责人、建立项目组并安排下一步行动。'},
+  {id:'q7',w:5,title:'医院愿意自己承担项目主体责任',help:'自己发现问题、组织团队、改进流程和复盘结果，不等待JJSV包办运营。'},
+  {id:'q8',w:5,title:'JJSV退出现场支持后仍能持续运行',help:'有明确负责人、岗位机制和内部能力，不依赖JJSV带患者或长期驻场。'}
+ ]},
+ {key:'floor',name:'B. 临床、患者价值、合规与执行底线',max:20,items:[
+  {id:'q9',w:6,title:'首席术者和临床安全能力稳定且可验证',help:'有病例基础、筛查标准、复杂病例与并发症处理能力。'},
+  {id:'q10',w:5,title:'患者需求、患教和共同决策流程规范',help:'能够识别真实视觉需求、充分沟通获益与风险并管理预期。'},
+  {id:'q11',w:5,title:'价格、宣传、知情同意和患者自主选择规范',help:'不夸大疗效、不保证脱镜；隐私、投诉和异常事件处理机制清楚。'},
+  {id:'q12',w:4,title:'基本执行团队职责与投入时间明确',help:'项目负责人、临床、检查、患教、护理和随访岗位有实名人选、职责和备份。'}
+ ]},
+ {key:'secondary',name:'C. 第二层因素',max:10,items:[
+  {id:'q13',w:3,title:'核心检查、手术设备和场地可以支持或按期补齐',help:'设备真实可用、有人员操作和维护保障；缺口有负责人、预算与期限。'},
+  {id:'q14',w:2,title:'手术量及高端 IOL / Toric / FLACS 经验有基础',help:'能够缩短能力爬坡期，但不能替代管理层真实意愿。'},
+  {id:'q15',w:2,title:'品牌、口碑和自费患者入口具备一定基础',help:'有助于冷启动，但不能抵消决策链长、官僚化或执行迟缓。'},
+  {id:'q16',w:3,title:'医院类型与复制价值适合首批试点',help:'单院决策链清晰；如为连锁，已明确总部授权和后续复制路径。'}
+ ]}
+];
+
+const stateKey='pls-first-hospital-selection-v2';
+const totalItems=gates.length+modules.flatMap(m=>m.items).length;
+
+function choices(name,type){
+ const opts=type==='gate'?[['pass','通过'],['fix','需整改'],['fail','不通过']]:[['good','完全符合'],['mid','部分符合'],['bad','不符合']];
+ return `<div class="choices" role="radiogroup" aria-label="${name}">${opts.map(([v,t])=>`<label class="choice ${v}"><input type="radio" name="${name}" value="${v}"><span>${t}</span></label>`).join('')}</div>`;
+}
+function render(){
+ document.getElementById('gateList').innerHTML=gates.map(g=>`<div class="gate"><div><div class="q-title">${g.title}${g.critical?'<span class="critical">红线项</span>':''}</div><div class="q-help">${g.help}</div></div>${choices(g.id,'gate')}</div>`).join('');
+ document.getElementById('questionModules').innerHTML=modules.map(m=>`<div class="module-title"><span>${m.name}</span><small>${m.max} 分</small></div><div class="question-list">${m.items.map(q=>`<div class="question"><div><div class="q-title">${q.title}<span class="weight">${q.w}分</span></div><div class="q-help">${q.help}</div></div>${choices(q.id,'score')}</div>`).join('')}</div>`).join('');
+ document.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('input',()=>{update();save()}));
+ load();update();
+}
+function val(name){const x=document.querySelector(`input[name="${name}"]:checked`);return x?x.value:null}
+function itemScore(q){const v=val(q.id);return v==='good'?q.w:v==='mid'?Math.round(q.w*.6):0}
+function moduleTotal(module){return module.items.reduce((sum,q)=>sum+itemScore(q),0)}
+function update(){
+ let answered=0,gaps=[],fails=[],fixes=[];
+ gates.forEach(g=>{const v=val(g.id);if(v)answered++;if(v==='fail'){fails.push(g);gaps.push(g.fail)}if(v==='fix'){fixes.push(g);gaps.push(g.fail+'（需整改）')}});
+ modules.forEach(m=>m.items.forEach(q=>{const v=val(q.id);if(v)answered++;if(v==='bad')gaps.push(q.title);else if(v==='mid')gaps.push(q.title+'（部分符合）')}));
+ const primary=moduleTotal(modules[0]),floor=moduleTotal(modules[1]),secondary=moduleTotal(modules[2]),score=primary+floor+secondary;
+ document.getElementById('score').textContent=score;
+ document.getElementById('primaryScore').textContent=`${primary} / 70`;
+ document.getElementById('floorScore').textContent=`${floor} / 20`;
+ document.getElementById('secondaryScore').textContent=`${secondary} / 10`;
+ const pct=Math.round(answered/totalItems*100);document.getElementById('progressBar').style.width=pct+'%';document.getElementById('progressText').textContent=`已完成 ${answered} / ${totalItems} 项`;
+ let grade='',decision='',text='',cls='';const complete=answered===totalItems;const criticalFix=fixes.some(x=>x.critical);
+ if(!complete){grade='尚未完成';decision='请继续完成评估';text='系统会实时保存。全部完成后才给出正式判断。'}
+ else if(fails.length){grade='D｜本轮不推荐';decision='暂不适合作为首批试点医院';text=fails.some(x=>x.critical)?'存在临床安全、患者价值或合规红线，应停止推进并升级专业评估。':'存在未通过的启动底线，不建议投入首批专项资源。';cls='grade-d'}
+ else if(score>=85&&primary>=55&&fixes.length===0){grade='A｜优先推荐';decision='适合作为首批试点候选医院';text='四项主标准强、底线全部通过，可安排联合尽调并形成院级项目组。';cls='grade-a'}
+ else if(score>=70&&primary>=45&&fixes.length<=2){grade='B｜补齐后推荐';decision='具备潜力，补齐关键短板后复核';text=criticalFix?'红线项整改完成并经专业复核前不得启动。':'请为短板明确负责人、预算和30–60天完成日期，复核后再启动。';cls='grade-b'}
+ else if(score>=55){grade='C｜持续培育';decision='暂不进入首批试点名单';text='医院有一定潜力，但主标准或执行条件尚不充分，建议维持关系并定期复评。';cls='grade-c'}
+ else{grade='D｜本轮不推荐';decision='当前不适合作为首批试点医院';text='综合基础不足，当前投入专项资源的成功概率较低。';cls='grade-d'}
+ const ge=document.getElementById('grade');ge.textContent=grade;ge.className='grade '+cls;document.getElementById('decision').textContent=decision;document.getElementById('decisionText').textContent=text;
+ const gapEl=document.getElementById('gaps');gapEl.innerHTML=gaps.length?gaps.slice(0,8).map(x=>`<li>${x}</li>`).join(''):'<li class="empty">目前未发现明显短板</li>';
+ let actions=[];
+ if(!complete)actions=['完成所有未评估项，避免凭印象推荐医院'];
+ else if(grade.startsWith('A'))actions=['提交候选医院证据清单','安排跨部门联合尽调','与院方确认项目组、基线数据和90天启动计划'];
+ else if(grade.startsWith('B'))actions=['为每个短板指定院方负责人和完成日期','30–60天内完成补齐；红线项须专业复核','复核通过后再进入启动评审'];
+ else if(grade.startsWith('C'))actions=['本轮不投入高强度专项资源','重点培育最高领导意愿、授权与医院主体责任','3个月后根据实际行动重新评估'];
+ else actions=['记录不推荐原因并停止首批专项投入','涉及医疗质量、患者权益或合规风险时升级专业评估','条件发生实质变化后再重新评估'];
+ document.getElementById('actions').innerHTML=actions.map(x=>`<li>${x}</li>`).join('');
+}
+function save(){
+ const data={};document.querySelectorAll('input[type=text],input[type=date],textarea').forEach(x=>data[x.id]=x.value);document.querySelectorAll('input[type=radio]:checked').forEach(x=>data[x.name]=x.value);localStorage.setItem(stateKey,JSON.stringify(data));
+}
+function load(){
+ try{const data=JSON.parse(localStorage.getItem(stateKey)||'{}');Object.entries(data).forEach(([k,v])=>{const el=document.getElementById(k);if(el)el.value=v;const r=document.querySelector(`input[name="${k}"][value="${v}"]`);if(r)r.checked=true})}catch(e){}
+ if(!document.getElementById('date').value)document.getElementById('date').value=new Date().toISOString().slice(0,10);
+}
+function clearAll(){
+ if(!confirm('确定清空本次医院评估吗？'))return;
+ localStorage.removeItem(stateKey);document.querySelectorAll('input[type=text],textarea').forEach(x=>x.value='');document.querySelectorAll('input[type=radio]').forEach(x=>x.checked=false);document.getElementById('date').value=new Date().toISOString().slice(0,10);update()
+}
+function scrollToFirstMissing(){
+ const names=[...gates.map(x=>x.id),...modules.flatMap(m=>m.items.map(x=>x.id))];const n=names.find(x=>!val(x));if(!n){alert('所有评估项已经完成。');return}document.querySelector(`input[name="${n}"]`).closest('.gate,.question').scrollIntoView({behavior:'smooth',block:'center'})
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>民营眼科PLS项目运营 JJSV工具箱</title>
+  <style>
+    :root{
+      --ink:#17242b;
+      --muted:#5c6b73;
+      --line:#dbe4e0;
+      --bg:#f5f7f6;
+      --panel:#ffffff;
+      --green:#0d6b57;
+      --blue:#245f8f;
+      --gold:#a97828;
+      --rose:#9e4a58;
+      --soft-green:#edf6f2;
+      --soft-blue:#eef5fb;
+      --shadow:0 18px 42px rgba(23,36,43,.09);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+      color:var(--ink);
+      background:
+        linear-gradient(135deg,rgba(13,107,87,.10),rgba(36,95,143,.09) 44%,rgba(169,120,40,.10)),
+        var(--bg);
+      line-height:1.6;
+      letter-spacing:0;
+    }
+    header{
+      max-width:1180px;
+      margin:0 auto;
+      padding:42px 22px 20px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--green);
+      font-weight:800;
+    }
+    .mark{
+      width:42px;
+      height:42px;
+      border-radius:8px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      background:linear-gradient(135deg,var(--green),var(--blue));
+      box-shadow:0 10px 24px rgba(13,107,87,.25);
+    }
+    h1{
+      margin:18px 0 10px;
+      font-size:clamp(30px,5vw,52px);
+      line-height:1.12;
+      max-width:900px;
+    }
+    .subtitle{
+      margin:0;
+      color:#35464e;
+      max-width:900px;
+      font-size:17px;
+    }
+    .toolbar{
+      position:sticky;
+      top:0;
+      z-index:10;
+      border-block:1px solid var(--line);
+      background:rgba(245,247,246,.92);
+      backdrop-filter:blur(14px);
+    }
+    .toolbar-inner{
+      max-width:1180px;
+      margin:0 auto;
+      padding:12px 22px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .filter-btn,
+    input{
+      height:42px;
+      border:1px solid var(--line);
+      border-radius:7px;
+      background:#fff;
+      color:var(--ink);
+      font:inherit;
+    }
+    input{
+      flex:1 1 280px;
+      min-width:220px;
+      padding:0 13px;
+    }
+    .filter-btn{
+      padding:0 13px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .filter-btn.active{
+      border-color:var(--green);
+      color:var(--green);
+      background:var(--soft-green);
+    }
+    main{
+      max-width:1180px;
+      margin:0 auto;
+      padding:22px 22px 58px;
+    }
+    .summary{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-bottom:18px;
+    }
+    .metric{
+      background:rgba(255,255,255,.82);
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:15px 16px;
+    }
+    .metric strong{
+      display:block;
+      font-size:24px;
+      line-height:1.1;
+      color:var(--green);
+    }
+    .metric span{color:var(--muted);font-size:13px}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+    .tool-card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      min-height:190px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .card-head{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+    }
+    h2{
+      margin:0;
+      font-size:20px;
+      line-height:1.28;
+    }
+    .tag{
+      flex:0 0 auto;
+      border-radius:7px;
+      padding:4px 8px;
+      font-size:12px;
+      font-weight:800;
+      color:var(--green);
+      background:var(--soft-green);
+      border:1px solid #cfe4dc;
+      white-space:nowrap;
+    }
+    .tag.clinical{color:var(--blue);background:var(--soft-blue);border-color:#cfe0ef}
+    .tag.operation{color:var(--gold);background:#fff7e8;border-color:#ead7b4}
+    .tag.assessment{color:var(--rose);background:#fff0f2;border-color:#efd0d6}
+    p{margin:0;color:#43535b}
+    .actions{
+      margin-top:auto;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+    }
+    .path{
+      color:var(--muted);
+      font-size:12px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    a.open{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:92px;
+      height:38px;
+      padding:0 14px;
+      border-radius:7px;
+      color:#fff;
+      background:var(--green);
+      text-decoration:none;
+      font-weight:800;
+    }
+    a.open:hover{background:#095342}
+    .empty{
+      display:none;
+      background:#fff;
+      border:1px dashed var(--line);
+      border-radius:8px;
+      padding:30px;
+      text-align:center;
+      color:var(--muted);
+    }
+    footer{
+      max-width:1180px;
+      margin:0 auto;
+      padding:0 22px 32px;
+      color:var(--muted);
+      font-size:12px;
+    }
+    @media (max-width:760px){
+      header{padding-top:30px}
+      .summary,.grid{grid-template-columns:1fr}
+      .toolbar-inner{align-items:stretch}
+      .filter-btn{flex:1 1 auto}
+      h1{font-size:32px}
+      .card-head{display:block}
+      .tag{display:inline-block;margin-top:10px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><div class="mark">PLS</div><span>JJSV内部支持建设</span></div>
+    <h1>民营眼科PLS项目运营 JJSV工具箱</h1>
+    <p class="subtitle">一个入口汇总全部网页工具，覆盖医院遴选、六大支柱、患者评估、晶体匹配、术后随访、研讨会议程和产品能力概览。</p>
+  </header>
+
+  <nav class="toolbar" aria-label="工具筛选">
+    <div class="toolbar-inner">
+      <input id="search" type="search" placeholder="搜索工具名称、场景或关键词" aria-label="搜索工具">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="strategy">项目策略</button>
+      <button class="filter-btn" data-filter="clinical">临床患者</button>
+      <button class="filter-btn" data-filter="operation">运营会议</button>
+      <button class="filter-btn" data-filter="assessment">评估表单</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="summary" aria-label="工具箱概览">
+      <div class="metric"><strong>10</strong><span>个网页工具已汇总</span></div>
+      <div class="metric"><strong>4</strong><span>类关键使用场景</span></div>
+      <div class="metric"><strong>1</strong><span>个网址即可进入</span></div>
+    </section>
+
+    <section class="grid" id="toolGrid">
+      <article class="tool-card" data-category="strategy assessment" data-keywords="医院遴选 首批医院 打分 目标医院 PLS 全自费">
+        <div class="card-head"><h2>PLS项目目标医院遴选工具</h2><span class="tag assessment">评估表单</span></div>
+        <p>用于首批试点医院筛选和打分，帮助区域团队判断项目基础、运营意愿与落地优先级。</p>
+        <div class="actions"><span class="path">PLS项目项目目标医院遴选工具</span><a class="open" href="./PLS项目项目目标医院遴选工具/index.html">打开</a></div>
+      </article>
+
+      <article class="tool-card" data-category="strategy" data-keywords="六大支柱 临床 卓越 MDT SOP 患者教育 定价 获客">
+        <div class="card-head"><h2>六大支柱核心内容逐层展开网页</h2><span class="tag">项目策略</span></div>
+        <p>把全自费PLS项目成功运营的六大支柱做成逐层展开页面，适合培训、共创和院长层沟通。</p>
+        <div class="actions"><span class="path">六大支柱核心内容逐层展开网页</span><a class="open" href="./六大支柱核心内容逐层展开网页/index.html">打开</a></div>
+      </article>
+
+      <article class="tool-card" data-category="operation strategy" data-keywords="共识 90天 行动计划 建议行动表 研讨会">
+        <div class="card-head"><h2>PLS项目初步共识议题与90天建议行动表</h2><span class="tag operation">运营会议</span></div>
+        <p>用于现场共创后形成共识议题、责任人和90天行动节奏，便于把讨论落到下一步执行。</p>
+        <div class="actions"><span class="path">PLS项目初步共识议题与90天建议行动表-通用版</span><a class="open" href="./PLS项目初步共识议题与90天建议行动表-通用版/index.html">打开</a></div>
+      </article>
+
+      <article class="tool-card" data-category="operation" data-keywords="研讨会 议程模板 民营眼科 辅导 workshop">
+        <div class="card-head"><h2>全国民营眼科医院PLS项目运营辅导研讨会议程模板</h2><span class="tag operation">运营会议</span></div>
+        <p>提供通用研讨会议程框架，可用于医院拜访、项目启动会和跨部门共创工作坊。</p>
+        <div class="actions"><span class="path">全国民营眼科医院_PLS项目运营辅导研讨会_通用议程模板</span><a class="open" href="./全国民营眼科医院_PLS项目运营辅导研讨会_通用议程模板/index.html">打开</a></div>
+      </article>
+
+      <article class="tool-card" data-category="clinical assessment" data-keywords="术前 视觉需求 问卷 患者需求 全自费白内障">
+        <div class="card-head"><h2>全自费白内障手术术前视觉需求问卷</h2><span class="tag clinical">临床患者</span></div>
+        <p>帮助术前采集患者生活场景、视觉目标和脱镜期待，为医生进行个体化方案沟通提供依据。</p>
+        <div class="actions"><span class="path">全自费白内障手术术前视觉需求问卷</span><a class="open" href="./全自费白内障手术术前视觉需求问卷/index.html">打开</a></div>
+      </article>
+
+      <article class="tool-card" data-category="clinical assessment" data-keywords="心理红线 术前 风险 投诉 预期管理 患者筛查">
+        <div class="card-head"><h2>全自费白内障手术术前心理红线评估量表</h2><span class="tag assessment">评估表单</span></div>
+        <p>用于识别过高期待、沟通风险和潜在不满意因素，支持术前预期管理与风险防控。</p>
+        <div class="actions"><span class="path">全自费白内障手术术前心理红线评估量表</span><a class="open" href="./全自费白内障手术术前心理红线评估量表/index.html">打开</a></div>
+      </article>
+
+      <article class="tool-card" data-category="clinical" data-keywords="人工晶体 匹配 决策树 IOL TECNIS Odyssey PureSee Synergy">
+        <div class="card-head"><h2>全自费患者人工晶体匹配决策树</h2><span class="tag clinical">临床患者</span></div>
+        <p>围绕患者需求、眼部条件和产品特点，辅助完成TECNIS人工晶体方案匹配沟通。</p>
+        <div class="actions"><span class="path">全自费患者人工晶体匹配决策树</span><a class="open" href="./全自费患者人工晶体匹配决策树/index.html">打开</a></div>
+      </article>
+
+      <article class="tool-card" data-category="clinical operation" data-keywords="术后护理 随访 SOP AIOLIS PCIOL RLE 记录表">
+        <div class="card-head"><h2>AIOLIS PCIOL RLE术后护理随访SOP记录表</h2><span class="tag clinical">临床患者</span></div>
+        <p>用于术后随访记录、护理节点管理和患者体验闭环，适合项目运行后持续追踪。</p>
+        <div class="actions"><span class="path">AIOLIS_PCIOL_RLE术后护理随访SOP记录表</span><a class="open" href="./AIOLIS_PCIOL_RLE术后护理随访SOP记录表/index.html">打开</a></div>
+      </article>
+
+      <article class="tool-card" data-category="assessment strategy" data-keywords="国际 PLS 诊疗中心 核查 评估 系统 标准">
+        <div class="card-head"><h2>国际PLS诊疗中心核查评估系统</h2><span class="tag assessment">评估表单</span></div>
+        <p>用于对标国际化PLS诊疗中心能力，形成模块化核查、评分和改进方向。</p>
+        <div class="actions"><span class="path">国际PLS诊疗中心核查评估系统</span><a class="open" href="./国际PLS诊疗中心核查评估系统/国际PLS诊疗中心核查评估系统.html">打开</a></div>
+      </article>
+
+      <article class="tool-card" data-category="clinical strategy" data-keywords="JJSV IOL Phaco FLACS LipiFlow 产品 概览 Catalys">
+        <div class="card-head"><h2>JJSV IOL、Phaco、FLACS和LipiFlow概览</h2><span class="tag">项目策略</span></div>
+        <p>汇总JJSV相关产品和技术能力，便于医院领导、项目团队和内部支持团队快速建立共同语言。</p>
+        <div class="actions"><span class="path">JJSV IOL flcac和LipiFlow概览</span><a class="open" href="./JJSV IOL flcac和LipiFlow概览/index.html">打开</a></div>
+      </article>
+    </section>
+
+    <div class="empty" id="emptyState">没有找到匹配的工具，请换一个关键词试试。</div>
+  </main>
+
+  <footer>
+    <p>更新日期：2026-08-16。此入口页仅汇总本文件夹内现有静态网页工具；各工具内容和交互仍保留在原页面中。</p>
+  </footer>
+
+  <script>
+    const search = document.getElementById('search');
+    const cards = Array.from(document.querySelectorAll('.tool-card'));
+    const buttons = Array.from(document.querySelectorAll('.filter-btn'));
+    const empty = document.getElementById('emptyState');
+    let activeFilter = 'all';
+
+    function normalize(value){
+      return value.toLowerCase().replace(/\s+/g,'');
+    }
+
+    function update(){
+      const q = normalize(search.value.trim());
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const categories = card.dataset.category.split(' ');
+        const haystack = normalize(card.innerText + ' ' + card.dataset.keywords);
+        const categoryMatch = activeFilter === 'all' || categories.includes(activeFilter);
+        const searchMatch = !q || haystack.includes(q);
+        const visible = categoryMatch && searchMatch;
+        card.style.display = visible ? '' : 'none';
+        if(visible) visibleCount += 1;
+      });
+      empty.style.display = visibleCount ? 'none' : 'block';
+    }
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+        activeFilter = button.dataset.filter;
+        update();
+      });
+    });
+
+    search.addEventListener('input', update);
+  </script>
+</body>
+</html>

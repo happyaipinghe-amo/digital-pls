@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全自费患者人工晶体匹配决策树 — TECNIS® IOL</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f0f2f5;
+  color: #1a1a2e;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0d5c4a 100%);
+  padding: 24px 32px 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.header-logo {
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.header-text h1 { font-size: 20px; font-weight: 800; letter-spacing: 0.3px; }
+.header-text p { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .main { grid-template-columns: 1fr; }
+}
+
+/* ── FORM PANEL ── */
+.form-panel {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  overflow: hidden;
+}
+.form-panel-header {
+  background: #f8f9fa;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex; align-items: center; gap: 8px;
+}
+.form-panel-header h2 { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+.form-panel-header .step-badge {
+  background: #1a1a2e; color: #fff;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 10px;
+}
+
+.form-body { padding: 20px; }
+
+/* ── SECTION ── */
+.section {
+  margin-bottom: 22px;
+}
+.section-title {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  color: #6b7280;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex; align-items: center; gap: 6px;
+}
+.section-title .icon { font-size: 13px; }
+
+/* ── INPUT STYLES ── */
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.input-row.full { grid-template-columns: 1fr; }
+.field label {
+  display: block;
+  font-size: 11px; font-weight: 600; color: #374151;
+  margin-bottom: 4px;
+}
+.field input, .field select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  font-size: 13px;
+  color: #1a1a2e;
+  background: #fff;
+  transition: border-color 0.15s;
+  appearance: none;
+}
+.field input:focus, .field select:focus {
+  outline: none;
+  border-color: #1a1a2e;
+}
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239ca3af'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+/* ── RADIO GROUPS ── */
+.radio-group { display: flex; flex-direction: column; gap: 6px; }
+.radio-option {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 9px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: #fff;
+}
+.radio-option:hover { border-color: #9ca3af; background: #fafafa; }
+.radio-option input[type=radio] { margin-top: 2px; flex-shrink: 0; accent-color: #1a1a2e; }
+.radio-option.selected { border-color: #1a1a2e; background: #f8f9fa; }
+.radio-option .opt-title { font-size: 12px; font-weight: 700; color: #1a1a2e; }
+.radio-option .opt-desc { font-size: 11px; color: #6b7280; margin-top: 1px; }
+
+/* ── CHECKBOX GROUP (禁忌症) ── */
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.check-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 10px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 11px; color: #374151;
+}
+.check-item:hover { border-color: #fca5a5; background: #fff5f5; }
+.check-item.checked { border-color: #ef4444; background: #fef2f2; color: #dc2626; font-weight: 600; }
+.check-item input[type=checkbox] { accent-color: #ef4444; flex-shrink: 0; }
+
+/* ── SCATTER SCORE (散光) ── */
+.astig-row {
+  display: flex; gap: 8px; align-items: center;
+}
+.astig-row input[type=number] {
+  width: 90px;
+  padding: 8px 10px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  font-size: 13px;
+  text-align: center;
+}
+.astig-row input:focus { outline: none; border-color: #1a1a2e; }
+.astig-unit { font-size: 12px; color: #6b7280; }
+.astig-badge {
+  display: none;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 8px; border-radius: 10px;
+}
+.astig-badge.show { display: inline-block; }
+.astig-badge.warn { background: #fef3c7; color: #d97706; }
+.astig-badge.ok { background: #d1fae5; color: #059669; }
+
+/* ── CTA BUTTON ── */
+.cta-btn {
+  width: 100%;
+  padding: 13px;
+  background: #1a1a2e;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 4px;
+}
+.cta-btn:hover { background: #0d5c4a; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.cta-btn:active { transform: none; }
+.cta-btn.disabled { background: #9ca3af; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ── RESULT PANEL ── */
+.result-panel {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  overflow: hidden;
+  min-height: 400px;
+  display: flex; flex-direction: column;
+}
+.result-empty {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 40px;
+  color: #9ca3af;
+}
+.result-empty .empty-icon { font-size: 48px; opacity: 0.4; }
+.result-empty p { font-size: 13px; text-align: center; line-height: 1.7; }
+
+/* ── RESULT CONTENT ── */
+.result-content { display: none; flex-direction: column; flex: 1; }
+.result-content.show { display: flex; }
+
+/* Product hero band */
+.product-hero {
+  padding: 24px 24px 20px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.product-hero::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.product-hero::after {
+  content: '';
+  position: absolute; bottom: -20px; left: 30%;
+  width: 80px; height: 80px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+}
+.hero-tier {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  opacity: 0.7; margin-bottom: 6px;
+}
+.hero-name-en { font-size: 13px; font-weight: 600; opacity: 0.8; margin-bottom: 2px; }
+.hero-name-cn { font-size: 32px; font-weight: 900; margin-bottom: 4px; letter-spacing: -0.5px; }
+.hero-tagline { font-size: 12px; opacity: 0.7; }
+.hero-model-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  padding: 5px 12px; border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+  margin-top: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Toric alert */
+.toric-alert {
+  margin: 0 24px;
+  padding: 10px 14px;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  font-size: 12px; color: #92400e;
+  font-weight: 600;
+  display: none; align-items: center; gap: 6px;
+  margin-top: 14px;
+}
+.toric-alert.show { display: flex; }
+
+/* Comment section */
+.comment-section {
+  padding: 20px 24px;
+  flex: 1;
+}
+.comment-section h3 {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.6px; color: #6b7280;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.comment-text {
+  font-size: 13px; color: #1a1a2e;
+  line-height: 1.85;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 14px 16px;
+  border-left: 3px solid #1a1a2e;
+}
+
+/* Key match points */
+.match-points {
+  margin-top: 14px;
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.match-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+}
+
+/* Specs grid */
+.specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.spec-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.spec-card .spec-label {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: #9ca3af; margin-bottom: 4px;
+}
+.spec-card .spec-val {
+  font-size: 12px; font-weight: 700; color: #1a1a2e; line-height: 1.5;
+}
+
+/* Warning bar */
+.warning-bar {
+  margin: 0 24px 20px;
+  padding: 10px 14px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  font-size: 11px; color: #92400e;
+  line-height: 1.6;
+  display: none;
+}
+.warning-bar.show { display: block; }
+.warning-bar strong { font-weight: 700; }
+
+/* Print button */
+.print-row {
+  padding: 14px 24px;
+  border-top: 1px solid #f3f4f6;
+  display: flex; justify-content: flex-end; gap: 8px;
+}
+.print-btn {
+  padding: 7px 16px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  background: #fff;
+  font-size: 12px; font-weight: 600; color: #6b7280;
+  cursor: pointer; transition: all 0.15s;
+  display: flex; align-items: center; gap: 5px;
+}
+.print-btn:hover { border-color: #1a1a2e; color: #1a1a2e; }
+.reset-btn-sm {
+  padding: 7px 16px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  background: #fff;
+  font-size: 12px; font-weight: 600; color: #6b7280;
+  cursor: pointer; transition: all 0.15s;
+}
+.reset-btn-sm:hover { border-color: #ef4444; color: #ef4444; }
+
+/* product color schemes */
+.bg-odyssey { background: linear-gradient(135deg, #1a1a2e, #2d2d4e); }
+.bg-synergy  { background: linear-gradient(135deg, #1e3a5f, #1a5276); }
+.bg-puresee  { background: linear-gradient(135deg, #0d5c4a, #117a65); }
+.bg-symfony  { background: linear-gradient(135deg, #4a2060, #6c3483); }
+.bg-eyhance  { background: linear-gradient(135deg, #374151, #4b5563); }
+
+.border-odyssey { border-left-color: #1a1a2e !important; }
+.border-synergy  { border-left-color: #1e3a5f !important; }
+.border-puresee  { border-left-color: #0d5c4a !important; }
+.border-symfony  { border-left-color: #4a2060 !important; }
+.border-eyhance  { border-left-color: #374151 !important; }
+
+.tag-odyssey { background: rgba(26,26,46,0.1); color: #1a1a2e; }
+.tag-synergy  { background: rgba(30,58,95,0.1); color: #1e3a5f; }
+.tag-puresee  { background: rgba(13,92,74,0.1); color: #0d5c4a; }
+.tag-symfony  { background: rgba(74,32,96,0.1); color: #4a2060; }
+.tag-eyhance  { background: rgba(55,65,81,0.1); color: #374151; }
+
+/* contraindication warning mode */
+.contra-mode .product-hero { background: linear-gradient(135deg, #374151, #4b5563) !important; }
+
+/* FOOTER */
+.footer {
+  text-align: center; font-size: 10px; color: #9ca3af;
+  padding: 16px; border-top: 1px solid #e5e7eb;
+  background: #fff; margin-top: 4px;
+  border-radius: 0 0 14px 14px;
+}
+
+/* animation */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.result-content.show { animation: fadeSlideIn 0.35s ease; }
+
+/* print */
+@media print {
+  body { background: #fff; }
+  .main { display: block; padding: 0; }
+  .form-panel { display: none; }
+  .result-panel { box-shadow: none; }
+  .print-row { display: none; }
+  .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .product-hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">👁</div>
+  <div class="header-text">
+    <h1>全自费患者人工晶体匹配决策树</h1>
+    <p>Johnson &amp; Johnson Surgical Vision · TECNIS® IOL 智能推荐系统 · 仅供内部销售培训参考</p>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══════════════ FORM PANEL ══════════════ -->
+  <div class="form-panel">
+    <div class="form-panel-header">
+      <div class="step-badge">患者评估</div>
+      <h2>请填写以下患者信息，自动生成晶体推荐</h2>
+    </div>
+    <div class="form-body">
+
+      <!-- A. 基本信息 -->
+      <div class="section">
+        <div class="section-title"><span class="icon">👤</span> 基本信息（选填）</div>
+        <div class="input-row">
+          <div class="field">
+            <label>患者姓名</label>
+            <input type="text" id="pt-name" placeholder="如：张先生">
+          </div>
+          <div class="field">
+            <label>年龄</label>
+            <input type="number" id="pt-age" placeholder="如：58" min="30" max="100">
+          </div>
+        </div>
+        <div class="input-row">
+          <div class="field">
+            <label>职业 / 生活方式</label>
+            <select id="pt-job">
+              <option value="">请选择</option>
+              <option value="exec">企业高管 / 商务人士</option>
+              <option value="reader">学者 / 作家 / 阅读爱好者</option>
+              <option value="outdoor">户外活动 / 运动爱好者</option>
+              <option value="driver">驾驶频繁（职业司机/常出差）</option>
+              <option value="digital">重度手机/平板用户</option>
+              <option value="retired">退休 / 居家</option>
+              <option value="other">其他</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>手术类型</label>
+            <select id="pt-surgery">
+              <option value="">请选择</option>
+              <option value="cataract">白内障超乳手术（Phaco）</option>
+              <option value="rle">老视矫正透明晶体置换（RLE/CLE）</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-row full">
+          <div class="field">
+            <label>支付方式</label>
+            <select id="pt-payment">
+              <option value="">请选择</option>
+              <option value="self">全自费（私立医院/自费通道）</option>
+              <option value="insurance">医保 / 集采</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- B. 脱镜期望 -->
+      <div class="section">
+        <div class="section-title"><span class="icon">🎯</span> 脱镜期望</div>
+        <div class="radio-group" id="rg-vision">
+          <label class="radio-option" onclick="selectRadio('vision','full',this)">
+            <input type="radio" name="vision" value="full">
+            <div>
+              <div class="opt-title">全程脱镜（远 · 中 · 近）</div>
+              <div class="opt-desc">看远、看电脑、看手机 / 阅读 均不需戴镜</div>
+            </div>
+          </label>
+          <label class="radio-option" onclick="selectRadio('vision','mid-far',this)">
+            <input type="radio" name="vision" value="mid-far">
+            <div>
+              <div class="opt-title">中远距离脱镜即可</div>
+              <div class="opt-desc">近距离（阅读/手机）可接受偶尔戴老花镜</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- C. 光晕耐受（全程脱镜时才显示） -->
+      <div class="section" id="sec-glare" style="display:none">
+        <div class="section-title"><span class="icon">🌙</span> 夜间光晕 / 眩光耐受度</div>
+        <div class="radio-group" id="rg-glare">
+          <label class="radio-option" onclick="selectRadio('glare','low',this)">
+            <input type="radio" name="glare" value="low">
+            <div>
+              <div class="opt-title">耐受度低——对光晕敏感</div>
+              <div class="opt-desc">夜间驾车频繁 · 职业精密视觉需求 · 瞳孔偏大</div>
+            </div>
+          </label>
+          <label class="radio-option" onclick="selectRadio('glare','high',this)">
+            <input type="radio" name="glare" value="high">
+            <div>
+              <div class="opt-title">耐受度高——可接受轻度光晕</div>
+              <div class="opt-desc">心理适应性强 · 夜间驾车较少 · 已充分知情</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- D. 近距需求（中远脱镜时才显示） -->
+      <div class="section" id="sec-near" style="display:none">
+        <div class="section-title"><span class="icon">📱</span> 近距离用眼需求强度</div>
+        <div class="radio-group" id="rg-near">
+          <label class="radio-option" onclick="selectRadio('near','strong',this)">
+            <input type="radio" name="near" value="strong">
+            <div>
+              <div class="opt-title">近距需求较强</div>
+              <div class="opt-desc">频繁看手机、阅读书报、精细近距操作（手工/摄影）</div>
+            </div>
+          </label>
+          <label class="radio-option" onclick="selectRadio('near','weak',this)">
+            <input type="radio" name="near" value="weak">
+            <div>
+              <div class="opt-title">以中远距离为主</div>
+              <div class="opt-desc">主要需求为电脑、驾车、户外活动；近距偶尔即可</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- E. 角膜散光 -->
+      <div class="section">
+        <div class="section-title"><span class="icon">🔬</span> 角膜散光（角膜地形图）</div>
+        <div class="astig-row">
+          <input type="number" id="astig-val" placeholder="0.00" min="0" max="6" step="0.25" oninput="updateAstig()">
+          <span class="astig-unit">D（屈光度）</span>
+          <span class="astig-badge" id="astig-badge"></span>
+        </div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:6px">≥ 0.75D 建议选用散光版（Toric），确保最佳裸眼视力</div>
+      </div>
+
+      <!-- F. 禁忌症筛查 -->
+      <div class="section">
+        <div class="section-title"><span class="icon">⚠️</span> 禁忌症快速筛查（勾选存在的情况）</div>
+        <div class="check-grid">
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" value="dry-eye"> 严重干眼症
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" value="cornea"> 角膜不规则 / 圆锥
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" value="macula"> 黄斑病变 / 前膜
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" value="retina"> 视网膜病变
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" value="pupil"> 瞳孔异常（过大/粘连）
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" value="glaucoma"> 青光眼视野缺损
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" value="anxiety"> 精神焦虑 / 完美主义
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" value="night-drive"> 夜间精密驾驶需求极高
+          </label>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button class="cta-btn" id="cta-btn" onclick="runDecision()">
+        <span>🔍</span> 生成推荐方案
+      </button>
+
+    </div><!-- /form-body -->
+  </div><!-- /form-panel -->
+
+  <!-- ══════════════ RESULT PANEL ══════════════ -->
+  <div class="result-panel">
+
+    <!-- Empty state -->
+    <div class="result-empty" id="result-empty">
+      <div class="empty-icon">🔭</div>
+      <p>请在左侧填写患者评估信息<br>系统将自动为您匹配最适合的<br><strong>眼力健 TECNIS® 人工晶体</strong></p>
+    </div>
+
+    <!-- Result content -->
+    <div class="result-content" id="result-content">
+
+      <!-- Product hero -->
+      <div class="product-hero" id="res-hero">
+        <div class="hero-tier" id="res-tier"></div>
+        <div class="hero-name-en" id="res-name-en"></div>
+        <div class="hero-name-cn" id="res-name-cn"></div>
+        <div class="hero-tagline" id="res-tagline"></div>
+        <div class="hero-model-badge" id="res-model-badge"></div>
+      </div>
+
+      <!-- Toric alert -->
+      <div class="toric-alert" id="toric-alert">
+        <span>📐</span>
+        <span id="toric-msg"></span>
+      </div>
+
+      <!-- Comment -->
+      <div class="comment-section">
+        <h3>🧾 匹配点评 — 为什么这款晶体适合该患者</h3>
+        <div class="comment-text" id="res-comment"></div>
+
+        <div class="match-points" id="res-tags"></div>
+
+        <!-- Specs -->
+        <div class="specs-grid" id="res-specs"></div>
+      </div>
+
+      <!-- Warning bar -->
+      <div class="warning-bar" id="res-warning"></div>
+
+      <!-- Print row -->
+      <div class="print-row">
+        <button class="reset-btn-sm" onclick="resetAll()">重新评估</button>
+        <button class="print-btn" onclick="window.print()"><span>🖨</span> 打印 / 保存 PDF</button>
+      </div>
+
+      <div class="footer">
+        © 2026 Johnson &amp; Johnson Surgical Vision | 本推荐仅供内部培训参考，不作为临床诊疗依据<br>
+        制作：何爱平（Happy）培训团队
+      </div>
+    </div><!-- /result-content -->
+
+  </div><!-- /result-panel -->
+</div><!-- /main -->
+
+<script>
+/* ──────────────────────────────────────────
+   STATE
+────────────────────────────────────────── */
+const state = {
+  vision: null,   // 'full' | 'mid-far'
+  glare:  null,   // 'low'  | 'high'
+  near:   null,   // 'strong' | 'weak'
+  astig:  0,
+  payment: '',
+  contraList: []
+};
+
+/* ──────────────────────────────────────────
+   PRODUCT DATABASE
+────────────────────────────────────────── */
+const products = {
+  odyssey: {
+    id: 'odyssey',
+    tier: '最高端全自费 · FVR 全视程 IOL',
+    nameEn: 'TECNIS Odyssey™',
+    nameCn: '奥德赛',
+    tagline: '全视程 · 远中近完整覆盖 · 暗光清晰卓越',
+    modelStd: 'ZFR00V（非预装）/ DEN00V（Simplicity 智简预装）',
+    modelToric: 'Toric II ZFR00V 散光版（需配合Veritas 飞白激光精准矫正散光）',
+    price: '¥19,800（普通版）/ ¥25,800（散光版）',
+    bg: 'bg-odyssey',
+    borderClass: 'border-odyssey',
+    tagClass: 'tag-odyssey',
+    specs: {
+      '光学设计': 'FVR 全视程（Pan-focal）连续无级视力',
+      '近视力范围': '33cm — 无限远 全程清晰',
+      '光学不良反应': '晕圈 / 眩光：中等，暗光下存在轻微光晕',
+      '散光矫正': '有 Toric II 散光版（ZFR00V）',
+    }
+  },
+  synergy: {
+    id: 'synergy',
+    tier: '高端自费 · 连续视程 + 多焦融合',
+    nameEn: 'TECNIS Synergy™',
+    nameCn: '跃无级®',
+    tagline: '连续视程 + 多焦 · 近视力 33cm · 强光与暗光均优秀',
+    modelStd: 'ICB00（非预装）/ DIB00（Simplicity 智简预装）',
+    modelToric: 'Toric II DIU100/150/225/300/375/450/525/600 散光版',
+    price: '¥6,990（普通版）',
+    bg: 'bg-synergy',
+    borderClass: 'border-synergy',
+    tagClass: 'tag-synergy',
+    specs: {
+      '光学设计': 'InteliLight™ 连续视程 + 多焦融合技术',
+      '近视力范围': '33cm 最佳近视力（适配中国人阅读习惯）',
+      '光学不良反应': '光晕 / 眩光：中等，可接受范围内',
+      '散光矫正': 'Toric II 系列（8 档柱镜可选）',
+    }
+  },
+  puresee: {
+    id: 'puresee',
+    tier: '2026 战略重点新品 · EDOF 新一代',
+    nameEn: 'TECNIS PureSee™',
+    nameCn: '臻无级',
+    tagline: 'OptiCure EDOF · 中远 + 功能性近视力 · 光学干扰最少',
+    modelStd: 'DRN00V（Simplicity 智简预装）',
+    modelToric: 'Toric DRT100/150/225/300 / DRW375 散光版',
+    price: '¥15,800',
+    bg: 'bg-puresee',
+    borderClass: 'border-puresee',
+    tagClass: 'tag-puresee',
+    specs: {
+      '光学设计': 'OptiCure 纯折射 EDOF，高 MTF 对比度',
+      '近视力范围': '功能性近视力（约 50–60cm），近阅读可能仍需眼镜',
+      '光学不良反应': '接近单焦晶体低干扰，光晕发生率最低',
+      '散光矫正': 'Toric DRT/DRW 系列',
+    }
+  },
+  symfony: {
+    id: 'symfony',
+    tier: 'EDOF 经典款 · 中远距离首选',
+    nameEn: 'TECNIS Symfony™（新无级®）',
+    nameCn: '新无级®',
+    tagline: 'Echelette 衍射 EDOF · 消色差 · 中远距离卓越',
+    modelStd: 'ZXR00（非预装）',
+    modelToric: 'Toric ZXT100/150/225/300/375/450/525/600（8 档柱镜）',
+    price: '（院内定价）',
+    bg: 'bg-symfony',
+    borderClass: 'border-symfony',
+    tagClass: 'tag-symfony',
+    specs: {
+      '光学设计': 'Echelette 专利衍射光栅 + 消色差后表面',
+      '近视力范围': '中远距离优秀，近距离（手机/书）仍需老花镜',
+      '光学不良反应': '光晕较低，消色差设计降低色散',
+      '散光矫正': 'Toric ZXT 系列（8 档覆盖范围广）',
+    }
+  },
+  eyhance: {
+    id: 'eyhance',
+    tier: '单焦增强型 · 医保 / 集采 / 禁忌症优选',
+    nameEn: 'TECNIS Eyhance™',
+    nameCn: '艾无级®',
+    tagline: '单焦增强 · 安全边际最高 · 禁忌症最少',
+    modelStd: 'ZCB00（非预装）/ DCB00（Simplicity）/ PCB00（iTec 预装）',
+    modelToric: 'Toric II ZCU100/150/225/300/375/450/525/600',
+    price: '¥1,200（集采价）',
+    bg: 'bg-eyhance',
+    borderClass: 'border-eyhance',
+    tagClass: 'tag-eyhance',
+    specs: {
+      '光学设计': '高阶渐进折射单焦增强，改善中距离质量',
+      '近视力范围': '主要改善远 + 中距离；近距阅读通常仍需老花镜',
+      '光学不良反应': '与单焦晶体相当，发生率极低',
+      '散光矫正': 'Toric II ZCU 系列（8 档柱镜）',
+    }
+  }
+};
+
+/* ──────────────────────────────────────────
+   UI HELPERS
+────────────────────────────────────────── */
+function selectRadio(group, val, el) {
+  state[group] = val;
+  el.closest('.radio-group').querySelectorAll('.radio-option').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input[type=radio]').checked = true;
+
+  if (group === 'vision') {
+    document.getElementById('sec-glare').style.display = val === 'full' ? '' : 'none';
+    document.getElementById('sec-near').style.display  = val === 'mid-far' ? '' : 'none';
+    if (val === 'full') { state.near = null; }
+    if (val === 'mid-far') { state.glare = null; }
+  }
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  const val = el.querySelector('input').value;
+  if (el.classList.contains('checked')) {
+    if (!state.contraList.includes(val)) state.contraList.push(val);
+  } else {
+    state.contraList = state.contraList.filter(v => v !== val);
+  }
+}
+
+function updateAstig() {
+  const v = parseFloat(document.getElementById('astig-val').value) || 0;
+  state.astig = v;
+  const badge = document.getElementById('astig-badge');
+  if (v === 0) { badge.className = 'astig-badge'; badge.textContent = ''; return; }
+  if (v >= 0.75) {
+    badge.className = 'astig-badge show warn';
+    badge.textContent = '建议选 Toric 散光版';
+  } else {
+    badge.className = 'astig-badge show ok';
+    badge.textContent = '散光较低，标准版可';
+  }
+}
+
+/* ──────────────────────────────────────────
+   DECISION LOGIC
+────────────────────────────────────────── */
+function decide() {
+  const payment = document.getElementById('pt-payment').value;
+  const hasCont = state.contraList.length > 0;
+  const isInsurance = payment === 'insurance';
+
+  // 医保/集采 → Eyhance
+  if (isInsurance) return { product: 'eyhance', reason: 'insurance' };
+
+  // 有任一禁忌症 → Eyhance
+  if (hasCont) return { product: 'eyhance', reason: 'contraindication' };
+
+  const vision = state.vision;
+  if (!vision) return null;
+
+  if (vision === 'full') {
+    const glare = state.glare;
+    if (!glare) return null;
+    if (glare === 'low') return { product: 'odyssey', reason: 'full-low-glare' };
+    if (glare === 'high') return { product: 'synergy', reason: 'full-high-glare' };
+  }
+
+  if (vision === 'mid-far') {
+    const near = state.near;
+    if (!near) return null;
+    if (near === 'strong') return { product: 'puresee', reason: 'midfar-near-strong' };
+    if (near === 'weak')   return { product: 'symfony', reason: 'midfar-near-weak' };
+  }
+
+  return null;
+}
+
+/* ──────────────────────────────────────────
+   COMMENT GENERATOR
+────────────────────────────────────────── */
+function generateComment(productId, reason, ptName, ptAge, ptJob, ptSurgery, astig, contraList) {
+  const name = ptName ? `${ptName}` : '该患者';
+  const age  = ptAge  ? `${ptAge}岁` : '';
+  const ageStr = age ? `（${age}）` : '';
+  const surgeryStr = ptSurgery === 'rle' ? '老视矫正透明晶体置换（RLE）' : '白内障超乳手术（Phaco）';
+
+  const jobMap = {
+    exec: '企业高管/商务人士', reader: '学者/阅读爱好者', outdoor: '户外活动爱好者',
+    driver: '频繁驾驶人群', digital: '重度手机/数字设备用户', retired: '退休/居家人士', other: ''
+  };
+  const jobStr = jobMap[ptJob] || '';
+
+  const toricNote = astig >= 0.75 ? `此外，该患者角膜散光达 ${astig}D（≥0.75D 阈值），建议同时选择对应 Toric 散光版，最大化裸眼视觉质量。` : '';
+
+  const contraMap = {
+    'dry-eye': '严重干眼症', 'cornea': '角膜不规则', 'macula': '黄斑病变',
+    'retina': '视网膜病变', 'pupil': '瞳孔异常', 'glaucoma': '青光眼',
+    'anxiety': '精神焦虑', 'night-drive': '夜间精密驾驶需求极高'
+  };
+
+  const comments = {
+    'full-low-glare': () => {
+      return `${name}${ageStr}${jobStr ? '，职业/生活方式为' + jobStr : ''}，选择进行${surgeryStr}，并明确表达了全程脱镜的强烈意愿（远 · 中 · 近均需清晰）。在夜间光晕敏感度评估中，患者对光晕 / 眩光耐受度较低，这一特点使 TECNIS Odyssey™ 奥德赛成为最匹配的选择。
+
+奥德赛采用专利 FVR 全视程（Pan-focal）光学设计，能够提供从 33cm 到无限远的连续清晰视力，无需在各个距离之间切换焦点，视觉质量流畅自然。与同类多焦点晶体相比，奥德赛在暗光环境下的光晕强度更低，边缘散射更少，非常适合对光学不良反应敏感的患者。其 UVAM 材料与紫光过滤发色团设计，更为黄斑提供长期保护。
+
+${toricNote}
+
+【术前沟通建议】仍需向患者说明：全视程晶体在暗光下（尤其夜间路灯周围）可能存在轻微光晕，属于正常适应过程，通常在术后 4–8 周内视觉神经适应后逐渐改善。`;
+    },
+    'full-high-glare': () => {
+      return `${name}${ageStr}${jobStr ? '，职业/生活方式为' + jobStr : ''}，选择进行${surgeryStr}，追求远 · 中 · 近的全程脱镜体验，且对光晕 / 眩光的耐受度较高，心理适应性强。TECNIS Synergy™ 跃无级是当前最匹配的选择。
+
+跃无级采用独创 InteliLight™ 级智融合技术，将连续视程与多焦优势有机结合：既能提供奥德赛式的视程连续性，又在 33cm 的极近距离（中国人阅读习惯）提供卓越的近视力表现。在暗光环境下，跃无级同样展示出高质量的视觉清晰度，适合室内外光线切换频繁的生活场景。
+
+${toricNote}
+
+【术前沟通建议】对于对光晕耐受度高的患者，跃无级的视觉质量通常能够超出预期。建议术前通过模拟器或对话让患者了解可能出现的轻度光晕现象，同时强调其卓越的近视力优势，增强术后满意度。`;
+    },
+    'midfar-near-strong': () => {
+      return `${name}${ageStr}${jobStr ? '，职业/生活方式为' + jobStr : ''}，进行${surgeryStr}，期望获得中远距离的清晰脱镜视力，同时近距离用眼需求较强（频繁看手机、阅读书报、精细操作）。TECNIS PureSee™ 臻无级是当前最理想的匹配。
+
+臻无级是眼力健 2026 年战略重点新品，采用创新 OptiCure 纯折射 EDOF 技术，在提供中远距离优秀清晰度的同时，比传统 EDOF 晶体更向近距离延伸，具备功能性近视力（约 50–60cm），满足该患者频繁近距离用眼的需求。最重要的是，其光学干扰（光晕 / 眩光）发生率接近单焦晶体，对比敏感度（MTF）表现在同类 EDOF 晶体中名列前茅，视觉质量均衡，患者满意度高、适应期短。
+
+${toricNote}
+
+【术前沟通建议】需说明臻无级在手机/阅读距离（33cm 内）的功能性近视力不等同于多焦晶体，极近距离仍可能偶尔需要眼镜，但绝大多数日常生活（手机、菜单、电脑）均可轻松应对。这对于追求视觉自然度与舒适度的患者来说是极佳的平衡点。`;
+    },
+    'midfar-near-weak': () => {
+      return `${name}${ageStr}${jobStr ? '，职业/生活方式为' + jobStr : ''}，进行${surgeryStr}，主要视觉需求集中在中远距离（驾车、户外、电脑屏幕），近距离（手机 / 阅读）偶尔使用老花镜可接受。TECNIS Symfony™ 新无级是最适合的选择。
+
+新无级采用专利 Echelette 衍射光栅设计，配合主动消色差衍射后表面，在中远距离提供连续流畅的清晰视力，并有效降低色差带来的视觉干扰，在各光线条件下均能保持高对比敏感度。对于以中远距离用眼为主的患者，新无级的视觉质量表现往往"接近单焦但胜于单焦"——脱镜率显著提升，同时光学不良反应发生率低于多焦晶体，安全性与视觉满意度均衡。
+
+${toricNote}
+
+【术前沟通建议】请明确告知患者：新无级近距离（33cm 内手机 / 书本）通常仍需老花镜，但中距离（40–80cm 电脑/餐桌菜单）及远距离无需眼镜。对于已接受此前提的患者，术后满意度通常非常高。`;
+    },
+    'insurance': () => {
+      return `${name}${ageStr}选择医保 / 集采支付通道，根据政策要求，高端多焦点 IOL（奥德赛、跃无级、臻无级）不在集采目录内，TECNIS Eyhance™ 艾无级作为已纳入集采的单焦增强型 IOL，是符合政策且能为患者提供最佳视觉改善效果的选择。
+
+艾无级采用全球首创高阶渐进折射技术，在单焦晶体安全性的基础上，显著提升中距离（40–80cm 电脑 / 餐桌）清晰度，并改善远距离成像质量，是集采路径下性价比最高的 IOL。其禁忌症最少，适合包括合并干眼、黄斑病变等复杂情况的患者。
+
+${toricNote}
+
+【术前沟通建议】向患者明确：艾无级主要改善远 + 中距离视力质量；近距离（手机 / 书本）在多数情况下仍需老花镜。若患者希望更好的脱镜效果且经济条件允许，可引导至自费通道重新评估更高端 IOL 选择。`;
+    },
+    'contraindication': () => {
+      const contraNames = contraList.map(c => contraMap[c] || c).join('、');
+      return `${name}${ageStr}经禁忌症筛查发现存在以下情况：${contraNames}。
+
+以上因素是高端多焦点 / 全视程 IOL 的相对或绝对禁忌证，继续选用这类晶体可能导致术后视觉不适加重、患者满意度下降，甚至增加医患纠纷风险。TECNIS Eyhance™ 艾无级单焦增强型 IOL 是当前情况下最安全、最合适的选择。
+
+艾无级的光学原理为纯折射渐进设计，无衍射环，不会产生能量分配损失，对干眼、黄斑、视网膜等眼底情况耐受性最强。其禁忌症在眼力健全线产品中最少，能在保证视觉安全的前提下，为患者提供比普通单焦晶体更优越的中距离视觉质量。
+
+${toricNote}
+
+【处理建议】针对可改善的禁忌症（如干眼症），建议术前进行系统性干眼治疗（人工泪液 / 雾化治疗 / 强脉冲光 IPL），待 TBUT≥7s、Schirmer≥7mm 后重新评估是否可升级至 PureSee 或 Symfony。`;
+    }
+  };
+
+  return (comments[reason] && comments[reason]()) || '';
+}
+
+/* ──────────────────────────────────────────
+   MATCH TAGS
+────────────────────────────────────────── */
+function generateTags(productId, reason, astig) {
+  const tagSets = {
+    'odyssey': ['✅ 全程脱镜', '✅ 暗光清晰', '✅ 光晕敏感可选', '✅ FVR全视程技术', '✅ 高净值患者首选'],
+    'synergy': ['✅ 全程脱镜', '✅ 近视力33cm', '✅ 光晕耐受高', '✅ InteliLight技术', '✅ 阅读/手机用户'],
+    'puresee': ['✅ 光晕最少', '✅ 中远+功能近视力', '✅ 高MTF对比度', '✅ 2026重点新品', '✅ 适应期短'],
+    'symfony': ['✅ 中远距离优先', '✅ 消色差设计', '✅ 光学干扰低', '✅ 驾车/户外人群', '✅ 安全性高'],
+    'eyhance': ['✅ 医保/集采合规', '✅ 禁忌症最少', '✅ 安全边际最高', '✅ 干眼/黄斑可用', '✅ 复杂患者首选'],
+  };
+  const base = tagSets[productId] || [];
+  if (astig >= 0.75) base.push('📐 建议Toric散光版');
+  return base;
+}
+
+/* ──────────────────────────────────────────
+   RUN DECISION
+────────────────────────────────────────── */
+function runDecision() {
+  state.astig = parseFloat(document.getElementById('astig-val').value) || 0;
+
+  const result = decide();
+  if (!result) {
+    alert('请完整填写所有必选评估项（脱镜期望 + 相关子选项），再生成推荐方案。');
+    return;
+  }
+
+  const p = products[result.product];
+  const ptName    = document.getElementById('pt-name').value.trim();
+  const ptAge     = document.getElementById('pt-age').value.trim();
+  const ptJob     = document.getElementById('pt-job').value;
+  const ptSurgery = document.getElementById('pt-surgery').value;
+  const astig     = state.astig;
+  const needToric = astig >= 0.75;
+
+  // Hero
+  document.getElementById('res-hero').className = `product-hero ${p.bg}`;
+  document.getElementById('res-tier').textContent    = p.tier;
+  document.getElementById('res-name-en').textContent = p.nameEn;
+  document.getElementById('res-name-cn').textContent = p.nameCn;
+  document.getElementById('res-tagline').textContent = p.tagline;
+  document.getElementById('res-model-badge').textContent = needToric
+    ? `推荐型号：${p.modelToric.split('（')[0]}`
+    : `推荐型号：${p.modelStd.split('（')[0]}`;
+
+  // Toric alert
+  const toricEl = document.getElementById('toric-alert');
+  if (needToric) {
+    document.getElementById('toric-msg').textContent = `角膜散光 ${astig}D ≥ 0.75D → 建议选用散光版 ${p.modelToric}`;
+    toricEl.classList.add('show');
+  } else {
+    toricEl.classList.remove('show');
+  }
+
+  // Comment
+  const comment = generateComment(result.product, result.reason, ptName, ptAge, ptJob, ptSurgery, astig, state.contraList);
+  const commentEl = document.getElementById('res-comment');
+  commentEl.textContent = comment;
+  commentEl.className = `comment-text ${p.borderClass}`;
+
+  // Tags
+  const tags = generateTags(result.product, result.reason, astig);
+  const tagsEl = document.getElementById('res-tags');
+  tagsEl.innerHTML = tags.map(t => `<span class="match-tag ${p.tagClass}">${t}</span>`).join('');
+
+  // Specs
+  const specsEl = document.getElementById('res-specs');
+  specsEl.innerHTML = Object.entries(p.specs).map(([k,v]) =>
+    `<div class="spec-card"><div class="spec-label">${k}</div><div class="spec-val">${v}</div></div>`
+  ).join('');
+
+  // Warning
+  const warnEl = document.getElementById('res-warning');
+  if (result.reason === 'contraindication') {
+    const contraMap2 = {
+      'dry-eye':'严重干眼症','cornea':'角膜不规则/圆锥','macula':'黄斑病变/前膜',
+      'retina':'视网膜病变','pupil':'瞳孔异常','glaucoma':'青光眼视野缺损',
+      'anxiety':'精神焦虑/完美主义','night-drive':'夜间精密驾驶需求极高'
+    };
+    const contraNames = state.contraList.map(c => contraMap2[c] || c).join('、');
+    warnEl.innerHTML = `<strong>⚠ 禁忌症提示：</strong>检测到以下禁忌症状 —— ${contraNames}。已自动降级推荐至安全性最高的 Eyhance 艾无级，请术前进行全面眼部检查并详细记录知情同意。`;
+    warnEl.classList.add('show');
+  } else if (result.reason === 'insurance') {
+    warnEl.innerHTML = `<strong>ℹ 集采 / 医保路径提示：</strong>当前医保 / 集采政策下，多焦点及全视程 IOL 不纳入报销范围。如患者日后希望升级，可引导至自费通道重新评估。`;
+    warnEl.classList.add('show');
+  } else {
+    warnEl.classList.remove('show');
+  }
+
+  // Show result
+  document.getElementById('result-empty').style.display = 'none';
+  const rc = document.getElementById('result-content');
+  rc.classList.add('show');
+
+  // Scroll to result on mobile
+  if (window.innerWidth < 900) {
+    rc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+/* ──────────────────────────────────────────
+   RESET
+────────────────────────────────────────── */
+function resetAll() {
+  // Reset state
+  state.vision = null; state.glare = null; state.near = null;
+  state.astig = 0; state.payment = ''; state.contraList = [];
+
+  // Reset form inputs
+  document.getElementById('pt-name').value    = '';
+  document.getElementById('pt-age').value     = '';
+  document.getElementById('pt-job').value     = '';
+  document.getElementById('pt-surgery').value = '';
+  document.getElementById('pt-payment').value = '';
+  document.getElementById('astig-val').value  = '';
+
+  // Reset radio groups
+  document.querySelectorAll('.radio-option').forEach(r => {
+    r.classList.remove('selected');
+    r.querySelector('input[type=radio]').checked = false;
+  });
+
+  // Reset checkboxes
+  document.querySelectorAll('.check-item').forEach(c => {
+    c.classList.remove('checked');
+    c.querySelector('input[type=checkbox]').checked = false;
+  });
+
+  // Reset astig badge
+  const badge = document.getElementById('astig-badge');
+  badge.className = 'astig-badge'; badge.textContent = '';
+
+  // Hide conditional sections
+  document.getElementById('sec-glare').style.display = 'none';
+  document.getElementById('sec-near').style.display  = 'none';
+
+  // Reset result
+  document.getElementById('result-content').classList.remove('show');
+  document.getElementById('result-empty').style.display = '';
+  document.getElementById('toric-alert').classList.remove('show');
+  document.getElementById('res-warning').classList.remove('show');
+}
+</script>
+</body>
+</html>

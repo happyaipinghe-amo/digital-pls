@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JJSV IOL、Phaco、FLACS和LipiFlow概览</title>
+<style>
+:root{
+  --ink:#16242d;--muted:#61717d;--line:#dce5e2;--bg:#f5f8f7;--white:#fff;
+  --teal:#0f766e;--green:#2f8c5f;--blue:#245f9d;--purple:#5f184e;--cyan:#1f9fac;
+  --gold:#b6812f;--red:#b64740;--soft:#eef7f4;--soft-blue:#eef4fb;--shadow:0 18px 46px rgba(22,36,45,.11)
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#eaf5f1 0,#f8faf9 360px,var(--bg) 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;line-height:1.62;letter-spacing:0}
+img{max-width:100%;display:block}
+header{max-width:1240px;margin:auto;padding:38px 22px 20px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--teal);font-weight:850}
+.mark{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--teal),#5ba996);display:grid;place-items:center;color:#fff;font-weight:900}
+h1{font-size:clamp(32px,4.2vw,54px);line-height:1.12;margin:18px 0 10px;max-width:920px}
+.subtitle{max-width:980px;margin:0;color:#40525c;font-size:17px}
+.toolbar{position:sticky;top:0;z-index:10;background:rgba(245,248,247,.9);backdrop-filter:blur(14px);border-block:1px solid var(--line)}
+.toolbar-inner{max-width:1240px;margin:auto;padding:12px 22px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.toolbar a,.toolbar button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:7px;padding:9px 12px;font:inherit;font-weight:750;text-decoration:none;cursor:pointer}
+.toolbar a:hover,.toolbar button:hover{border-color:var(--teal);color:var(--teal)}
+.spacer{flex:1}
+main{max-width:1240px;margin:auto;padding:20px 22px 70px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch;margin-bottom:18px}
+.hero-card,.panel,.product,.table-card{background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
+.hero-card{padding:24px;background:linear-gradient(135deg,#fff,#f3fbf8)}
+.eyebrow{display:inline-flex;border-radius:999px;background:var(--soft);color:var(--teal);padding:4px 10px;font-size:12px;font-weight:850}
+.hero-card h2{font-size:31px;line-height:1.18;margin:14px 0 10px;color:#123d38}
+.hero-card p{margin:0 0 14px;color:#40525c}
+.three{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.triad{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.triad-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px;box-shadow:var(--shadow)}
+.triad-card b{display:block;color:#123d38;font-size:18px;margin:8px 0 6px}
+.triad-card p{margin:0;color:#465964;font-size:14px}
+.metric{border:1px solid var(--line);border-radius:8px;padding:13px;background:#fff;text-decoration:none;transition:.18s ease;cursor:pointer}
+.metric:hover{border-color:var(--teal);box-shadow:0 10px 24px rgba(15,118,110,.13);transform:translateY(-1px)}
+.metric:focus-visible{outline:3px solid rgba(15,118,110,.28);outline-offset:2px}
+.metric b{display:block;font-size:24px;line-height:1;color:#123d38}
+.metric span{display:block;margin-top:6px;color:var(--muted);font-size:12px}
+.hero-image{overflow:hidden;display:grid;grid-template-rows:1fr auto;background:#111}
+.hero-image img{width:100%;height:100%;object-fit:cover;background:#fff}
+.caption{padding:10px 12px;color:#dce7e4;background:#142a28;font-size:12px}
+.section-head{margin:26px 0 12px;display:flex;align-items:end;justify-content:space-between;gap:16px}
+.section-head h2{font-size:25px;margin:0;color:#123d38}
+.section-head p{margin:4px 0 0;color:var(--muted);font-size:14px;max-width:780px}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.product{overflow:hidden;display:flex;flex-direction:column;min-height:520px}
+.product figure{height:190px;margin:0;background:#f7faf9;display:grid;place-items:center;border-bottom:1px solid var(--line)}
+.product figure img{width:100%;height:100%;object-fit:contain;padding:10px}
+.product-body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.chip{align-self:flex-start;border-radius:999px;padding:3px 9px;color:#fff;font-size:12px;font-weight:850}
+.purple{background:var(--purple)}.cyan{background:var(--cyan)}.green{background:var(--green)}.blue{background:var(--blue)}.gold{background:var(--gold)}
+.product h3{font-size:19px;line-height:1.18;margin:0;color:#132f36}
+.product .role{font-weight:800;color:#3b4c56;margin:0}
+.product ul{margin:0;padding-left:18px;color:#374a55;font-size:14px}
+.product li{margin:6px 0}
+.source{margin-top:auto;font-size:11px;color:var(--muted)}
+.source a{color:var(--blue);text-decoration:none}
+.panel{padding:20px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.phaco,.flacs,.lipiflow{display:grid;grid-template-columns:.96fr 1.04fr;gap:18px;align-items:center}
+.phaco-image,.flacs-image,.lipiflow-image{border-radius:8px;background:#101716;overflow:hidden;border:1px solid #d0ddda}
+.phaco-image img,.flacs-image img,.lipiflow-image img{width:100%;height:360px;object-fit:contain;background:#fff}
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.feature{border:1px solid var(--line);border-radius:8px;padding:13px;background:#fbfdfc}
+.feature b{display:block;color:#123d38;margin-bottom:4px}
+.feature span{font-size:13px;color:#51626d}
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.step{border:1px solid var(--line);border-radius:8px;background:#fff;padding:14px;min-height:132px;position:relative}
+.num{width:25px;height:25px;border-radius:999px;background:var(--teal);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:900;margin-bottom:8px}
+.step b{display:block;color:#123d38;font-size:14px}
+.step span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.compare{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px}
+table{width:100%;min-width:900px;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid #e2e8e5;padding:11px 12px;vertical-align:top;text-align:left}
+th{background:#12372f;color:#ffe7a3;font-weight:850}
+td{background:#fff;color:#2f424c}
+.notice{border-left:5px solid var(--teal);background:#eef7f4;padding:13px 15px;border-radius:0 8px 8px 0;color:#385059;font-size:13px;margin-top:18px}
+.references{font-size:12px;color:var(--muted)}
+.references a{color:var(--blue);text-decoration:none}
+@media(max-width:1060px){.hero-grid,.phaco,.flacs,.lipiflow,.two-col{grid-template-columns:1fr}.product-grid{grid-template-columns:repeat(2,1fr)}.flow,.triad{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){header{padding-top:28px}.toolbar-inner{align-items:stretch}.toolbar a,.toolbar button{flex:1;text-align:center}.spacer{display:none}.three,.triad,.product-grid,.feature-grid,.flow{grid-template-columns:1fr}.product{min-height:0}.hero-card h2{font-size:26px}.section-head{display:block}}
+@media print{body{background:#fff}.toolbar{display:none}.hero-card,.panel,.product,.table-card,.triad-card{box-shadow:none}.product,.panel,.hero-grid,.phaco,.flacs,.lipiflow,.flow,.triad{break-inside:avoid}.product-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="mark">JJSV</div><span>Johnson & Johnson Surgical Vision｜专业交流概览</span></div>
+  <h1>JJSV IOL、Phaco、FLACS 和 LipiFlow 概览</h1>
+  <p class="subtitle">用一页网页系统介绍 TECNIS IOL 产品矩阵、VERITAS 超声乳化平台、CATALYS 飞秒激光白内障手术平台和 LipiFlow 热脉动治疗：从眼表质量、晶体选择、乳化效率到术后视觉体验，建立屈光性白内障诊疗的完整技术全景。</p>
+</header>
+
+<nav class="toolbar">
+  <div class="toolbar-inner">
+    <a href="#portfolio">IOL产品矩阵</a>
+    <a href="#phaco">Phaco/Veritas</a>
+    <a href="#flacs">Catalys/FLACS</a>
+    <a href="#lipiflow">LipiFlow/MGD</a>
+    <a href="#journey">患者旅程</a>
+    <a href="#compare">快速对照</a>
+    <div class="spacer"></div>
+    <button onclick="window.print()">打印 / 另存为PDF</button>
+  </div>
+</nav>
+
+<main>
+  <section class="hero-grid">
+    <div class="hero-card">
+      <span class="eyebrow">从晶体到飞秒平台的一体化高端白内障解决方案</span>
+      <h2>不是单一产品介绍，而是一套围绕眼表、晶体、超乳、飞秒平台和患者体验的系统方案。</h2>
+      <p>JJSV 的 TECNIS 家族覆盖单焦、增强型单焦、EDOF、全视程和散光矫正等不同需求；VERITAS 支撑白内障晶状体乳化与前房稳定；CATALYS 把高端 IOL 所需要的精准撕囊、切口规划和术中影像引导转化为可感知的手术能力；LipiFlow 则帮助医院把 MGD 眼表管理前移，为屈光性白内障结果打好地基。</p>
+      <div class="three">
+        <a class="metric" href="#portfolio"><b>IOL</b><span>从基础清晰到老视矫正</span></a>
+        <a class="metric" href="#phaco"><b>Phaco</b><span>Veritas超乳与前房稳定</span></a>
+        <a class="metric" href="#flacs"><b>FLACS</b><span>飞秒辅助白内障手术</span></a>
+        <a class="metric" href="#lipiflow"><b>LipiFlow</b><span>MGD眼表管理与热脉动治疗</span></a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://brand.jjvision.com/transform/01e0cf40-8575-4a3d-8948-aadf40fe33a0/CATALYS-Product-Photo-No-Bed" alt="CATALYS Precision Laser System">
+      <div class="caption">CATALYS Precision Laser System｜图片来源：J&J Vision Professional</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <h2>整体定位：四项能力共同支撑屈光性白内障中心</h2>
+        <p>IOL、Phaco、FLACS 和 LipiFlow 不应被分开讲成孤立产品。更自然的临床逻辑是：先把眼表调稳，再把晶体选准，用稳定高效的超乳完成核心手术步骤，并用飞秒平台提升精准度与患者体验。</p>
+      </div>
+    </div>
+    <div class="triad">
+      <div class="triad-card"><span class="eyebrow">眼表地基</span><b>LipiFlow</b><p>针对睑板腺功能障碍（MGD）的热脉动治疗，帮助改善油脂分泌和蒸发过强型干眼，为术前测量和术后视觉质量创造更稳定条件。</p></div>
+      <div class="triad-card"><span class="eyebrow">光学方案</span><b>TECNIS IOL</b><p>按患者视觉目标分层选择单焦、增强型单焦、EDOF、全视程或 Toric，让方案从“晶体型号”回到“患者生活质量”。</p></div>
+      <div class="triad-card"><span class="eyebrow">超乳平台</span><b>VERITAS Phaco</b><p>通过流体控制、能量管理和符合手术习惯的人机工程设计，为白内障核心步骤提供稳定、高效、可控的手术基础。</p></div>
+      <div class="triad-card"><span class="eyebrow">精准平台</span><b>CATALYS / FLACS</b><p>通过 3D OCT 影像、精准撕囊和激光切口规划，把高端 IOL 的居中性、稳定性和高端手术体验更清晰地呈现出来。</p></div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <div class="section-head">
+      <div>
+        <h2>一、TECNIS IOL 产品矩阵</h2>
+        <p>介绍时建议按照“患者视觉目标”展开：基础清晰、增强中距离、低干扰 EDOF、全视程摘镜诉求、散光矫正与高端视觉质量。</p>
+      </div>
+    </div>
+    <div class="product-grid">
+      <article class="product">
+        <figure><img src="https://amvtecnologia.com.ve/wp-content/uploads/2023/07/amv_jnj_tecnis-1_01.jpg" alt="TECNIS 1-piece monofocal IOL"></figure>
+        <div class="product-body">
+          <span class="chip blue">基础清晰</span>
+          <h3>TECNIS 1-Piece / ZCB00</h3>
+          <p class="role">经典非球面单焦 IOL</p>
+          <ul>
+            <li>核心价值：稳定远视力与成熟的白内障基础方案。</li>
+            <li>适合场景：以清晰、安全、可及性为优先的常规白内障患者。</li>
+            <li>沟通语言：先把远距离清晰讲透，再说明近距离阅读通常仍需眼镜。</li>
+          </ul>
+          <div class="source">图片来源：公开产品图</div>
+        </div>
+      </article>
+
+      <article class="product">
+        <figure><img src="https://einstein-clients.imgix.net/2664/447494/original_J%26J_TECNIS_Eyhance.png?auto=format&fit=crop&fp-y=0.8&h=400&w=600" alt="TECNIS Eyhance IOL"></figure>
+        <div class="product-body">
+          <span class="chip green">增强中距离</span>
+          <h3>TECNIS Eyhance / DCB00</h3>
+          <p class="role">增强型单焦 IOL</p>
+          <ul>
+            <li>核心价值：在单焦基础上改善功能性中距离表现。</li>
+            <li>适合场景：希望提升日常中距离便利性，同时重视低光学干扰的患者。</li>
+            <li>沟通语言：不是“多焦”，而是让日常生活的中距离更友好。</li>
+          </ul>
+          <div class="source">图片来源：网页搜索公开产品图</div>
+        </div>
+      </article>
+
+      <article class="product">
+        <figure><img src="https://images.contentstack.io/v3/assets/bltc6e7ece114c6734f/blt486ee1189c9d4b8c/697925a9446329ebfa6a562b/TECNIS-PureSee_25th_year_2.png?branch=prod_alias" alt="TECNIS PureSee IOL"></figure>
+        <div class="product-body">
+          <span class="chip cyan">低干扰 EDOF</span>
+          <h3>TECNIS PureSee / DEN00V</h3>
+          <p class="role">纯折射 EDOF 老视矫正 IOL</p>
+          <ul>
+            <li>官方定位：纯折射 EDOF，视觉干扰表现接近单焦。</li>
+            <li>J&J Vision Professional 页面列出：90% 患者偶尔或从不戴镜，97% 愿意推荐给亲友。</li>
+            <li>沟通语言：适合强调“白天夜间高质量视觉”和低干扰平衡。</li>
+          </ul>
+          <div class="source">图片/信息来源：<a href="https://www.jnjvisionpro.com/en-us/products/tecnis-puresee/">J&J Vision Professional</a></div>
+        </div>
+      </article>
+
+      <article class="product">
+        <figure><img src="https://www.multivu.com/players/English/8471352-jnj-vision-tecnis-synergy-iol-escrs-2019-congress/image/Photo3_1568421336051-HR.jpg" alt="TECNIS Synergy IOL"></figure>
+        <div class="product-body">
+          <span class="chip gold">连续视程</span>
+          <h3>TECNIS Synergy / ZFR00</h3>
+          <p class="role">EDOF + 多焦设计思路的老视矫正 IOL</p>
+          <ul>
+            <li>核心价值：提供较宽的连续视程，满足远中近多场景需求。</li>
+            <li>适合场景：对摘镜需求较强，并能接受充分预期管理的患者。</li>
+            <li>沟通语言：强调“连续范围”，同时提前说明光晕眩光等可能体验。</li>
+          </ul>
+          <div class="source">图片来源：J&J Vision 发布图 / MultiVu</div>
+        </div>
+      </article>
+
+      <article class="product">
+        <figure><img src="https://images.contentstack.io/v3/assets/bltc6e7ece114c6734f/blt05a7f12132e1ef75/69791f78f19f606f8299b26d/Odyssey_25th_year_6.png?branch=prod_alias" alt="TECNIS Odyssey IOL"></figure>
+        <div class="product-body">
+          <span class="chip purple">旗舰全视程</span>
+          <h3>TECNIS Odyssey / DRN00V</h3>
+          <p class="role">Full Visual Range 全视程 IOL</p>
+          <ul>
+            <li>官方定位：high quality, full visual range IOL。</li>
+            <li>J&J Vision Professional 页面列出：94% 对不戴镜总体视觉满意，96% 对手机/平板阅读满意。</li>
+            <li>沟通语言：适合讲“任何距离、不同光线下的高质量视觉”。</li>
+          </ul>
+          <div class="source">图片/信息来源：<a href="https://www.jnjvisionpro.com/en-us/products/tecnis-odyssey/">J&J Vision Professional</a></div>
+        </div>
+      </article>
+
+      <article class="product">
+        <figure><img src="https://i.cdn.newsbytesapp.com/images/l144_16591773335658.jpg" alt="TECNIS Odyssey Toric IOL"></figure>
+        <div class="product-body">
+          <span class="chip purple">全视程 + 散光</span>
+          <h3>TECNIS Odyssey Toric II</h3>
+          <p class="role">全视程散光矫正 IOL</p>
+          <ul>
+            <li>核心价值：在全视程基础上同步处理规则角膜散光。</li>
+            <li>适合场景：有散光、追求高端视觉质量、愿意做精细术前规划的患者。</li>
+            <li>沟通语言：散光不是“小问题”，它会影响视觉稳定性和满意度。</li>
+          </ul>
+          <div class="source">图片来源：网页搜索公开新闻图</div>
+        </div>
+      </article>
+
+      <article class="product">
+        <figure><img src="https://svjetlost.hr/UserDocsImages/usluge/mrena/intraokularne-lece.jpg" alt="TECNIS IOL portfolio display"></figure>
+        <div class="product-body">
+          <span class="chip blue">平台化家族</span>
+          <h3>TECNIS Family</h3>
+          <p class="role">一套覆盖不同患者需求的光学平台</p>
+          <ul>
+            <li>交流重点不是“哪个最高端”，而是“哪类患者最需要哪类视觉能力”。</li>
+            <li>产品矩阵让医院可以从常规白内障逐步升级到高端老视矫正。</li>
+            <li>配合标准化检查、咨询和随访，才能形成稳定的高端项目能力。</li>
+          </ul>
+          <div class="source">信息参考：<a href="https://www.jnjvisionpro.com/en-us/tecnis-family-of-iols/">TECNIS Family of IOLs</a></div>
+        </div>
+      </article>
+
+      <article class="product">
+        <figure><img src="https://www.ahpmedicals.com/media/catalog/product/cache/74c1057f7991b4edb2bc7bdaa94de933/2/2/22_8_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1.jpg" alt="TECNIS Synergy OptiBlue packaging"></figure>
+        <div class="product-body">
+          <span class="chip gold">患者教育素材</span>
+          <h3>视觉体验讲解</h3>
+          <p class="role">把光学参数转化为患者能理解的场景</p>
+          <ul>
+            <li>远：开车、看路牌、户外活动。</li>
+            <li>中：电脑、厨房、仪表盘、会议屏幕。</li>
+            <li>近：手机、菜单、药盒说明、阅读。</li>
+          </ul>
+          <div class="source">图片来源：网页搜索公开产品图</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="phaco">
+    <div class="section-head">
+      <div>
+        <h2>二、VERITAS Phaco：稳定高效的白内障核心手术平台</h2>
+        <p>Phaco 是白内障手术的核心基础能力。对于屈光性白内障和高端 IOL 患者，超乳平台不仅影响核处理效率，也影响前房稳定、角膜内皮保护、术后恢复速度和整体手术体验。</p>
+      </div>
+    </div>
+    <div class="panel phaco">
+      <div class="phaco-image">
+        <img src="https://images.contentstack.io/v3/assets/bltc6e7ece114c6734f/bltf7bf06acea28a7df/67ac4c4eefe40e178c8f69e0/sv_pi_veritas_vision_system_hero_banner.png?branch=prod_alias" alt="VERITAS Vision System phacoemulsification platform">
+      </div>
+      <div>
+        <span class="eyebrow">VERITAS Vision System</span>
+        <h2>把“乳化效率”和“前房稳定”变成屈光性白内障手术的基础保障。</h2>
+        <p>VERITAS 是 J&J Vision 的新一代 phacoemulsification system。公开产品资料介绍其采用 Hybrid Fluidics Technology，结合 Advanced Tubing System 和 Dual Pump System，帮助维持前房稳定并减少 occlusion break surge；同时具备 WHITESTAR 白星技术、三维立体超乳手柄和可调节触控屏等设计，支持医生在不同核硬度和手术习惯下保持可控、高效的操作。</p>
+        <div class="feature-grid">
+          <div class="feature"><b>Hybrid Fluidics</b><span>结合液流控制与管路系统，帮助维持前房稳定，降低涌动风险。</span></div>
+          <div class="feature"><b>Dual Pump System</b><span>支持不同抽吸模式，让医生可按病例与手术习惯选择更合适的控制方式。</span></div>
+          <div class="feature"><b>WHITESTAR 能量管理</b><span>通过脉冲式能量释放理念，帮助提升乳化效率并关注组织保护。</span></div>
+          <div class="feature"><b>人机工程设计</b><span>触控屏、脚踏和手柄设计服务于手术流程顺畅度与医生操作舒适性。</span></div>
+        </div>
+        <div class="source">图片/信息来源：<a href="https://www.jnjvisionpro.com/ja-jp/products/sv/veritas-vision-system/">J&J Vision Professional VERITAS</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="flacs">
+    <div class="section-head">
+      <div>
+        <h2>三、CATALYS 与 FLACS：让高端 IOL 的精准落地更可感知</h2>
+        <p>FLACS 不是简单“多一个设备”，而是把术前规划、影像引导、精准撕囊与患者高端体验连接起来。</p>
+      </div>
+    </div>
+    <div class="panel flacs">
+      <div class="flacs-image">
+        <img src="https://images.contentstack.io/v3/assets/bltc6e7ece114c6734f/blt579c4a6643df6901/67eb70db29f0cd8919184e51/sv_pi_catalys_precision_laser_system_hero_banner_v3.png?branch=prod_alias" alt="CATALYS Precision Laser System hero image">
+      </div>
+      <div>
+        <span class="eyebrow">CATALYS Precision Laser System</span>
+        <h2>从“手术做完”升级为“精准、可解释、可体验”的高端白内障流程。</h2>
+        <p>J&J Vision Professional 页面介绍，CATALYS 具备先进可视化、可靠激光切口和高端患者体验；其 3D OCT 可识别解剖结构并完成超过 10,000 次 A-scan，用于支持手术规划与执行。</p>
+        <div class="feature-grid">
+          <div class="feature"><b>精准撕囊</b><span>有助于 IOL 居中与有效位置稳定，是高端 IOL 视觉质量的重要基础。</span></div>
+          <div class="feature"><b>3D OCT 影像</b><span>把眼内结构“看见”，帮助医生规划并解释手术步骤。</span></div>
+          <div class="feature"><b>激光切口</b><span>标准化、可重复的切口规划，支持高端流程一致性。</span></div>
+          <div class="feature"><b>患者体验</b><span>可作为高端白内障中心区别于常规手术的可视化技术名片。</span></div>
+        </div>
+        <div class="source">图片/信息来源：<a href="https://www.jnjvisionpro.com/en-us/products/catalys-precision-laser-system/">J&J Vision Professional CATALYS</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lipiflow">
+    <div class="section-head">
+      <div>
+        <h2>四、LipiFlow：屈光性白内障不可忽视的眼表质量管理</h2>
+        <p>MGD 是蒸发过强型干眼的重要原因。对于屈光性白内障患者，眼表不稳定会影响术前测量、IOL 计算、术后视觉波动和满意度。LipiFlow 的价值，正是在手术前把这类风险提前识别并干预。</p>
+      </div>
+    </div>
+    <div class="panel lipiflow">
+      <div class="lipiflow-image">
+        <img src="https://images.squarespace-cdn.com/content/v1/58591aed3e00bedc063f7303/1544436516307-JEGV07Y16KG4GD4L50MC/TearScience%2BLIPILOW%2BGER%C3%84T%2BComputer_download_OPT_.jpg" alt="LipiFlow Thermal Pulsation System">
+      </div>
+      <div>
+        <span class="eyebrow">LipiFlow Thermal Pulsation System</span>
+        <h2>把“干眼处理”从术后补救，前移到屈光性白内障术前质量控制。</h2>
+        <p>J&J Vision Professional 页面介绍，LipiFlow 使用 Vectored Thermal Pulse（VTP）技术，在保护角膜和眼球结构的同时，对内睑提供约 42.5°C 热量，并对外睑施加脉动压力，帮助疏通受阻睑板腺、促进脂质分泌。</p>
+        <div class="feature-grid">
+          <div class="feature"><b>内睑恒温加热</b><span>约 42.5°C 热量直接作用于睑板腺所在区域，帮助软化阻塞的睑脂。</span></div>
+          <div class="feature"><b>外睑脉动压力</b><span>配合热量进行周期性按压，帮助排出异常睑脂并恢复腺体流动。</span></div>
+          <div class="feature"><b>一次性眼杯设计</b><span>治疗过程中覆盖并保护角膜和眼球结构，兼顾舒适性与标准化。</span></div>
+          <div class="feature"><b>屈光结果地基</b><span>改善眼表稳定性，有助于提高术前测量可靠性和术后视觉质量满意度。</span></div>
+        </div>
+        <div class="source">图片来源：Ocular Surface Center Berlin｜信息来源：<a href="https://www.jnjvisionpro.com/en-us/products/lipiflow-treatment/">J&J Vision Professional LipiFlow</a></div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top:16px">
+      <div class="panel">
+        <h2>为什么与屈光性白内障相关</h2>
+        <ul>
+          <li>泪膜不稳定会影响角膜曲率、生物测量和 IOL 计算可靠性。</li>
+          <li>高端 IOL 患者对视觉波动、干涩、异物感和夜间视觉质量更敏感。</li>
+          <li>术前主动筛查 MGD，可把“术后不满意”风险提前转化为“术前可解释、可处理”的质量管理。</li>
+          <li>公开随机对照研究显示，白内障术前 LipiFlow 治疗可改善 MGD 相关体征，并对术后干眼症状和眼表指标有积极影响。</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>适合放入医院流程的位置</h2>
+        <ul>
+          <li>初诊筛查：对高端 IOL 候选患者进行 MGD/干眼风险识别。</li>
+          <li>术前优化：对检查结果波动、睑板腺堵塞或症状明显者先处理再复测。</li>
+          <li>方案沟通：向患者解释“先调眼表，再谈晶体”，让高端方案更可信。</li>
+          <li>术后随访：持续管理干眼和眼表波动，保护视觉质量和口碑体验。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="section-head">
+      <div>
+        <h2>五、从患者旅程看产品价值</h2>
+        <p>与院长、主任交流时，不必从参数清单开始；可以沿着患者从检查到术后满意的路径，把 LipiFlow、IOL、VERITAS Phaco 与 CATALYS FLACS 放在同一个屈光性白内障服务闭环里。</p>
+      </div>
+    </div>
+    <div class="flow">
+      <div class="step"><div class="num">1</div><b>眼表筛查</b><span>先看 MGD、干眼、泪膜和角膜表面，判断是否需要 LipiFlow 等术前优化。</span></div>
+      <div class="step"><div class="num">2</div><b>精准测量</b><span>眼表稳定后再做生物测量、角膜、黄斑 OCT，确认适应证与风险。</span></div>
+      <div class="step"><div class="num">3</div><b>IOL 分层</b><span>按视觉目标选择单焦、增强单焦、EDOF、全视程或 Toric。</span></div>
+      <div class="step"><div class="num">4</div><b>Phaco 稳定</b><span>用 VERITAS 支持可控乳化、液流稳定和顺畅手术流程。</span></div>
+      <div class="step"><div class="num">5</div><b>FLACS 加持</b><span>用 CATALYS 支持精准撕囊、切口规划和高端体验表达。</span></div>
+      <div class="step"><div class="num">6</div><b>随访闭环</b><span>追踪视觉质量、满意度、眼表状态和投诉风险，形成口碑。</span></div>
+    </div>
+  </section>
+
+  <section id="compare">
+    <div class="section-head">
+      <div>
+        <h2>六、快速对照表</h2>
+        <p>便于现场快速形成共识：不同产品不是互相替代，而是服务不同患者需求层级。</p>
+      </div>
+    </div>
+    <div class="compare">
+      <table>
+        <thead>
+          <tr><th>产品/平台</th><th>一句话定位</th><th>重点价值</th><th>交流关键词</th><th>注意事项</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>TECNIS 1-Piece / ZCB00</td><td>经典非球面单焦</td><td>远距离清晰、基础稳定</td><td>清晰、安全、成熟</td><td>近距离通常仍需眼镜</td></tr>
+          <tr><td>TECNIS Eyhance / DCB00</td><td>增强型单焦</td><td>在单焦基础上改善功能性中距离</td><td>低干扰、中距离便利</td><td>不应按多焦晶体承诺摘镜</td></tr>
+          <tr><td>TECNIS PureSee / DEN00V</td><td>纯折射 EDOF</td><td>延长焦深、低视觉干扰、日夜高质量视觉</td><td>低干扰、平衡、EDOF</td><td>需完整术前评估与预期管理</td></tr>
+          <tr><td>TECNIS Synergy / ZFR00</td><td>连续视程老视矫正</td><td>覆盖远中近多场景，减少眼镜依赖</td><td>连续视程、摘镜需求</td><td>需说明光晕眩光和神经适应</td></tr>
+          <tr><td>TECNIS Odyssey / DRN00V</td><td>旗舰全视程</td><td>全程视觉、低光下视觉质量、患者满意度</td><td>全视程、任何距离、不同光线</td><td>适应证、眼表和黄斑筛查不可省</td></tr>
+          <tr><td>Odyssey Toric II</td><td>全视程 + 散光矫正</td><td>规则散光患者的高端全程视觉方案</td><td>散光矫正、轴位精准</td><td>角膜规则性、轴位规划和旋转稳定性关键</td></tr>
+          <tr><td>VERITAS Phaco</td><td>新一代超声乳化平台</td><td>Hybrid Fluidics、Dual Pump、WHITESTAR 能量管理、手术流程效率</td><td>前房稳定、可控乳化、高效安全</td><td>需结合医生技术、核硬度、参数设置和完整手术流程使用</td></tr>
+          <tr><td>CATALYS / FLACS</td><td>飞秒激光白内障平台</td><td>精准撕囊、OCT 引导、切口规划、高端体验</td><td>精准、可视化、标准化</td><td>不是替代医生判断，应服务于适应证和流程质量</td></tr>
+          <tr><td>LipiFlow</td><td>MGD 热脉动治疗平台</td><td>内睑加热、外睑脉动压力、改善睑板腺脂质流动</td><td>眼表地基、术前优化、视觉质量</td><td>需先评估干眼/MGD类型；不替代完整眼表诊疗</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="notice">合规提示：本网页用于专业交流与患者教育思路参考，不替代医生诊断、适应证判断、干眼/MGD诊疗方案或正式产品说明书。不同产品在不同国家/地区的上市、适应证和宣传边界可能不同；正式对外使用前请以中国获批标签、公司批准材料和 HCC/法务要求为准。</div>
+
+  <section class="references">
+    <div class="section-head"><div><h2>图片与信息来源</h2></div></div>
+    <p>
+      <a href="https://www.jnjvisionpro.com/en-us/products/tecnis-odyssey/">TECNIS Odyssey - J&J Vision Professional</a>｜
+      <a href="https://www.jnjvisionpro.com/en-us/products/tecnis-puresee/">TECNIS PureSee - J&J Vision Professional</a>｜
+      <a href="https://www.jnjvisionpro.com/ja-jp/products/sv/veritas-vision-system/">VERITAS Vision System - J&J Vision Professional</a>｜
+      <a href="https://www.jnjvisionpro.com/en-us/products/catalys-precision-laser-system/">CATALYS Precision Laser System - J&J Vision Professional</a>｜
+      <a href="https://www.jnjvisionpro.com/en-us/products/lipiflow-treatment/">LipiFlow Treatment - J&J Vision Professional</a>｜
+      <a href="https://www.jnjvisionpro.com/en-us/tecnis-family-of-iols/">TECNIS Family of IOLs - J&J Vision Professional</a>｜
+      <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6858600/">白内障术前 LipiFlow 随机对照研究 - Clinical Ophthalmology 2019</a>
+    </p>
+  </section>
+</main>
+</body>
+</html>

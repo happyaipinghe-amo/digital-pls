@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PLS项目初步共识议题与90天建议行动表-通用版</title>
+  <style>
+    :root {
+      --ink: #1f2d3d;
+      --muted: #667385;
+      --blue: #1f4e79;
+      --blue-dark: #12324f;
+      --line: #d9e2ec;
+      --soft: #f4f7fb;
+      --soft-blue: #eaf2f8;
+      --green: #2f6f62;
+      --gold: #9a6a16;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #eef3f8;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 28px auto;
+      background: var(--white);
+      border: 1px solid #e4ebf2;
+      box-shadow: 0 18px 44px rgba(18, 50, 79, 0.12);
+    }
+
+    header {
+      padding: 34px 42px 20px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(31, 78, 121, 0.08), rgba(47, 111, 98, 0.06)),
+        var(--white);
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--blue-dark);
+      font-size: 34px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .principles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .principles span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 4px 10px;
+      border: 1px solid #cfe0eb;
+      color: var(--blue-dark);
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 42px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    nav a,
+    button {
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid #cad7e2;
+      background: var(--white);
+      color: var(--blue-dark);
+      font: inherit;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    button {
+      background: var(--blue);
+      color: var(--white);
+      border-color: var(--blue);
+    }
+
+    main {
+      padding: 26px 42px 42px;
+    }
+
+    section {
+      margin-top: 28px;
+    }
+
+    section:first-child {
+      margin-top: 0;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: var(--blue);
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 1040px;
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      vertical-align: top;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      color: var(--white);
+      background: var(--blue);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    td {
+      background: var(--white);
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #fbfdff;
+    }
+
+    .num {
+      width: 5%;
+      text-align: center;
+    }
+
+    .topic {
+      width: 12%;
+    }
+
+    .question {
+      width: 43%;
+    }
+
+    .consensus {
+      width: 40%;
+    }
+
+    .phase {
+      width: 10%;
+      color: var(--blue-dark);
+      font-weight: 700;
+    }
+
+    .action {
+      width: 34%;
+    }
+
+    .owners {
+      width: 31%;
+    }
+
+    .output {
+      width: 25%;
+    }
+
+    .metric-name {
+      width: 18%;
+      color: var(--blue-dark);
+      font-weight: 700;
+    }
+
+    .note-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .note-list li {
+      padding: 14px 16px;
+      border-left: 4px solid var(--green);
+      background: var(--soft);
+    }
+
+    .role {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .footer-note {
+      margin-top: 26px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: 100%;
+        margin: 0;
+        border: 0;
+        box-shadow: none;
+      }
+
+      header,
+      .toolbar,
+      main {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
+      .toolbar {
+        position: static;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      table {
+        min-width: 980px;
+      }
+
+      .metrics-table {
+        min-width: 720px;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 12mm;
+      }
+
+      body {
+        background: var(--white);
+      }
+
+      .page {
+        width: auto;
+        margin: 0;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .toolbar {
+        display: none;
+      }
+
+      header {
+        padding: 0 0 14px;
+      }
+
+      main {
+        padding: 16px 0 0;
+      }
+
+      section {
+        break-inside: avoid;
+      }
+
+      .table-wrap {
+        overflow: visible;
+      }
+
+      th,
+      td {
+        padding: 7px 8px;
+        font-size: 10.5px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      .intro,
+      .subtitle {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">PLS 项目共创研讨 | 通用版</p>
+      <h1>PLS项目初步共识议题与90天建议行动表</h1>
+      <p class="subtitle">通用于中国民营医院全自费 PLS 项目启动、共创研讨与阶段复盘</p>
+      <div class="principles" aria-label="项目原则">
+        <span>适应证优先</span>
+        <span>共同决策</span>
+        <span>透明定价</span>
+        <span>患者自主</span>
+        <span>合规审查贯穿始终</span>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <nav aria-label="页面导航">
+        <a href="#topics">共识议题</a>
+        <a href="#plan">90天行动表</a>
+        <a href="#metrics">轻量指标</a>
+        <a href="#collaboration">协作方式</a>
+      </nav>
+      <button type="button" onclick="window.print()">打印/另存为 PDF</button>
+    </div>
+
+    <main>
+      <section id="topics">
+        <h2>一、建议先共同探讨的 6 个初步共识议题</h2>
+        <p class="intro">以下议题不是要求现场立即拍板，而是帮助医院管理层、临床团队、运营团队与合作支持方把 PLS 项目的机会、边界、资源和节奏讨论清楚，形成后续协作的共同语言。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="num">序号</th>
+                <th class="topic">议题</th>
+                <th class="question">建议讨论问题</th>
+                <th class="consensus">希望形成的阶段性共识</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="num">1</td>
+                <td>项目定位</td>
+                <td>本院 PLS 应优先从高端白内障升级、透明晶体置换老视矫正，还是两者并行切入？</td>
+                <td>明确适应证边界、目标患者画像、院内转诊/沟通路径。</td>
+              </tr>
+              <tr>
+                <td class="num">2</td>
+                <td>患者价值</td>
+                <td>围绕“视觉质量”和“旅程体验”，哪些环节最影响自费 PLS 患者的信任、理解与满意？</td>
+                <td>形成患者旅程关键触点清单，优先改善最短板。</td>
+              </tr>
+              <tr>
+                <td class="num">3</td>
+                <td>临床基础</td>
+                <td>现有检查、测量、手术规划、术后随访是否能支撑高端自费患者的稳定体验？</td>
+                <td>对照 PLS 六大支柱，识别需要补强的临床与流程基础。</td>
+              </tr>
+              <tr>
+                <td class="num">4</td>
+                <td>跨部门协作</td>
+                <td>医生、视光、护士、咨询、运营、收费/医保、市场之间如何形成闭环？</td>
+                <td>明确 MDT 协作机制、交接节点和每周复盘节奏。</td>
+              </tr>
+              <tr>
+                <td class="num">5</td>
+                <td>价值定价</td>
+                <td>在合规和患者自主前提下，如何让价格说明更透明、价值表达更清楚？</td>
+                <td>形成透明报价、知情同意、费用解释和合规审核的基本框架。</td>
+              </tr>
+              <tr>
+                <td class="num">6</td>
+                <td>联合支持</td>
+                <td>医院需要合作支持方在哪些方面提供合法合规支持，哪些内容必须由医院自主决策和审核？</td>
+                <td>明确市场、专业教育、医学事务、合规/法务等资源的协作边界。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="plan">
+        <h2>二、90 天建议行动表</h2>
+        <p class="intro">建议采用“小范围启动、每周复盘、边做边优化”的方式推进。90 天目标不是追求声量，而是先跑通一个合规、可复制、患者体验稳定的 PLS 项目闭环。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="phase">阶段</th>
+                <th class="action">建议行动</th>
+                <th class="owners">双方分工</th>
+                <th class="output">阶段输出</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="phase">第 0-15 天<br>共识与诊断</td>
+                <td>完成 PLS 项目现状评估；确认目标患者画像；梳理院内患者旅程；初步识别 3-5 个优先短板。</td>
+                <td><strong class="role">医院：</strong>院长/运营牵头，组织临床、视光、护理、咨询、收费/医保、市场参加。<br><strong class="role">合作支持方：</strong>在合规范围内支持评估工具讲解和六大支柱对标。</td>
+                <td>完成 PLS 诊疗中心自评；形成初步问题清单和优先级。</td>
+              </tr>
+              <tr>
+                <td class="phase">第 16-30 天<br>基础搭建</td>
+                <td>优化检查测量、术前沟通、术后随访的 SOP；建立 MDT 每周病例/流程复盘机制；设计患者教育材料框架。</td>
+                <td><strong class="role">医院：</strong>明确流程 owner，试运行标准化路径。<br><strong class="role">合作支持方：</strong>专业教育/医学事务提供合规范围内的专业支持建议。</td>
+                <td>形成 PLS 患者路径 V1.0、MDT 复盘机制、患者沟通材料草案。</td>
+              </tr>
+              <tr>
+                <td class="phase">第 31-45 天<br>团队训练</td>
+                <td>围绕适应证、晶体选择逻辑、患者沟通、透明定价、风险告知开展团队训练；统一院内表达。</td>
+                <td><strong class="role">医院：</strong>安排医生、视光、咨询、护理、运营共同参与。<br><strong class="role">合作支持方：</strong>在合规批准范围内提供专业教育或项目共创支持。</td>
+                <td>完成核心岗位训练；沉淀常见问题回答和转诊/接诊脚本。</td>
+              </tr>
+              <tr>
+                <td class="phase">第 46-60 天<br>小范围试运行</td>
+                <td>选择合适患者路径进行小范围试运行；记录患者从初诊到术后随访的体验问题；每周复盘改进。</td>
+                <td><strong class="role">医院：</strong>真实流程试运行并记录数据。<br><strong class="role">合作支持方：</strong>协助复盘患者旅程、教育材料和团队协作问题。</td>
+                <td>完成第一轮闭环验证；形成流程问题、体验问题、转化障碍清单。</td>
+              </tr>
+              <tr>
+                <td class="phase">第 61-75 天<br>项目优化</td>
+                <td>根据试运行反馈优化 SOP、患者教育、报价说明、随访触点；确定院内启动或阶段复盘方案。</td>
+                <td><strong class="role">医院：</strong>确认项目组织架构、院内启动安排和材料审核路径。<br><strong class="role">合作支持方：</strong>市场、合规、法务、医学事务等按流程审阅可支持内容。</td>
+                <td>形成 PLS 项目启动方案、合规审查清单、可公开使用材料清单。</td>
+              </tr>
+              <tr>
+                <td class="phase">第 76-90 天<br>启动与复盘</td>
+                <td>开展院内项目启动或阶段复盘；完成首轮数据回顾；确认下一个 90 天优化重点。</td>
+                <td><strong class="role">医院：</strong>组织院内启动、项目复盘和后续责任分工。<br><strong class="role">合作支持方：</strong>在合规批准范围内提供专业教育、项目复盘和持续支持。</td>
+                <td>完成阶段复盘纪要；形成下一阶段目标与责任分工。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="metrics">
+        <h2>三、建议持续跟踪的轻量指标</h2>
+        <div class="table-wrap">
+          <table class="metrics-table">
+            <thead>
+              <tr>
+                <th class="metric-name">跟踪维度</th>
+                <th>建议观察指标</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="metric-name">患者旅程体验</td>
+                <td>咨询等待时间、关键触点满意度、术前疑问关闭率、术后随访完成率</td>
+              </tr>
+              <tr>
+                <td class="metric-name">视觉质量与临床质量</td>
+                <td>检查完整率、测量复核率、术后目标达成情况、投诉/返修/追加解释需求</td>
+              </tr>
+              <tr>
+                <td class="metric-name">团队协同</td>
+                <td>MDT 复盘次数、跨岗位交接完整率、共识问题关闭率</td>
+              </tr>
+              <tr>
+                <td class="metric-name">项目运营</td>
+                <td>适应证匹配患者数、PLS 咨询数、知情同意完整率、透明报价执行率</td>
+              </tr>
+              <tr>
+                <td class="metric-name">合规底线</td>
+                <td>材料审查通过情况、费用说明一致性、患者自主选择记录完整性</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="collaboration">
+        <h2>四、会后建议确认的协作方式</h2>
+        <ul class="note-list">
+          <li>建议医院内部指定 1 名项目负责人，并与合作支持方确定 1 名沟通窗口，负责会后资料、会议纪要、行动项和时间表跟进。</li>
+          <li>建议每周进行一次 30 分钟项目例会，重点看问题是否关闭、流程是否更顺、患者反馈是否更稳定。</li>
+          <li>所有面向患者或外部传播的内容，建议先完成医院内部审阅，并按照合作支持方合规、法务、医学事务等流程确认支持边界。</li>
+        </ul>
+        <p class="footer-note">原则：适应证优先、共同决策、透明定价、患者自主、合规审查贯穿始终</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
