@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="qa.css">
   <link rel="stylesheet" href="auth.css">
   <link rel="stylesheet" href="revenue.css">
+  <link rel="stylesheet" href="pls-concept.css">
   <script src="mdt-data.js" defer>
 </script>
   <script src="inventory-data.js" defer>
@@ -79,6 +80,7 @@
     <button class="mobile-menu" id="menuButton" aria-label="打开导航" aria-expanded="false">☰</button>
     <nav id="mainNav" aria-label="主导航">
       <button data-view="home" class="active">首页</button>
+<button data-view="concept">认识PLS</button>
 <button data-view="journey">PLS患者旅程</button>
 <button data-view="clinical">临床工作台</button>
 <button data-view="capability">医院PLS能力建设</button>
@@ -123,6 +125,7 @@
 <div class="intro-actions">
 <button type="button" class="intro-primary" data-go="home">进入 Digital PLS 工作台 <span aria-hidden="true">→</span>
 </button>
+<button type="button" class="intro-secondary intro-concept-link" data-go="concept">PLS到底是什么？</button>
 <a href="#introValue" class="intro-secondary">了解项目价值 ↓</a>
 </div>
 <small>背景为生成的医院场景示意，并非合作医院实景。</small>
@@ -274,9 +277,9 @@
 </h1>
 <p>以患者为中心，连接临床判断、团队协作与长期随访。</p>
 <div class="hero-buttons">
-<button class="primary" data-go="journey">查看患者旅程 <span aria-hidden="true">→</span>
+<button class="primary" data-go="concept">PLS到底是啥？ <span aria-hidden="true">→</span>
 </button>
-<button class="ghost" data-go="capability">查看六大支柱</button>
+<button class="ghost" data-go="journey">查看患者旅程</button>
 </div>
 <small>医院建筑为生成的场景示意，并非实景照片</small>
 </div>
@@ -311,6 +314,10 @@
 </div>
 </div>
       </div>
+      <section class="home-concept-band" aria-labelledby="homeConceptTitle">
+<div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="homeConceptTitle">先统一概念，再进入患者旅程</h2><p><strong>P</strong>remium 是更高标准，<strong>L</strong>ens 是晶状体，<strong>S</strong>urgery 是手术。PLS不是“更贵的IOL手术”，而是一套高质量晶状体诊疗与医院能力体系。</p></div>
+<button type="button" class="outline" data-go="concept">认识PLS →</button>
+</section>
       <div class="journey-strip">
 <div class="section-line">
 <h2>PLS 患者旅程</h2>
@@ -488,6 +495,80 @@
 <button class="text-button" data-go="inventory">查看 IOL 与设备耗材 →</button>
 </section>
 </div>
+    </section>
+
+    <section id="concept" class="view concept-page" aria-labelledby="conceptTitle">
+      <header class="concept-hero">
+        <div class="concept-hero-copy">
+          <span class="eyebrow">FOR CEO · PLS EXPLAINED</span>
+          <h1 id="conceptTitle">PLS到底是啥？</h1>
+          <p class="concept-lead">PLS是<strong>Premium Lens Surgery</strong>的缩写，中文可表述为“高端晶状体手术”。它不是某一款人工晶状体、设备或单一术式，而是一套以患者视觉质量和生活方式需求为中心的高质量晶状体诊疗与医院能力体系。</p>
+          <p class="concept-keyline">这里的Premium，首先代表更高标准、更精准匹配和更完整责任，而不是单纯代表更高价格。</p>
+        </div>
+        <aside class="concept-ceo-answer" aria-label="给CEO的一句话">
+          <span>给CEO的一句话</span>
+          <blockquote>PLS不是发明了一种新手术，而是把已有的医学技术、患者服务和质量管理，连接成一套医院能够稳定运行的高质量视觉医疗模式。</blockquote>
+        </aside>
+      </header>
+
+      <section class="concept-section concept-letters" aria-labelledby="lettersTitle">
+        <div class="concept-section-head"><span>01</span><div><p>UNDERSTAND THE NAME</p><h2 id="lettersTitle">三个字母，分别意味着什么？</h2></div></div>
+        <div class="letter-grid">
+          <article><b>P</b><div><h3>Premium</h3><strong>更高的医疗与服务标准</strong><p>更完整的医学检查、更精准的需求与技术匹配、更充分的知情沟通、更稳定的手术质量，以及更连续的术后随访。</p><small>不是“更贵”，也不是寻找“更有钱”的患者。</small></div></article>
+          <article><b>L</b><div><h3>Lens</h3><strong>自然晶状体与人工晶状体</strong><p>既要评估人眼原有的自然晶状体，也要讨论人工晶状体能否与眼健康、视觉目标和生活场景相匹配。</p><small>不是简单选择一枚IOL。</small></div></article>
+          <article><b>S</b><div><h3>Surgery</h3><strong>以安全和视觉质量为核心的手术</strong><p>主要涵盖白内障患者的晶状体手术，以及对严格筛选的老视患者开展的CLE/RLE讨论。</p><small>两条路径的医学背景与决策门槛不同。</small></div></article>
+        </div>
+      </section>
+
+      <section class="concept-section concept-newness" aria-labelledby="newnessTitle">
+        <div class="concept-section-head"><span>02</span><div><p>WHAT IS NEW</p><h2 id="newnessTitle">PLS是一个新概念吗？</h2></div></div>
+        <div class="newness-layout">
+          <div><h3>医学技术并非凭空出现</h3><p>白内障手术、CLE/RLE、人工晶状体、精准生物测量、眼表与眼底评估、Phaco、FLACS、患者教育和术后随访，都有各自既有的医学与实践基础。</p></div>
+          <div><h3>新的，是体系化的连接</h3><p>PLS把过去分散的技术和服务连接起来：从只关注“手术是否完成”，进一步走向“患者是否获得适合其生活方式的视觉结果，以及医院能否稳定、规范地交付这种结果”。</p></div>
+        </div>
+      </section>
+
+      <section class="concept-section" aria-labelledby="pathsTitle">
+        <div class="concept-section-head"><span>03</span><div><p>TWO CLINICAL PATHWAYS</p><h2 id="pathsTitle">PLS主要涉及两条临床路径</h2></div></div>
+        <div class="path-table" role="table" aria-label="PLS两条临床路径比较">
+          <div class="path-row path-header" role="row"><span role="columnheader">临床路径</span><span role="columnheader">适用背景</span><span role="columnheader">决策重点</span></div>
+          <div class="path-row" role="row"><strong role="cell">白内障患者的晶状体手术</strong><span role="cell">晶状体混浊已经影响视功能和合理生活需求。</span><span role="cell">在治疗白内障的同时，根据眼健康、散光和视觉目标进行屈光规划。</span></div>
+          <div class="path-row" role="row"><strong role="cell">严格筛选后的CLE/RLE</strong><span role="cell">晶状体透明或混浊不明显，但患者有明确老视矫正需求。</span><span role="cell">需要更审慎地权衡风险、替代方案、长期影响和患者可接受的取舍。</span></div>
+        </div>
+        <p class="concept-note">两条路径都必须以患者安全和视觉质量为核心，但不能使用同一种筛选尺度、沟通语言或预期管理方式。</p>
+      </section>
+
+      <section class="concept-section concept-flow" aria-labelledby="dlsTitle">
+        <div class="concept-section-head"><span>04</span><div><p>FROM DLS TO PLS</p><h2 id="dlsTitle">DLS帮助理解晶状体老化，但不是手术指征</h2></div></div>
+        <div class="flow-steps" aria-label="从DLS医学认知到PLS医院能力">
+          <div><b>晶状体老化连续谱</b><span>老视 → 光学质量变化 → 早期白内障 → 明显白内障</span></div><i aria-hidden="true">↓</i>
+          <div><b>真实生活视觉困扰</b><span>阅读、电脑、手机、夜间驾驶、眩光和对比敏感度</span></div><i aria-hidden="true">↓</i>
+          <div><b>规范评估与共同决策</b><span>眼健康检查 → 需求分析 → 适应证 → 方案比较 → 风险告知</span></div><i aria-hidden="true">↓</i>
+          <div><b>PLS医院能力体系</b><span>精准匹配 → 稳定手术 → 全旅程体验 → 主动随访 → 结果复盘</span></div>
+        </div>
+        <p class="concept-boundary"><strong>必须说清楚：</strong>DLS不是一个已经建立统一诊断标准和治疗指南的独立疾病实体，也不能推出“患者应该做手术”。任何治疗决定仍须回到规范诊断、检查发现、医学适应证、替代方案和共同决策。</p>
+      </section>
+
+      <section class="concept-section" aria-labelledby="notTitle">
+        <div class="concept-section-head"><span>05</span><div><p>FOUR BOUNDARIES</p><h2 id="notTitle">PLS不是什么？</h2></div></div>
+        <ol class="boundary-list">
+          <li><b>不是单一产品、设备或术式的名称</b><p>使用屈光型IOL、飞秒激光或先进检查设备，不能自动等同于PLS。</p></li>
+          <li><b>不等同于“全自费白内障手术”</b><p>支付方式只能说明费用来源，不能定义医疗价值。</p></li>
+          <li><b>不是脱离医学适应证的消费手术</b><p>患者支付能力不能替代风险收益判断，更不能成为放宽医学标准的理由。</p></li>
+          <li><b>不是由医生或患者单方面决定的方案</b><p>医生把关医学适应证，患者表达生活目标与可接受取舍，通过充分沟通形成共同决策。</p></li>
+        </ol>
+      </section>
+
+      <section class="concept-section concept-outcomes" aria-labelledby="outcomesTitle">
+        <div class="concept-section-head"><span>06</span><div><p>TWO OUTCOMES</p><h2 id="outcomesTitle">PLS最终要实现什么？</h2></div></div>
+        <div class="outcome-grid"><div><b>01</b><h3>适合患者的精准视觉结果</h3><p>不是只追求一个屈光数字，而是让术后表现尽可能符合已经充分讨论的工作距离、双眼视觉需求和生活场景。</p></div><div><b>02</b><h3>透明、安心的全旅程体验</h3><p>患者知道为什么检查、为什么适合或不适合、不同选择有什么取舍，以及术后何时观察、何时联系医院。</p></div></div>
+      </section>
+
+      <section class="concept-next" aria-labelledby="conceptNextTitle">
+        <div><span class="eyebrow">FROM CONCEPT TO PRACTICE</span><h2 id="conceptNextTitle">概念清楚以后，进入医院的真实工作</h2><p>IDEAL是前端患者路径，六大支柱是后台能力系统，CEO驾驶舱用于持续复盘质量、团队和行动。</p></div>
+        <div class="concept-next-actions"><button class="primary" type="button" data-go="journey">查看患者旅程 →</button><button class="outline" type="button" data-go="capability">查看医院PLS能力 →</button><button class="outline" type="button" data-go="ceo">进入CEO驾驶舱 →</button></div>
+      </section>
+      <p class="concept-source">内容依据《PLS的定义、边界与医学基础：从DLS到PLS》整理。页面用于项目沟通与团队学习，不替代临床指南、医生判断及医院合规审核。</p>
     </section>
 
     <section id="inventory" class="view page inventory-page" aria-labelledby="inventoryPageTitle">
@@ -1128,6 +1209,10 @@
 <button class="outline" data-go="operations">← 返回运营</button>
 </div>
 <p class="feature-boundary">演示数据，仅保存在本浏览器；不是医院经营报表。</p>
+<section class="concept-ceo-entry" aria-labelledby="ceoConceptTitle">
+<div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="ceoConceptTitle">在看经营数据之前，先回答：PLS到底是啥？</h2><p>Premium是更高标准，Lens是晶状体，Surgery是手术。它是一套高质量晶状体诊疗与医院能力体系，不是单一产品或高价IOL项目。</p></div>
+<button class="outline" type="button" data-go="concept">查看完整解释 →</button>
+</section>
 <div id="ceoMetrics" class="feature-metrics">
 </div>
 <div class="feature-columns">
