@@ -14,7 +14,7 @@ function renderRoleWork() {
   const role=state.role, tasks=state.tasks.filter(t=>!t.done&&roleMatches(t.owner,role)), patients=state.patients.filter(p=>roleMatches(handoffSteps[p.stage]?.from||'',role));
   $('#roleWorkTitle').textContent=`${role} · 今日工作入口`;
   $('#roleWorkSubtitle').textContent='依据当前演示记录显示，角色切换不代表权限验证。';
-  let cards=[...patients.slice(0,2).map(p=>`<div class="role-work-item"><b>${esc(p.name)} · ${esc(stages[p.stage])}</b><small>当前环节：${esc(handoffSteps[p.stage].work)}</small><button class="wide-button" data-open-patient="${esc(p.id)}">处理患者 →</button></div>`),...tasks.slice(0,2).map(t=>`<div class="role-work-item"><b>${esc(t.title)}</b><small>${esc(t.phase)} · 90 天行动</small><button class="wide-button" data-go="operations">查看行动 →</button></div>`)];
+  let cards=[...patients.slice(0,2).map(p=>`<div class="role-work-item"><b>${esc(p.name)} · ${esc(stages[p.stage])}</b><small>当前环节：${esc(handoffSteps[p.stage].work)}</small><button class="wide-button" data-open-patient="${esc(p.id)}">处理患者 →</button></div>`),...tasks.slice(0,2).map(t=>`<div class="role-work-item"><b>${esc(t.title)}</b><small>${esc(t.phase)} · 30/60/90天行动</small><button class="wide-button" data-go="operations">查看行动 →</button></div>`)];
   if(role==='院长/CEO') cards.unshift('<div class="role-work-item"><b>医院质量与进展</b><small>查看患者路径、六大支柱与团队学习</small><button class="wide-button" data-go="ceo">进入驾驶舱 →</button></div>');
   if(!cards.length) cards=['<div class="role-work-item"><b>暂无本岗位待办</b><small>可在患者旅程或行动清单中新增演示记录</small><button class="wide-button" data-go="journey">查看患者 →</button></div>'];
   $('#roleWorkItems').innerHTML=cards.join('');
@@ -39,7 +39,7 @@ function renderLearning() {
 }
 function renderCeo() {
   const cohort=state.patients.filter(p=>monthOf(p.createdAt)===monthOf(localDate())), atRisk=state.patients.filter(p=>p.riskNote || (p.stage>=4&&p.checks.some(v=>!v))), doneTasks=state.tasks.filter(t=>t.done).length;
-  $('#ceoMetrics').innerHTML=[['本月演示入组',cohort.length,'按建档月份'],['进入手术环节',cohort.filter(p=>p.stage>=6).length,'本月入组患者'],['需复核',atRisk.length,'检查缺项或有复核问题'],['行动完成',`${doneTasks}/${state.tasks.length}`,'90 天行动']].map(([label,value,note])=>`<div class="feature-metric"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`).join('');
+  $('#ceoMetrics').innerHTML=[['本月演示入组',cohort.length,'按建档月份'],['进入手术环节',cohort.filter(p=>p.stage>=6).length,'本月入组患者'],['需复核',atRisk.length,'检查缺项或有复核问题'],['行动完成',`${doneTasks}/${state.tasks.length}`,'30/60/90天行动']].map(([label,value,note])=>`<div class="feature-metric"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`).join('');
   $('#ceoQuality').innerHTML=`<div class="feature-row"><span>完整标记检查项</span><b>${state.patients.filter(p=>p.checks.every(Boolean)).length}/${state.patients.length}</b></div><div class="feature-row"><span>术后随访阶段</span><b>${state.patients.filter(p=>p.stage>=7).length}</b></div><div class="feature-row"><span>患者来源已记录</span><b>${state.patients.filter(p=>p.source).length}/${state.patients.length}</b></div><button class="wide-button" data-go="funnel">查看本月漏斗 →</button>`;
   $('#ceoPillars').innerHTML=state.audit.map((status,i)=>`<div class="feature-row"><span>${esc(pillars[i][0])}</span><b>${esc(status)}</b></div>`).join('');
   $('#ceoTraining').innerHTML=Object.keys(learningTopics).map(role=>`<div class="feature-row"><span>${esc(role)}</span><b>${trainingDone(role)?'演示达标':'待完成'}</b></div>`).join('')+'<button class="wide-button" data-go="capability">查看岗位能力 →</button>';

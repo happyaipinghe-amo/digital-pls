@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="auth.css">
   <link rel="stylesheet" href="revenue.css">
   <link rel="stylesheet" href="pls-concept.css">
+  <link rel="stylesheet" href="project-flow.css">
   <script src="mdt-data.js" defer>
 </script>
   <script src="inventory-data.js" defer>
@@ -79,13 +80,12 @@
 </div>
     <button class="mobile-menu" id="menuButton" aria-label="打开导航" aria-expanded="false">☰</button>
     <nav id="mainNav" aria-label="主导航">
-      <button data-view="home" class="active">首页</button>
+      <button data-view="home" class="active">项目总览</button>
 <button data-view="concept">认识PLS</button>
-<button data-view="journey">PLS患者旅程</button>
-<button data-view="clinical">临床工作台</button>
-<button data-view="capability">医院PLS能力建设</button>
-<button data-view="operations">运营与数据</button>
-<button data-view="education">患者教育</button>
+<button data-view="capability">启动与自评</button>
+<button data-view="operations">30/60/90天行动</button>
+<button data-view="journey">医院流程实施</button>
+<button data-view="ceo">复盘与改进</button>
 <button data-view="resources">知识与工具</button>
     </nav>
     <div class="top-actions">
@@ -268,14 +268,18 @@
 <p class="intro-legal">本页为项目沟通演示，所述建设路径需由医院结合实际条件验证，不构成疗效、手术量、收入或患者转化承诺。临床适应证、诊疗方案和产品选择由医疗团队决定；项目、产品和素材使用须遵循当地法规、准入政策及公司合规要求。</p>
     </section>
     <section id="home" class="view" aria-labelledby="homeTitle">
+      <section class="single-hospital-banner" aria-label="网站演示范围">
+<div><span class="eyebrow">SINGLE-HOSPITAL DEMONSTRATION</span><strong>本网站以上海Happy卓越眼科医院为示例</strong><p>演示一家医院如何从项目启动走向流程运行、复盘改进和能力认证；不展示全国42家医院的名单、排名或项目数据。</p></div>
+<span class="single-hospital-badge">单院建设蓝图</span>
+</section>
       <div class="home-top">
         <div class="hero">
 <div class="hero-content">
 <span class="eyebrow">SHANGHAI · DIGITAL PLS PILOT</span>
 <h1 id="homeTitle">Digital PLS<br>
-<span>让每一次视觉选择更清晰</span>
+<span>医院PLS体系建设示例</span>
 </h1>
-<p>以患者为中心，连接临床判断、团队协作与长期随访。</p>
+<p>按照认识、诊断、行动、实施、复盘和认证的顺序，把PLS落实到医院日常工作。</p>
 <div class="hero-buttons">
 <button class="primary" data-go="concept">PLS到底是啥？ <span aria-hidden="true">→</span>
 </button>
@@ -286,7 +290,7 @@
 </div>
         <div class="today">
 <div class="section-line">
-<h2>今日概览</h2>
+<h2>项目概览</h2>
 <span id="todayDate">
 </span>
 </div>
@@ -294,7 +298,7 @@
 <div class="metric-grid">
 <div>
 <b id="metricPatients">3</b>
-<span>演示患者</span>
+<span>试运行患者</span>
 </div>
 <div>
 <b id="metricTasks">4</b>
@@ -309,11 +313,24 @@
 <span>随访待办</span>
 </div>
 </div>
-<div class="mini-heading">患者旅程分布</div>
+<div class="mini-heading">试运行患者阶段</div>
 <div id="stageBars" class="stage-bars">
 </div>
 </div>
       </div>
+      <section class="project-roadmap" aria-labelledby="projectRoadmapTitle">
+<div class="roadmap-heading"><div><span class="eyebrow">ONE HOSPITAL · ONE IMPLEMENTATION PATH</span><h2 id="projectRoadmapTitle">一家医院的PLS建设路线</h2><p>每一阶段都要形成明确输出；完成本阶段的责任、行动和证据后，再进入下一步。</p></div><div class="current-phase"><span>当前演示阶段</span><b>04 30天行动与流程试运行</b><small>下一次复盘：第30天</small></div></div>
+<div class="roadmap-steps">
+<button type="button" class="done" data-go="concept"><i>01</i><b>认识PLS</b><span>CEO理解定位与边界</span><em>已完成</em></button>
+<button type="button" class="done" data-go="capability"><i>02</i><b>项目启动</b><span>负责人和MDT到位</span><em>已完成</em></button>
+<button type="button" class="done" data-go="capability"><i>03</i><b>基线自评</b><span>看见六大支柱差距</span><em>已完成</em></button>
+<button type="button" class="active" data-go="operations"><i>04</i><b>30天行动</b><span>三至五项重点任务</span><em>进行中</em></button>
+<button type="button" data-go="journey"><i>05</i><b>流程实施</b><span>各部门围绕患者协作</span><em>待验证</em></button>
+<button type="button" data-go="ceo"><i>06</i><b>复盘改进</b><span>第30/60/90天复盘</span><em>待开始</em></button>
+<button type="button" data-go="certification"><i>07</i><b>固化与认证</b><span>SOP、证据与持续改进</span><em>待开始</em></button>
+</div>
+<div class="roadmap-next"><div><span>本阶段需要CEO支持</span><b>确认跨部门责任人，并为第30天复盘预留时间</b></div><button class="primary" type="button" data-go="operations">查看当前行动 →</button></div>
+</section>
       <section class="home-concept-band" aria-labelledby="homeConceptTitle">
 <div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="homeConceptTitle">先统一概念，再进入患者旅程</h2><p><strong>P</strong>remium 是更高标准，<strong>L</strong>ens 是晶状体，<strong>S</strong>urgery 是手术。PLS不是“更贵的IOL手术”，而是一套高质量晶状体诊疗与医院能力体系。</p></div>
 <button type="button" class="outline" data-go="concept">认识PLS →</button>
@@ -453,7 +470,7 @@
 <div class="panel-head">
 <div>
 <span class="eyebrow">ACTION</span>
-<h2>90 天行动</h2>
+<h2>30/60/90 天行动</h2>
 </div>
 <button class="text-button" data-go="operations">查看计划 →</button>
 </div>
@@ -586,11 +603,20 @@
 <div class="page-head">
 <div>
 <span class="eyebrow">PATIENT JOURNEY</span>
-<h1 id="journeyTitle">PLS 患者旅程</h1>
-<p>从首次接触到长期随访，用同一份记录连接各岗位。</p>
+<h1 id="journeyTitle">医院流程实施</h1>
+<p>以一位患者为主线，把市场、前台、咨询、检查、医生、手术和随访连接起来。</p>
 </div>
 <button class="primary" id="addPatientButton">＋ 新建演示患者</button>
 </div>
+<section class="implementation-hub" aria-labelledby="implementationHubTitle">
+<div class="implementation-hub-head"><div><span class="eyebrow">DEPARTMENT IMPLEMENTATION</span><h2 id="implementationHubTitle">医院各部门如何开始工作</h2><p>先进入对应岗位的二级工作台，再回到患者旅程完成交接和复盘。</p></div><span class="notice">当前阶段 · 试运行</span></div>
+<div class="implementation-links">
+<button type="button" data-go="clinical"><b>医生与检查团队</b><span>IDEAL需求、检查完整性和术前摘要</span><em>进入临床工作台 →</em></button>
+<button type="button" data-go="education"><b>咨询师与患者教育</b><span>方案解释、视觉示意和投诉回应</span><em>进入患者教育 →</em></button>
+<button type="button" data-go="capability"><b>HR与MDT团队</b><span>岗位标准、自评、学习和短测</span><em>查看岗位能力 →</em></button>
+<button type="button" data-go="inventory"><b>运营与手术支持</b><span>IOL规格及设备耗材演示查询</span><em>查看运营支持 →</em></button>
+</div>
+</section>
 <div class="page-grid">
 <div class="panel">
 <div class="panel-head">
@@ -767,8 +793,8 @@
 <div class="page-head">
 <div>
 <span class="eyebrow">SIX PILLARS · MDT</span>
-<h1 id="capabilityTitle">医院PLS能力建设</h1>
-<p>六大支柱与岗位能力并行建设，让标准落到每天的工作节点。</p>
+<h1 id="capabilityTitle">项目启动与基线自评</h1>
+<p>明确医院负责人和MDT团队，通过六大支柱与岗位能力评估找到最优先的建设差距。</p>
 </div>
 <span class="notice">演示性标准与短测，非正式岗位认证</span>
 </div>
@@ -818,8 +844,8 @@
 <div class="page-grid lower">
 <div class="panel">
 <h2>从评估到改进</h2>
-<p>每项“需改进”都应进入 90 天行动计划，明确医院责任人、期限和复评证据。六大支柱是后台能力系统；IDEAL 是前台患者路径。</p>
-<button class="wide-button" data-go="operations">前往 90 天行动 →</button>
+<p>每项“需改进”都应进入30/60/90天行动计划，明确医院责任人、期限和复评证据。六大支柱是后台能力系统；IDEAL是前台患者路径。</p>
+<button class="wide-button" data-go="operations">前往30/60/90天行动 →</button>
 </div>
 <div class="panel">
 <h2>Collective Genius</h2>
@@ -870,11 +896,19 @@
 <div class="page-head">
 <div>
 <span class="eyebrow">PILOT OPERATIONS</span>
-<h1 id="operationsTitle">运营与 90 天行动</h1>
-<p>让共识落实到责任人、期限和可复核结果。</p>
+<h1 id="operationsTitle">30/60/90天行动</h1>
+<p>先建立最小可运行流程，再通过复盘优化，最后把有效做法固化为医院标准。</p>
 </div>
 <button class="outline" id="exportButton">导出演示数据</button>
 </div>
+<section class="action-cycle" aria-labelledby="actionCycleTitle">
+<div class="action-cycle-head"><span class="eyebrow">IMPLEMENTATION CYCLE</span><h2 id="actionCycleTitle">三个周期，不一次铺开所有工作</h2></div>
+<div class="action-cycle-grid">
+<article class="active"><small>第1至30天</small><h3>建立最小可运行流程</h3><p>选择三至五项重点：患者分流、IDEAL访谈、检查清单、岗位交接、患者教育或随访升级。</p><b>输出：责任人、完成时间、验收证据</b></article>
+<article><small>第31至60天</small><h3>发现问题并优化</h3><p>检查患者在哪里暂缓、信息在哪里断开、哪些岗位没有执行，以及哪些内容需要医生或CEO介入。</p><b>输出：问题清单、修订流程、新行动</b></article>
+<article><small>第61至90天</small><h3>固化并准备认证</h3><p>形成SOP、完成岗位复评、沉淀病例复盘，并判断是否具备扩大运行和能力认证的条件。</p><b>输出：医院标准、运行证据、下一周期</b></article>
+</div>
+</section>
 <div class="page-grid">
 <div class="panel">
 <div class="panel-head">
@@ -1203,12 +1237,16 @@
 <div class="page-head">
 <div>
 <span class="eyebrow">LEADERSHIP DASHBOARD</span>
-<h1 id="ceoTitle">CEO 驾驶舱</h1>
-<p>患者质量、团队能力与改进事项在同一视图复盘。</p>
+<h1 id="ceoTitle">复盘与持续改进</h1>
+<p>在第30、60和90天，用患者质量、团队能力和行动证据判断项目是否真正运行。</p>
 </div>
-<button class="outline" data-go="operations">← 返回运营</button>
+<button class="outline" data-go="operations">← 返回行动计划</button>
 </div>
 <p class="feature-boundary">演示数据，仅保存在本浏览器；不是医院经营报表。</p>
+<section class="review-sequence" aria-labelledby="reviewSequenceTitle">
+<div><span class="eyebrow">REVIEW BEFORE SCALE</span><h2 id="reviewSequenceTitle">CEO复盘先问执行，再问规模</h2><p>本周期做了什么 → 是否真正应用 → 患者和团队发生什么变化 → 哪些流程需要调整 → 下一周期由谁完成。</p></div>
+<button class="outline" type="button" data-go="certification">查看固化与认证 →</button>
+</section>
 <section class="concept-ceo-entry" aria-labelledby="ceoConceptTitle">
 <div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="ceoConceptTitle">在看经营数据之前，先回答：PLS到底是啥？</h2><p>Premium是更高标准，Lens是晶状体，Surgery是手术。它是一套高质量晶状体诊疗与医院能力体系，不是单一产品或高价IOL项目。</p></div>
 <button class="outline" type="button" data-go="concept">查看完整解释 →</button>
@@ -1234,7 +1272,7 @@
 </div>
 </section>
 <section class="panel">
-<h2>90 天行动</h2>
+<h2>30/60/90天行动</h2>
 <div id="ceoActions">
 </div>
 </section>
@@ -1333,7 +1371,7 @@
 </section>
   </main>
   <footer>
-<span>Digital PLS · 上海Happy卓越眼科医院场景演示</span>
+<span>Digital PLS · 上海Happy卓越眼科医院单院建设示例</span>
 <span>IDEAL：个体化视觉设计 · 六大支柱：医院能力基础</span>
 <button type="button" class="text-button" data-go="intro">项目介绍</button>
 </footer>

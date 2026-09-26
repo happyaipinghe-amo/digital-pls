@@ -25,10 +25,10 @@ function seed(){return {role:'院长/CEO',selected:'P001',mdtRole:'咨询师',co
   {id:'P002',name:'患者 B',age:'64 岁',stage:2,priority:'阅读与近距离',concern:'关注阅读舒适度',glasses:'愿意按需戴镜'},
   {id:'P003',name:'患者 C',age:'61 岁',stage:7,priority:'远距离与户外',concern:'术后需要定期随访',glasses:'尚需解释与讨论'}
 ],audit:['未评估','需改进','未评估','达标','需改进','未评估'],tasks:[
-  {id:1,title:'完成六大支柱基线评估',owner:'院长/CEO',phase:'第 0–15 天',done:false},
-  {id:2,title:'确认 IDEAL 患者交接节点',owner:'眼科医生',phase:'第 16–30 天',done:false},
-  {id:3,title:'试运行术前需求问卷',owner:'咨询师',phase:'第 31–45 天',done:true},
-  {id:4,title:'建立术后随访复盘机制',owner:'护士',phase:'第 46–60 天',done:false}
+  {id:1,title:'完成六大支柱基线评估',owner:'院长/CEO',phase:'第 1–30 天',done:false},
+  {id:2,title:'确认 IDEAL 患者交接节点',owner:'眼科医生',phase:'第 1–30 天',done:false},
+  {id:3,title:'试运行术前需求问卷',owner:'咨询师',phase:'第 1–30 天',done:true},
+  {id:4,title:'建立术后随访复盘机制',owner:'护士',phase:'第 31–60 天',done:false}
 ]};}
 function load(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!saved||!Array.isArray(saved.patients)||!Array.isArray(saved.tasks)||!Array.isArray(saved.audit))return seed();saved.competency ||= {};saved.learning ||= {};saved.mdtRole=mdtRoles[saved.mdtRole]?saved.mdtRole:'咨询师';if(!saved.inventory||!Array.isArray(saved.inventory.iol)||!Array.isArray(saved.inventory.consumables))saved.inventory=demoInventory();saved.inventoryLookup ||= {model:'puresee',power:'+20.0 D',cylinder:''};saved.patients.forEach(p=>{p.handoffs ||= {};featurePatient(p)});return saved}catch{return seed()}}
 let state=load();
@@ -38,7 +38,8 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&l
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));render()}
 function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.remove('show'),2700)}
 function current(){return state.patients.find(p=>p.id===state.selected)||state.patients[0]}
-function nav(view){document.body.classList.toggle('intro-mode',view==='intro');if(view!=='intro'){try{sessionStorage.setItem('digital-pls-intro-seen','1')}catch{}}document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id===view));document.querySelectorAll('#mainNav button').forEach(el=>el.classList.toggle('active',el.dataset.view===view||(view==='certification'&&el.dataset.view==='capability')||(view==='qa'&&el.dataset.view==='resources')||(view==='revenue'&&el.dataset.view==='operations')));$('#mainNav').classList.remove('open');$('#menuButton').setAttribute('aria-expanded','false');if(['concept','inventory','ceo','funnel','revenue','education','certification','qa'].includes(view))history.replaceState(null,'','#'+view);else if(location.hash)history.replaceState(null,'',location.pathname+location.search);window.scrollTo({top:0,behavior:'smooth'})}
+function navParent(view){if(['clinical','education','inventory'].includes(view))return'journey';if(['funnel','revenue','certification'].includes(view))return'ceo';if(view==='qa')return'resources';return view}
+function nav(view){document.body.classList.toggle('intro-mode',view==='intro');if(view!=='intro'){try{sessionStorage.setItem('digital-pls-intro-seen','1')}catch{}}document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id===view));document.querySelectorAll('#mainNav button').forEach(el=>el.classList.toggle('active',el.dataset.view===navParent(view)));$('#mainNav').classList.remove('open');$('#menuButton').setAttribute('aria-expanded','false');if(['concept','inventory','ceo','funnel','revenue','education','certification','qa'].includes(view))history.replaceState(null,'','#'+view);else if(location.hash)history.replaceState(null,'',location.pathname+location.search);window.scrollTo({top:0,behavior:'smooth'})}
 function renderHome(){
   const patient=current(),done=state.audit.filter(a=>a!=='未评估').length,open=state.tasks.filter(t=>!t.done).length;
   $('#metricPatients').textContent=state.patients.length;$('#metricTasks').textContent=open;$('#metricAudit').textContent=Math.round(done/6*100)+'%';$('#metricFollowup').textContent=state.patients.filter(p=>p.stage===7).length;
