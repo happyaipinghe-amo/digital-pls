@@ -33,6 +33,17 @@ body.intro-mode>.topbar,body.intro-mode>footer{display:none}
 #intro .intro-support{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:27px}
 #intro .intro-support>div{border-left:3px solid #1e8b9a;padding:5px 12px 5px 17px}
 #intro .intro-support b{display:block;font-size:18px;color:#18364d;margin-bottom:8px}
+#intro .intro-support>.intro-motive-boundary{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:28px;margin-top:8px;padding:24px 26px;border:1px solid #e3cbc8;border-left:4px solid #b42e27;background:#fff}
+#intro .intro-motive-statement span{display:block;color:#a52b24;font-size:13px;font-weight:800;margin-bottom:7px}
+#intro .intro-motive-statement h3{font-size:24px;margin:0 0 10px;color:#7e211d}
+#intro .intro-motive-statement p{font-size:14px;line-height:1.75;color:#4e6272}
+#intro .intro-motive-statement a{display:inline-block;margin-top:12px;color:#125d82;font-size:12px;font-weight:700;text-underline-offset:3px}
+#intro .intro-boundary-list{padding-left:24px;border-left:1px solid #ead7d4}
+#intro .intro-boundary-list b{font-size:16px;color:#56322f}
+#intro .intro-boundary-list ol{margin:10px 0 0;padding-left:20px;color:#526877;font-size:13px;line-height:1.85}
+#intro .intro-ownership{grid-column:1/-1;margin:0;padding:15px 18px;background:#173b54;color:#fff;font-size:14px;line-height:1.6}
+#intro .intro-ownership strong{color:#9ee3dd}
+#intro .intro-boundary-button{grid-column:1/-1;justify-self:start;background:transparent;border:0;padding:0;color:#a52b24;font-size:13px;font-weight:800;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
 #intro .intro-close{display:flex;justify-content:space-between;align-items:center;gap:25px;padding-top:43px;padding-bottom:38px}
 #intro .intro-close h2{margin-bottom:5px}
 #intro .intro-close p{color:#5c6c7a;margin-bottom:0}
@@ -49,6 +60,8 @@ body.intro-mode>.topbar,body.intro-mode>footer{display:none}
 #intro .intro-sub{font-size:14px}
 #intro .intro-content,#intro .intro-partner-inner{padding:37px 20px}
 #intro .intro-benefits,#intro .intro-support{grid-template-columns:1fr;gap:17px}
+#intro .intro-support>.intro-motive-boundary{grid-template-columns:1fr;padding:20px;gap:18px}
+#intro .intro-boundary-list{padding:18px 0 0;border-left:0;border-top:1px solid #ead7d4}
 #intro .intro-benefits article{padding-top:10px}
 #intro .intro-close{display:block;padding:35px 20px}
 #intro .intro-close .intro-primary{margin-top:18px}
