@@ -19,8 +19,9 @@ const resources = [
   ['术后护理随访 SOP','D1、W1、M1、M3 视觉质量与体验','术后随访 · 护士/医生','在线表单','AIOLIS_PCIOL_RLE术后护理随访SOP记录表/index.html',['doctor','nurse']],
   ['PLS 六大支柱核心内容','能力标准、流程和培训资料','资源库 · 全团队','知识库','六大支柱核心内容逐层展开网页/index.html',['doctor','nurse','consultant','manager','team']],
   ['JJSV 产品与技术概览','专业人员使用的产品及技术资料','资源库 · 医生/PLS团队','知识库','JJSV IOL flcac和LipiFlow概览/index.html',['doctor','team']]
+  ,['IOL计算公式导航与临床选择','公式类别、关键输入、特殊眼路径及专业计算器入口；最终由医生复核决策','临床工作台 · 医生/检查团队','交互知识库','IOL计算公式导航与临床选择/index.html',['doctor','team']]
 ];
-function seed(){return {role:'院长/CEO',selected:'P001',mdtRole:'咨询师',competency:{},learning:{},inventory:demoInventory(),inventoryLookup:{model:'puresee',power:'+20.0 D',cylinder:''},patients:[
+function seed(){return {role:'院长/CEO',selected:'P001',mdtRole:'咨询师',competency:{},learning:{},courseRole:'咨询师',courseProgress:{},inventory:demoInventory(),inventoryLookup:{model:'puresee',power:'+20.0 D',cylinder:''},patients:[
   {id:'P001',name:'患者 A',age:'58 岁',stage:4,priority:'电脑与中距离',concern:'希望改善工作和阅读体验，担心夜间眩光',glasses:'希望减少戴镜'},
   {id:'P002',name:'患者 B',age:'64 岁',stage:2,priority:'阅读与近距离',concern:'关注阅读舒适度',glasses:'愿意按需戴镜'},
   {id:'P003',name:'患者 C',age:'61 岁',stage:7,priority:'远距离与户外',concern:'术后需要定期随访',glasses:'尚需解释与讨论'}
@@ -30,7 +31,7 @@ function seed(){return {role:'院长/CEO',selected:'P001',mdtRole:'咨询师',co
   {id:3,title:'试运行术前需求问卷',owner:'咨询师',phase:'第 1–30 天',done:true},
   {id:4,title:'建立术后随访复盘机制',owner:'护士',phase:'第 31–60 天',done:false}
 ]};}
-function load(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!saved||!Array.isArray(saved.patients)||!Array.isArray(saved.tasks)||!Array.isArray(saved.audit))return seed();saved.competency ||= {};saved.learning ||= {};saved.mdtRole=mdtRoles[saved.mdtRole]?saved.mdtRole:'咨询师';if(!saved.inventory||!Array.isArray(saved.inventory.iol)||!Array.isArray(saved.inventory.consumables))saved.inventory=demoInventory();saved.inventoryLookup ||= {model:'puresee',power:'+20.0 D',cylinder:''};saved.patients.forEach(p=>{p.handoffs ||= {};featurePatient(p)});return saved}catch{return seed()}}
+function load(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!saved||!Array.isArray(saved.patients)||!Array.isArray(saved.tasks)||!Array.isArray(saved.audit))return seed();saved.competency ||= {};saved.learning ||= {};saved.courseProgress ||= {};saved.courseRole=roleCourseCatalog?.[saved.courseRole]?saved.courseRole:'咨询师';saved.mdtRole=mdtRoles[saved.mdtRole]?saved.mdtRole:'咨询师';if(!saved.inventory||!Array.isArray(saved.inventory.iol)||!Array.isArray(saved.inventory.consumables))saved.inventory=demoInventory();saved.inventoryLookup ||= {model:'puresee',power:'+20.0 D',cylinder:''};saved.patients.forEach(p=>{p.handoffs ||= {};featurePatient(p)});return saved}catch{return seed()}}
 let state=load();
 let viewedStage=null;
 const $=s=>document.querySelector(s);
@@ -47,7 +48,7 @@ function renderHome(){
   $('#homeSteps').innerHTML=stages.map((s,i)=>`<div class="step"><i>${i+1}</i><span>${s}</span></div>`).join('');
   $('#featuredPatient').innerHTML=`<div class="patient-summary"><div class="avatar">${esc(patient.name.slice(-1))}</div><div><strong>${esc(patient.name)} · ${esc(patient.age)}</strong><span>${esc(stages[patient.stage])} · ${esc(patient.id)}</span></div></div><div class="info-row"><span>视觉重点</span><b>${esc(patient.priority||'待填写')}</b></div><div class="info-row"><span>戴镜偏好</span><b>${esc(patient.glasses||'待讨论')}</b></div><div class="info-row"><span>当前环节</span><b>${esc(stages[patient.stage])}</b></div><button class="wide-button" data-go="journey">查看患者路径 →</button>`;
   $('#clinicalPreview').innerHTML=`<p class="preview-title">${esc(patient.name)} · 需要团队共同确认</p><div class="preview-item"><b>需求</b> ${esc(patient.priority||'待填写')}</div><div class="preview-item"><b>顾虑</b> ${esc(patient.concern||'待填写')}</div><div class="preview-item"><b>下一步</b> 医生结合检查结果解释可选方案</div><div class="callout"><strong>系统提示</strong><p>这里记录讨论重点，不生成自动诊断或产品推荐。</p></div>`;
-  $('#pillarPreview').innerHTML=`<div class="ops-big">${done}/6</div><span class="muted">支柱已完成简版评估</span><div class="progress"><span style="width:${done/6*100}%"></span></div><div class="preview-item"><b>MDT 岗位能力</b> 七类岗位标准、自评与在线短测</div><div class="preview-item"><b>及格线</b> 80 分（演示）</div><button class="wide-button" data-go="capability">进入岗位能力 →</button>`;
+  $('#pillarPreview').innerHTML=`<div class="ops-big">${done}/6</div><span class="muted">支柱已完成简版评估</span><div class="progress"><span style="width:${done/6*100}%"></span></div><div class="preview-item"><b>MDT 岗位能力</b> 岗位标准、自评、初中级课程与在线短测</div><div class="preview-item"><b>学习闭环</b> 差距分析 → 课程 → 考试 → 在岗验证</div><button class="wide-button" data-go="capability">进入岗位能力 →</button>`;
   $('#taskPreview').innerHTML=state.tasks.filter(t=>!t.done).slice(0,3).map(t=>`<div class="preview-item"><b>○</b> ${esc(t.title)}<br><span class="muted">${esc(t.owner)} · ${esc(t.phase)}</span></div>`).join('')||'<p class="muted">当前没有待推进任务</p>';
   const roleDescriptions={'市场/客服':'合规触达','前台':'登记与分流','咨询师':'倾听需求','检查人员':'采集检查数据','眼科医生':'诊断与方案','手术护士':'规范执行','随访护士':'追踪体验','HR/培训经理':'建设能力','院长/CEO':'看质量与进展'};
   $('#roleCards').innerHTML=Object.entries(roleDescriptions).map(([n,v])=>`<div class="role-card"><b>${n}</b><span>${v}</span></div>`).join('');

@@ -37,6 +37,19 @@ function renderLearning() {
   $('#learningModules').innerHTML=topics.map((title,i)=>`<label class="learning-row"><input type="checkbox" data-learning="${i}" ${done[i]?'checked':''}>${esc(title)}</label>`).join('');
   $('#learningProgress').textContent=`学习 ${done.filter(Boolean).length}/3 项 · 短测 ${pass===null?'未作答':pass+' 分'} · ${trainingDone(role)?'达到演示标准':'尚未达到演示标准'}（需学习完成且短测 ≥80 分）`;
 }
+function courseProgressKey(role,level,index){return `${role}|${level}|${index}`}
+function renderCourseMap(){
+  const roles=Object.keys(roleCourseCatalog),selected=roleCourseCatalog[state.courseRole]?state.courseRole:'咨询师',level=$('#courseLevelFilter').value||'all',catalog=roleCourseCatalog[selected];
+  state.courseRole=selected;
+  $('#courseRoleFilter').innerHTML=roles.map(role=>`<option value="${esc(role)}">${esc(role)}</option>`).join('');
+  $('#courseRoleFilter').value=selected;
+  const rows=[];['junior','intermediate'].forEach(courseLevel=>{if(level!=='all'&&level!==courseLevel)return;(catalog[courseLevel]||[]).forEach((course,index)=>rows.push({courseLevel,index,course}))});
+  const all=[...(catalog.junior||[]).map((course,index)=>({courseLevel:'junior',index,course})),...(catalog.intermediate||[]).map((course,index)=>({courseLevel:'intermediate',index,course}))],completed=all.filter(item=>state.courseProgress[courseProgressKey(selected,item.courseLevel,item.index)]).length,quiz=state.competency[selected]?.quiz?.score;
+  $('#courseSummary').innerHTML=`<div><strong>${all.length}</strong><span>岗位课程</span></div><div><strong>${catalog.junior.length}</strong><span>初级课程</span></div><div><strong>${catalog.intermediate.length}</strong><span>中级课程</span></div><div><strong>${completed}/${all.length}</strong><span>演示学习进度</span></div>`;
+  const mappedMdt=mdtRoles[selected]?selected:Object.keys(courseRoleAliases).find(role=>courseRoleAliases[role]===selected),record=mappedMdt?state.competency[mappedMdt]:null,selfScore=record?.self?.length===5&&record.self.every(Boolean)?record.self.reduce((a,b)=>a+b,0)*4:null;
+  $('#courseGap').innerHTML=`<div><b>自评结果</b>${selfScore===null?'尚未完成岗位自评':`${selfScore}分 · ${selfScore>=80?'巩固并进入中级培养':'优先补强低分能力项'}`}</div><div><b>知识短测</b>${quiz===undefined?'尚未参加岗位短测':`${quiz}分 · ${quiz>=80?'知识基础达标':'建议先完成初级课程'}`}</div><div><b>系统建议</b>${selfScore!==null&&selfScore<80?'先完成初级必修与场景演练':quiz!==undefined&&quiz>=80?'结合在岗观察选择中级课程':'完成评估后生成更精确建议'}</div>`;
+  $('#courseGrid').innerHTML=rows.map(({courseLevel,index,course})=>{const [title,intro,content,format,assessment]=course,key=courseProgressKey(selected,courseLevel,index),done=!!state.courseProgress[key];return `<article class="course-card ${courseLevel}"><header><h3>${esc(title)}</h3><span class="course-level">${courseLevel==='junior'?'初级':'中级'}</span></header><p>${esc(intro)}</p><div class="course-meta"><span><b>主要内容：</b>${esc(content)}</span><span><b>学习形式：</b>${esc(format)}</span><span><b>达标要求：</b>${esc(assessment)}</span></div><div class="course-action"><label><input type="checkbox" data-course-progress="${esc(key)}" ${done?'checked':''}> 标记演示学习完成</label>${title.includes('IOL')?'<button type="button" class="outline" data-open-iol-tool>打开IOL公式工具 →</button>':''}</div></article>`}).join('');
+}
 function renderCeo() {
   const cohort=state.patients.filter(p=>monthOf(p.createdAt)===monthOf(localDate())), atRisk=state.patients.filter(p=>p.riskNote || (p.stage>=4&&p.checks.some(v=>!v))), doneTasks=state.tasks.filter(t=>t.done).length;
   $('#ceoMetrics').innerHTML=[['本月演示入组',cohort.length,'按建档月份'],['进入手术环节',cohort.filter(p=>p.stage>=6).length,'本月入组患者'],['需复核',atRisk.length,'检查缺项或有复核问题'],['行动完成',`${doneTasks}/${state.tasks.length}`,'30/60/90天行动']].map(([label,value,note])=>`<div class="feature-metric"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`).join('');
@@ -60,12 +73,13 @@ function renderEducation() {
   $('#educationGrid').innerHTML=educationTopics.filter(t=>filter==='all'||t.stage===filter).map(t=>`<article class="education-item"><small>${esc(t.stage)}</small><h2>${esc(t.title)}</h2><p>${esc(t.detail)}</p><button class="outline" data-education="${t.id}" type="button">${p.educationDone.includes(t.id)?'已记录讲解 ✓':'标记已讲解'}</button></article>`).join('');
   $('#educationStatus').textContent=`${p.name}：已讲解 ${p.educationDone.length}/${educationTopics.length} 项（仅演示记录）`;
 }
-function renderFeatures() { state.patients.forEach(featurePatient); renderRoleWork(); renderClinicalFeature(); renderLearning(); renderCeo(); renderFunnel(); renderEducation(); renderRoutingGate(); if(typeof renderQaContexts==='function')renderQaContexts(); $('#patientSource').value=current().source; $('#pauseReason').value=current().pauseReason; }
+function renderFeatures() { state.patients.forEach(featurePatient); renderRoleWork(); renderClinicalFeature(); renderLearning(); renderCourseMap(); renderCeo(); renderFunnel(); renderEducation(); renderRoutingGate(); if(typeof renderQaContexts==='function')renderQaContexts(); $('#patientSource').value=current().source; $('#pauseReason').value=current().pauseReason; }
 document.addEventListener('click',e=>{
   const patient=e.target.closest('[data-open-patient]');if(patient){state.selected=patient.dataset.openPatient;save();nav('journey')}
   const focus=e.target.closest('[data-routing-focus]');if(focus)setTimeout(()=>$('#routingGate').scrollIntoView({behavior:'smooth',block:'start'}),80);
   const education=e.target.closest('[data-education]');if(education){const p=current(),id=education.dataset.education;p.educationDone=p.educationDone.includes(id)?p.educationDone.filter(x=>x!==id):[...p.educationDone,id];save()}
   if(e.target.id==='reviewBriefButton'){const p=current();if(p.checks.every(Boolean)){p.reviewedAt=new Date().toLocaleString('zh-CN');save();toast('摘要复核状态已保存（演示）')}}
+  if(e.target.closest('[data-open-iol-tool]')){const index=resources.findIndex(r=>r[0]==='IOL计算公式导航与临床选择');if(index>=0){openTool(index);nav('resources')}}
 });
 document.addEventListener('change',e=>{
   const p=current();
@@ -75,5 +89,8 @@ document.addEventListener('change',e=>{
   if(e.target.matches('[data-learning]')){roleLearning(state.mdtRole)[Number(e.target.dataset.learning)]=e.target.checked;save()}
   if(e.target.id==='educationPatient'){state.selected=e.target.value;save()}
   if(e.target.id==='educationStageFilter')renderEducation();
+  if(e.target.id==='courseRoleFilter'){state.courseRole=e.target.value;save()}
+  if(e.target.id==='courseLevelFilter')renderCourseMap();
+  if(e.target.matches('[data-course-progress]')){state.courseProgress[e.target.dataset.courseProgress]=e.target.checked;save()}
   if(e.target.matches('[data-routing]')){p.routing[e.target.dataset.routing]=e.target.value;const result=routingDecision(p.routing);p.routing.decision=result.id;p.routing.confirmedAt=result.id==='pending'?'':new Date().toLocaleString('zh-CN');save();toast('路径确认信息已保存（演示）')}
 });

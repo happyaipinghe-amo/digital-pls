@@ -18,12 +18,15 @@
   <link rel="stylesheet" href="revenue.css">
   <link rel="stylesheet" href="pls-concept.css">
   <link rel="stylesheet" href="project-flow.css">
+  <link rel="stylesheet" href="training.css">
   <script src="mdt-data.js" defer>
 </script>
   <script src="inventory-data.js" defer>
 </script>
   <script src="features-data.js" defer>
-</script>
+  </script>
+  <script src="training-data.js" defer>
+  </script>
   <script src="qa-data.js" defer>
 </script>
   <script src="qa-extra-data.js" defer>
@@ -906,6 +909,24 @@
 <div id="learningProgress" class="score-result">
 </div>
 </section>
+<section class="panel training-map" aria-labelledby="trainingMapTitle">
+<div class="panel-head training-map-head">
+<div>
+<span class="eyebrow">ROLE-BASED CURRICULUM</span>
+<h2 id="trainingMapTitle">岗位培训课程地图</h2>
+<p class="muted">初次评估后，按岗位能力差距分配课程；同一员工可以在不同能力项处于不同级别。</p>
+</div>
+<div class="training-filters">
+<label>培训岗位<select id="courseRoleFilter"></select></label>
+<label>课程级别<select id="courseLevelFilter"><option value="all">全部级别</option><option value="junior">初级</option><option value="intermediate">中级</option></select></label>
+</div>
+</div>
+<div class="training-path"><b>岗位标准</b><i>→</i><b>初次评估</b><i>→</i><b>识别差距</b><i>→</i><b>分配课程</b><i>→</i><b>学习与考试</b><i>→</i><b>在岗验证</b><i>→</i><b>复评</b></div>
+<div id="courseSummary" class="course-summary"></div>
+<div id="courseGap" class="course-gap"></div>
+<div id="courseGrid" class="course-grid"></div>
+<div class="training-boundary"><b>达标规则：</b>初级课程知识考试建议≥80分；中级课程建议≥85分，并完成病例、情景或在岗考核。自我评分用于发现差距，不能单独作为岗位能力达标或医院认证依据。</div>
+</section>
 <section class="panel certification-entry">
 <div>
 <span class="eyebrow">PRACTICE EXCELLENCE PATHWAY</span>
@@ -1010,7 +1031,7 @@
 </section>
 <div class="section-line tool-library-title">
 <h2>PLS工具库</h2>
-<span class="muted">10个独立网页</span>
+<span class="muted">11个独立网页</span>
 </div>
 <div class="tool-controls">
 <label>搜索工具 <input id="toolSearch" type="search" placeholder="名称、用途或岗位" autocomplete="off">
