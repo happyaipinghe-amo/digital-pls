@@ -27,7 +27,7 @@ function renderQaContexts(){
   const ceo=ensureQaPanel('#ceo','qaContextCeo');if(ceo)ceo.innerHTML=qaContextHtml([23,22,21,3,4,6,17,20],'CEO与管理层相关问题');
   const capability=ensureQaPanel('#capability','qaContextCapability');if(capability)capability.innerHTML=qaContextHtml([22,5,6],'组织与MDT能力相关问题');
   const operations=ensureQaPanel('#operations','qaContextOperations');if(operations)operations.innerHTML=qaContextHtml([23,22,6,13],'项目启动、合作边界与跨科实施');
-  const roleMap={'院长/CEO':[23,22,21,20],'市场/客服':[23,20,18,19],'前台/接待护士':[21,10,12,13],'咨询师':[21,1,11,15],'验光师':[8,7,5],'特殊检查技师':[8,7,5],'手术医生':[22,21,7,8],'手术护士':[6,15,17],'术后随访护士':[15,16,17],'HR/培训经理':[22,6,5],'PLS BDM':[23,22,21,20]};
+  const roleMap={'院长/CEO':[23,22,21,20],'市场/客服':[23,20,18,19],'前台/接待护士':[21,10,12,13],'咨询师':[21,1,11,15],'验光师':[8,7,5],'特殊检查技师':[8,7,5],'手术医生':[22,21,7,8],'手术护士':[6,15,17],'术后随访护士':[15,16,17],'HR/培训经理':[22,6,5],'PLS团队':[23,22,21,20]};
   renderComplaintQa();
   const work=$('#roleWorkItems');if(work){work.querySelector('.role-qa-item')?.remove();const ids=roleMap[state.role]||[3,6,10];work.insertAdjacentHTML('beforeend',`<div class="role-work-item role-qa-item"><b>本岗位决策Q&A</b><small>${ids.map(id=>'Q'+id).join('、')} · 经过审核的统一回答</small><button class="wide-button" type="button" data-qa="${ids[0]}">查看相关问题 →</button></div>`)}
 }

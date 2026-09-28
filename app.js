@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'digital-pls-mvp-demo-v1';
+const STORAGE_KEY = 'digital-pls-demo-v1';
 const stages = ['引流/预约','到院分流','IDEAL评估','全面检查','医生诊断','方案确定','手术执行','术后随访','持续改进'];
 const pillars = [
   ['临床卓越基础','检查、测量、手术质量与风险识别'],
@@ -9,16 +9,16 @@ const pillars = [
   ['口碑与患者触达','合规触达、随访与真实反馈']
 ];
 const resources = [
-  ['医院遴选打分表','内部候选医院初筛；地区经济只是参考，还需综合患者基数、真实需求、医院能力和区域辐射','Pilot Program · 院长/PLS BDM','在线评估','PLS项目项目目标医院遴选工具/index.html',['manager','bdm']],
-  ['运营辅导研讨会议程','院方共创会议准备与现场安排','Pilot Program · 院长/BDM','可编辑网页','全国民营眼科医院_PLS项目运营辅导研讨会_通用议程模板/index.html',['manager','bdm']],
-  ['诊疗中心 59 项核查','六大支柱正式基线与复评工具','能力建设 · 管理团队','交互工具','国际PLS诊疗中心核查评估系统/国际PLS诊疗中心核查评估系统.html',['doctor','nurse','manager','bdm']],
-  ['90 天行动表','明确责任人、期限和阶段输出','运营与数据 · 各职能','网页模板','PLS项目初步共识议题与90天建议行动表-通用版/index.html',['doctor','nurse','consultant','manager','bdm']],
+  ['医院遴选打分表','内部候选医院初筛；地区经济只是参考，还需综合患者基数、真实需求、医院能力和区域辐射','Pilot Program · 院长/PLS团队','在线评估','PLS项目项目目标医院遴选工具/index.html',['manager','team']],
+  ['运营辅导研讨会议程','院方共创会议准备与现场安排','Pilot Program · 院长/PLS团队','可编辑网页','全国民营眼科医院_PLS项目运营辅导研讨会_通用议程模板/index.html',['manager','team']],
+  ['诊疗中心 59 项核查','六大支柱正式基线与复评工具','能力建设 · 管理团队','交互工具','国际PLS诊疗中心核查评估系统/国际PLS诊疗中心核查评估系统.html',['doctor','nurse','manager','team']],
+  ['90 天行动表','明确责任人、期限和阶段输出','运营与数据 · 各职能','网页模板','PLS项目初步共识议题与90天建议行动表-通用版/index.html',['doctor','nurse','consultant','manager','team']],
   ['术前视觉需求问卷','患者生活方式、视觉目标与顾虑','IDEAL · 咨询师/医生','在线表单','全自费白内障手术术前视觉需求问卷/index.html',['doctor','nurse','consultant']],
   ['术前心理预期复核','宣教护士初评、主诊医生复核','临床工作台 · 护士/医生','在线表单','全自费白内障手术术前心理红线评估量表/index.html',['doctor','nurse','consultant']],
-  ['人工晶体匹配决策树','原页仅供内部销售培训；临床使用须另行审核','临床工作台 · 医生/培训','交互工具','全自费患者人工晶体匹配决策树/index.html',['doctor','bdm']],
+  ['人工晶体匹配决策树','原页仅供内部销售培训；临床使用须另行审核','临床工作台 · 医生/培训','交互工具','全自费患者人工晶体匹配决策树/index.html',['doctor','team']],
   ['术后护理随访 SOP','D1、W1、M1、M3 视觉质量与体验','术后随访 · 护士/医生','在线表单','AIOLIS_PCIOL_RLE术后护理随访SOP记录表/index.html',['doctor','nurse']],
-  ['PLS 六大支柱核心内容','能力标准、流程和培训资料','资源库 · 全团队','知识库','六大支柱核心内容逐层展开网页/index.html',['doctor','nurse','consultant','manager','bdm']],
-  ['JJSV 产品与技术概览','专业人员使用的产品及技术资料','资源库 · 医生/BDM','知识库','JJSV IOL flcac和LipiFlow概览/index.html',['doctor','bdm']]
+  ['PLS 六大支柱核心内容','能力标准、流程和培训资料','资源库 · 全团队','知识库','六大支柱核心内容逐层展开网页/index.html',['doctor','nurse','consultant','manager','team']],
+  ['JJSV 产品与技术概览','专业人员使用的产品及技术资料','资源库 · 医生/PLS团队','知识库','JJSV IOL flcac和LipiFlow概览/index.html',['doctor','team']]
 ];
 function seed(){return {role:'院长/CEO',selected:'P001',mdtRole:'咨询师',competency:{},learning:{},inventory:demoInventory(),inventoryLookup:{model:'puresee',power:'+20.0 D',cylinder:''},patients:[
   {id:'P001',name:'患者 A',age:'58 岁',stage:4,priority:'电脑与中距离',concern:'希望改善工作和阅读体验，担心夜间眩光',glasses:'希望减少戴镜'},

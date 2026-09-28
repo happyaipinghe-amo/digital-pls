@@ -1,8 +1,9 @@
 const DIGITAL_PLS_USERS = [
-  'admin','wang dong','liang yan','fan xiaoqing','chen yonghong',
-  'wang shuihong','chen peiyu','zhang luxi','du sha','mei luoli',
-  'zhang borong','xu peiqi','chen biao','hui hubert','luo yujuan',
-  'liu shuting','yu yanping','jing tengyang','liu xiaomin'
+  'chen biao','fan xiaoqing','luo yujuan','liu shuting','hui hubert',
+  'lu joyce','feng xusheng','zhao qirui','liang yan','wang dong',
+  'jing tengyang','zhang lei','wang shuihong','du sha','zhang luxi',
+  'chen yonghong','chen peiyu','mei luoli','zhang borong','xu peiqi',
+  'liu xiaomin','admin'
 ];
 const DIGITAL_PLS_PASSWORD = 'pls2026';
 const AUTH_SESSION_KEY = 'digital-pls-auth-user';
