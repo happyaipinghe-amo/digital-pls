@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="pls-concept.css">
   <link rel="stylesheet" href="project-flow.css">
   <link rel="stylesheet" href="training.css">
+  <link rel="stylesheet" href="search.css">
   <script src="mdt-data.js" defer>
 </script>
   <script src="inventory-data.js" defer>
@@ -36,7 +37,9 @@
   <script src="education-experience.js" defer>
 </script>
   <script src="qa.js" defer>
-</script>
+  </script>
+  <script src="search.js" defer>
+  </script>
   <script src="app.js" defer>
 </script>
   <script src="auth.js" defer>
@@ -92,6 +95,14 @@
 <button data-view="resources">知识与工具</button>
     </nav>
     <div class="top-actions">
+<div class="site-search" id="siteSearch">
+<button id="siteSearchButton" class="site-search-button" type="button" aria-label="搜索本站" aria-expanded="false" title="搜索本站">⌕</button>
+<div id="siteSearchPanel" class="site-search-panel" hidden>
+<label class="site-search-input"><span>⌕</span><input id="siteSearchInput" type="search" placeholder="搜索页面、问答、课程或工具" autocomplete="off" aria-label="搜索本站内容"></label>
+<div class="site-search-meta"><span id="siteSearchCount">输入关键词开始搜索</span><button id="siteSearchClose" type="button">关闭</button></div>
+<div id="siteSearchResults" class="site-search-results" role="listbox" aria-label="全站搜索结果"></div>
+</div>
+</div>
 <label>角色 <select id="roleSelect">
 <option>院长/CEO</option>
 <option>市场/客服</option>
@@ -341,7 +352,7 @@
 <div class="roadmap-next"><div><span>本阶段需要CEO支持</span><b>确认跨部门责任人，并为第30天复盘预留时间</b></div><button class="primary" type="button" data-go="operations">查看当前行动 →</button></div>
 </section>
       <section class="home-concept-band" aria-labelledby="homeConceptTitle">
-<div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="homeConceptTitle">先统一概念，再进入患者旅程</h2><p><strong>P</strong>remium 是更高标准，<strong>L</strong>ens 是晶状体，<strong>S</strong>urgery 是手术。PLS不是“更贵的IOL手术”，而是一套高质量晶状体诊疗与医院能力体系。</p></div>
+<div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="homeConceptTitle">先统一概念，再进入患者旅程</h2><p><strong>PLS晶状体卓越诊疗体系</strong>，围绕白内障与屈光性透明晶体置换（包括老视矫正），建设患者评估、共同决策、精准手术和术后管理的全流程医院专业能力。</p></div>
 <button type="button" class="outline" data-go="concept">认识PLS →</button>
 </section>
       <div class="journey-strip">
@@ -528,12 +539,14 @@
         <div class="concept-hero-copy">
           <span class="eyebrow">FOR CEO · PLS EXPLAINED</span>
           <h1 id="conceptTitle">PLS到底是啥？</h1>
-          <p class="concept-lead">PLS是<strong>Premium Lens Surgery</strong>的缩写，中文可表述为“高端晶状体手术”。它不是某一款人工晶状体、设备或单一术式，而是一套以患者视觉质量和生活方式需求为中心的高质量晶状体诊疗与医院能力体系。</p>
+          <div class="concept-cn-name"><span>PLS中文名称</span><strong>PLS晶状体卓越诊疗体系</strong></div>
+          <p class="concept-lead">PLS是<strong>Premium Lens Surgery</strong>的缩写。PLS指的是围绕白内障与屈光性透明晶体置换（包括老视矫正），建设从患者评估、共同决策、精准手术到术后管理的全流程医院专业能力。</p>
+          <p class="concept-definition-note">它不是某一款人工晶状体、某一台设备或某一种术式，而是把临床、流程、团队和患者服务连接起来的医院能力体系。</p>
           <p class="concept-keyline">这里的Premium，首先代表更高标准、更精准匹配和更完整责任，而不是单纯代表更高价格。</p>
         </div>
         <aside class="concept-ceo-answer" aria-label="给CEO的一句话">
           <span>给CEO的一句话</span>
-          <blockquote>PLS不是发明了一种新手术，而是把已有的医学技术、患者服务和质量管理，连接成一套医院能够稳定运行的高质量视觉医疗模式。</blockquote>
+          <blockquote>PLS晶状体卓越诊疗体系，是围绕白内障与屈光性透明晶体置换，贯通患者评估、共同决策、精准手术和术后管理的全流程医院专业能力。</blockquote>
         </aside>
       </header>
 
@@ -1308,7 +1321,7 @@
 <button class="outline" type="button" data-go="certification">查看固化与认证 →</button>
 </section>
 <section class="concept-ceo-entry" aria-labelledby="ceoConceptTitle">
-<div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="ceoConceptTitle">在看经营数据之前，先回答：PLS到底是啥？</h2><p>Premium是更高标准，Lens是晶状体，Surgery是手术。它是一套高质量晶状体诊疗与医院能力体系，不是单一产品或高价IOL项目。</p></div>
+<div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="ceoConceptTitle">在看经营数据之前，先回答：PLS到底是啥？</h2><p><strong>中文名称：PLS晶状体卓越诊疗体系。</strong>它围绕白内障与屈光性透明晶体置换（包括老视矫正），建设从患者评估、共同决策、精准手术到术后管理的全流程医院专业能力，不是单一产品或高价IOL项目。</p></div>
 <button class="outline" type="button" data-go="concept">查看完整解释 →</button>
 </section>
 <section class="pathway-boundary-entry" aria-labelledby="ceoPathwayBoundaryTitle">
