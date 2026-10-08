@@ -1,0 +1,15 @@
+.topbar-pls-logo {
+  display: block;
+  width: 74px;
+  height: 46px;
+  object-fit: contain;
+  object-position: left center;
+  flex: none;
+}
+
+@media (max-width: 760px) {
+  .topbar-pls-logo {
+    width: 58px;
+    height: 38px;
+  }
+}
