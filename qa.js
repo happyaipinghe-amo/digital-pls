@@ -1,7 +1,7 @@
 let qaExpandAll=false,qaFocusId=null;
 const qaEsc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function qaById(id){return plsDecisionQa.find(q=>q.id===Number(id))}
-function qaDetails(q,open=false){return `<details class="qa-item" data-qa-item="${q.id}" ${open||qaExpandAll?'open':''}><summary><span class="qa-number">Q${q.id}</span><span><small>${qaEsc(q.category)}</small><b>${qaEsc(q.question)}</b><em>${q.roles.map(qaEsc).join(' · ')}</em></span></summary><div class="qa-answer"><section><h3>简明回答</h3><p>${qaEsc(q.answer)}</p></section><section><h3>管理要点</h3><ol>${q.management.map(x=>`<li>${qaEsc(x)}</li>`).join('')}</ol></section><section class="qa-dont"><h3>不能做什么</h3><ul>${q.dont.map(x=>`<li>${qaEsc(x)}</li>`).join('')}</ul></section><p class="qa-escalate">责任边界：涉及诊断、适应证和治疗方案由医生确认；涉及属地医保、收费、财税或对外传播时，由相应专业岗位完成复核。</p></div></details>`}
+function qaDetails(q,open=false){return `<details class="qa-item" data-qa-item="${q.id}" ${open||qaExpandAll?'open':''}><summary><span class="qa-number">Q${q.id}</span><span><small>${qaEsc(q.category)}</small><b>${qaEsc(q.question)}</b><em>${q.roles.map(qaEsc).join(' · ')}</em></span></summary><div class="qa-answer"><section><h3>简明回答</h3><p>${qaEsc(q.answer)}</p></section><section><h3>管理要点</h3><ol>${q.management.map(x=>`<li>${qaEsc(x)}</li>`).join('')}</ol></section><section class="qa-dont"><h3>不能做什么</h3><ul>${q.dont.map(x=>`<li>${qaEsc(x)}</li>`).join('')}</ul></section>${q.sources?`<section><h3>研究与参考资料</h3><ul>${q.sources.map(([title,url])=>`<li><a href="${qaEsc(url)}" target="_blank" rel="noopener">${qaEsc(title)}</a></li>`).join("")}</ul></section>`:""}<p class="qa-escalate">责任边界：涉及诊断、适应证和治疗方案由医生确认；涉及属地医保、收费、财税或对外传播时，由相应专业岗位完成复核。</p></div></details>`}
 function renderQa(){
   const search=$('#qaSearch').value.trim().toLowerCase(),role=$('#qaRoleFilter').value,category=$('#qaCategoryFilter').value;
   const matched=plsDecisionQa.filter(q=>(role==='all'||q.roles.includes(role))&&(category==='all'||q.category===category)&&(!search||`${q.question} ${q.answer} ${q.management.join(' ')} ${q.dont.join(' ')}`.toLowerCase().includes(search)));
@@ -22,12 +22,12 @@ function renderComplaintQa(){
 }
 function renderQaContexts(){
   const routing=ensureQaPanelAfter('#routingGate','qaContextRouting');if(routing)routing.innerHTML=qaContextHtml([21,7,13,1],'分流节点相关问题');
-  const clinical=ensureQaPanel('#clinical','qaContextClinical');if(clinical)clinical.innerHTML=qaContextHtml([7,8,9,15],'临床工作台相关问题');
-  const education=ensureQaPanel('#education','qaContextEducation');if(education)education.innerHTML=qaContextHtml([21,10,11,12],'患者教育相关问题');
+  const clinical=ensureQaPanel('#clinical','qaContextClinical');if(clinical)clinical.innerHTML=qaContextHtml([24,7,8,9,15],'临床工作台相关问题');
+  const education=ensureQaPanel('#education','qaContextEducation');if(education)education.innerHTML=qaContextHtml([24,21,10,11,12],'患者教育相关问题');
   const ceo=ensureQaPanel('#ceo','qaContextCeo');if(ceo)ceo.innerHTML=qaContextHtml([23,22,21,3,4,6,17,20],'CEO与管理层相关问题');
-  const capability=ensureQaPanel('#capability','qaContextCapability');if(capability)capability.innerHTML=qaContextHtml([22,5,6],'组织与MDT能力相关问题');
+  const capability=ensureQaPanel('#capability','qaContextCapability');if(capability)capability.innerHTML=qaContextHtml([24,22,5,6],'组织与MDT能力相关问题');
   const operations=ensureQaPanel('#operations','qaContextOperations');if(operations)operations.innerHTML=qaContextHtml([23,22,6,13],'项目启动、合作边界与跨科实施');
-  const roleMap={'院长/CEO':[23,22,21,20],'市场/客服':[23,20,18,19],'前台/接待护士':[21,10,12,13],'咨询师':[21,1,11,15],'验光师':[8,7,5],'特殊检查技师':[8,7,5],'手术医生':[22,21,7,8],'手术护士':[6,15,17],'术后随访护士':[15,16,17],'HR/培训经理':[22,6,5],'PLS团队':[23,22,21,20]};
+  const roleMap={'院长/CEO':[23,22,21,20],'市场/客服':[23,20,18,19],'前台/接待护士':[21,10,12,13],'咨询师':[24,21,1,11,15],'验光师':[8,7,5],'特殊检查技师':[8,7,5],'手术医生':[24,22,21,7,8],'手术护士':[6,15,17],'术后随访护士':[15,16,17],'HR/培训经理':[22,6,5],'PLS团队':[23,22,21,20]};
   renderComplaintQa();
   const work=$('#roleWorkItems');if(work){work.querySelector('.role-qa-item')?.remove();const ids=roleMap[state.role]||[3,6,10];work.insertAdjacentHTML('beforeend',`<div class="role-work-item role-qa-item"><b>本岗位决策Q&A</b><small>${ids.map(id=>'Q'+id).join('、')} · 经过审核的统一回答</small><button class="wide-button" type="button" data-qa="${ids[0]}">查看相关问题 →</button></div>`)}
 }
