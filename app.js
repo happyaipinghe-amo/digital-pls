@@ -31,9 +31,10 @@ function seed(){return {role:'院长/CEO',selected:'P001',mdtRole:'咨询师',co
   {id:1,title:'完成六大支柱基线评估',owner:'院长/CEO',phase:'第 1–30 天',done:false},
   {id:2,title:'确认 IDEAL 患者交接节点',owner:'眼科医生',phase:'第 1–30 天',done:false},
   {id:3,title:'试运行术前需求问卷',owner:'咨询师',phase:'第 1–30 天',done:true},
-  {id:4,title:'建立术后随访复盘机制',owner:'护士',phase:'第 31–60 天',done:false}
+  {id:4,title:'建立术后随访复盘机制',owner:'护士',phase:'第 31–60 天',done:false},
+  {id:5,title:'走查空间分区、患者动线与路径确认闸门',owner:'院长/CEO',phase:'第 1–30 天',done:false}
 ]};}
-function load(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!saved||!Array.isArray(saved.patients)||!Array.isArray(saved.tasks)||!Array.isArray(saved.audit))return seed();saved.competency ||= {};saved.learning ||= {};saved.courseProgress ||= {};saved.courseRole=roleCourseCatalog?.[saved.courseRole]?saved.courseRole:'咨询师';saved.mdtRole=mdtRoles[saved.mdtRole]?saved.mdtRole:'咨询师';if(!saved.inventory||!Array.isArray(saved.inventory.iol)||!Array.isArray(saved.inventory.consumables))saved.inventory=demoInventory();saved.inventoryLookup ||= {model:'puresee',power:'+20.0 D',cylinder:''};saved.patients.forEach(p=>{p.handoffs ||= {};featurePatient(p)});return saved}catch{return seed()}}
+function load(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!saved||!Array.isArray(saved.patients)||!Array.isArray(saved.tasks)||!Array.isArray(saved.audit))return seed();saved.competency ||= {};saved.learning ||= {};saved.courseProgress ||= {};saved.courseRole=roleCourseCatalog?.[saved.courseRole]?saved.courseRole:'咨询师';saved.mdtRole=mdtRoles[saved.mdtRole]?saved.mdtRole:'咨询师';if(!saved.inventory||!Array.isArray(saved.inventory.iol)||!Array.isArray(saved.inventory.consumables))saved.inventory=demoInventory();saved.inventoryLookup ||= {model:'puresee',power:'+20.0 D',cylinder:''};if(!saved.tasks.some(t=>t.id===5||t.title.includes('空间分区、患者动线'))){saved.tasks.push({id:5,title:'走查空间分区、患者动线与路径确认闸门',owner:'院长/CEO',phase:'第 1–30 天',done:false})}saved.patients.forEach(p=>{p.handoffs ||= {};featurePatient(p)});return saved}catch{return seed()}}
 let state=load();
 let viewedStage=null;
 const $=s=>document.querySelector(s);
