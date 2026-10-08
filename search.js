@@ -1,5 +1,5 @@
 let siteSearchIndex=[];
-const searchViewNames={intro:'项目介绍',home:'项目总览',concept:'认识PLS',capability:'医院PLS能力建设',operations:'30/60/90天行动',journey:'医院流程实施',clinical:'临床工作台',education:'患者教育',inventory:'库存与设备',ceo:'CEO驾驶舱',funnel:'患者转化漏斗',revenue:'经营情景测算',resources:'知识与工具',qa:'决策Q&A',certification:'PLS三级能力认证'};
+const searchViewNames={intro:'项目介绍',home:'CEO项目总览',concept:'认识PLS',capability:'医院能力诊断',operations:'90天建设',journey:'患者价值交付',clinical:'价值发现与临床协作',education:'患者教育',inventory:'库存与设备',ceo:'CEO驾驶舱',funnel:'患者价值旅程',revenue:'经营情景测算',resources:'知识与工具',qa:'决策Q&A',certification:'PLS三级能力认证'};
 const searchNormalize=value=>String(value??'').toLowerCase().replace(/\s+/g,'');
 const searchEscape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function searchExcerpt(text,max=105){const clean=String(text??'').replace(/\s+/g,' ').trim();return clean.length>max?clean.slice(0,max)+'…':clean}

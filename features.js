@@ -1,4 +1,4 @@
-function featurePatient(p) { p.createdAt ||= localDate(1); p.source ||= '现场登记'; p.pauseReason ||= ''; p.checks ||= clinicalChecks.map(() => false); p.riskNote ||= ''; p.doctorNote ||= ''; p.reviewedAt ||= ''; p.educationDone ||= []; p.routing ||= {medical:'unknown',redFlag:'unknown',need:'unknown',informed:'unknown',decision:'pending',confirmedAt:''}; return p; }
+function featurePatient(p) { p.createdAt ||= localDate(1); p.source ||= '现场登记'; p.pauseReason ||= ''; p.checks ||= clinicalChecks.map(() => false); p.riskNote ||= ''; p.doctorNote ||= ''; p.reviewedAt ||= ''; p.educationDone ||= []; p.desiredOutcome ||= ''; p.tradeoff ||= ''; p.teachBack ||= ''; p.routing ||= {medical:'unknown',redFlag:'unknown',need:'unknown',informed:'unknown',decision:'pending',confirmedAt:''}; return p; }
 function routingDecision(r) {
   if(r.redFlag==='yes'||r.medical==='no')return {id:'review',title:'暂不分流 · 医生优先复核',text:'先处理危险信号、诊断不明确或其他眼病问题，不能进入商业或常规路径选择。'};
   if(r.medical==='unknown'||r.redFlag==='unknown'||r.need==='unknown'||r.informed==='unknown')return {id:'pending',title:'信息未完整 · 保持共同候诊',text:'不要提前贴上“医保”或“高端”标签；补齐基础筛查、需求和知情沟通。'};
@@ -26,7 +26,7 @@ function renderClinicalFeature() {
   const missing=clinicalChecks.filter((_,i)=>!p.checks[i]);
   $('#doctorReviewResult').textContent=p.reviewedAt?`演示复核记录：${p.reviewedAt}`:missing.length?'完成全部检查标记后方可标记摘要已复核。':'检查项已标记完成，等待医生复核。';
   $('#reviewBriefButton').disabled=missing.length>0;
-  $('#doctorBrief').innerHTML=`<div class="brief-summary"><p><b>患者：</b>${esc(p.name)} · ${esc(p.age)}</p><p><b>当前阶段：</b>${esc(stages[p.stage])}</p><p><b>视觉需求：</b>${esc(p.priority||'未记录')}</p><p><b>患者顾虑：</b>${esc(p.concern||'未记录')}</p><p><b>戴镜偏好：</b>${esc(p.glasses||'未记录')}</p><p><b>检查标记：</b>${p.checks.filter(Boolean).length}/${clinicalChecks.length} 完成</p><p><b>待补检查：</b>${esc(missing.join('、')||'无')}</p><p><b>需复核问题：</b>${esc(p.riskNote||'未记录')}</p><p><b>讨论记录：</b>${esc(p.doctorNote||'未记录')}</p><p><b>复核状态：</b>${p.reviewedAt?'已标记':'待医生复核'}</p></div><p class="muted">仅汇总演示记录；检查标记不等于真实结果，不能作为诊断或 IOL 选择依据。</p>`;
+  $('#doctorBrief').innerHTML=`<div class="brief-summary"><p><b>患者：</b>${esc(p.name)} · ${esc(p.age)}</p><p><b>当前阶段：</b>${esc(stages[p.stage])}</p><p><b>视觉需求：</b>${esc(p.priority||'未记录')}</p><p><b>希望改善：</b>${esc(p.desiredOutcome||'未记录')}</p><p><b>患者顾虑：</b>${esc(p.concern||'未记录')}</p><p><b>戴镜偏好：</b>${esc(p.glasses||'未记录')}</p><p><b>可接受取舍：</b>${esc(p.tradeoff||'未记录')}</p><p><b>患者复述：</b>${esc(p.teachBack||'尚未完成')}</p><p><b>检查标记：</b>${p.checks.filter(Boolean).length}/${clinicalChecks.length} 完成</p><p><b>待补检查：</b>${esc(missing.join('、')||'无')}</p><p><b>需复核问题：</b>${esc(p.riskNote||'未记录')}</p><p><b>讨论记录：</b>${esc(p.doctorNote||'未记录')}</p><p><b>复核状态：</b>${p.reviewedAt?'已标记':'待医生复核'}</p></div><p class="muted">仅汇总演示记录；检查标记不等于真实结果，不能作为诊断或 IOL 选择依据。</p>`;
 }
 function roleLearning(role) { return state.learning[role] ||= [false,false,false]; }
 function trainingDone(role) { return roleLearning(role).every(Boolean) && (state.competency[role]?.quiz?.score??0)>=80; }
@@ -52,6 +52,11 @@ function renderCourseMap(){
 }
 function renderCeo() {
   const cohort=state.patients.filter(p=>monthOf(p.createdAt)===monthOf(localDate())), atRisk=state.patients.filter(p=>p.riskNote || (p.stage>=4&&p.checks.some(v=>!v))), doneTasks=state.tasks.filter(t=>t.done).length;
+  const completeChecks=state.patients.filter(p=>p.checks.every(Boolean)).length,understood=state.patients.filter(p=>p.teachBack).length,followed=state.patients.filter(p=>p.stage>=7).length;
+  $('#scoreMedical').textContent=`${completeChecks}/${state.patients.length}`;
+  $('#scorePatient').textContent=`${understood}/${state.patients.length}`;
+  $('#scoreExperience').textContent=`${followed}/${state.patients.length}`;
+  $('#scoreBusiness').textContent=`${doneTasks}/${state.tasks.length}`;
   $('#ceoMetrics').innerHTML=[['本月演示入组',cohort.length,'按建档月份'],['进入手术环节',cohort.filter(p=>p.stage>=6).length,'本月入组患者'],['需复核',atRisk.length,'检查缺项或有复核问题'],['行动完成',`${doneTasks}/${state.tasks.length}`,'30/60/90天行动']].map(([label,value,note])=>`<div class="feature-metric"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`).join('');
   $('#ceoQuality').innerHTML=`<div class="feature-row"><span>完整标记检查项</span><b>${state.patients.filter(p=>p.checks.every(Boolean)).length}/${state.patients.length}</b></div><div class="feature-row"><span>术后随访阶段</span><b>${state.patients.filter(p=>p.stage>=7).length}</b></div><div class="feature-row"><span>患者来源已记录</span><b>${state.patients.filter(p=>p.source).length}/${state.patients.length}</b></div><button class="wide-button" data-go="funnel">查看本月漏斗 →</button>`;
   $('#ceoPillars').innerHTML=state.audit.map((status,i)=>`<div class="feature-row"><span>${esc(pillars[i][0])}</span><b>${esc(status)}</b></div>`).join('');
@@ -61,7 +66,7 @@ function renderCeo() {
 function renderFunnel() {
   const cohort=state.patients.filter(p=>monthOf(p.createdAt)===monthOf(localDate())), total=cohort.length, surgery=cohort.filter(p=>p.stage>=6).length;
   $('#funnelPeriod').textContent=`${new Intl.DateTimeFormat('zh-CN',{year:'numeric',month:'long'}).format(new Date())} · 同一批演示患者`;
-  $('#funnelDefinition').textContent='口径：本月建档患者的累计阶段进展；后续月份的进展仍计入其建档月份。样本很小，不代表医院真实转化率或临床质量。';
+  $('#funnelDefinition').textContent='口径：本月建档患者的累计价值旅程；后续月份的进展仍计入其建档月份。该页面用于发现流程断点，不把进入手术环节等同于项目成功。样本很小，不代表医院真实转化率或临床质量。';
   $('#funnelSummary').innerHTML=`<div class="feature-metric"><span>本月建档</span><strong>${total}</strong><small>演示患者</small></div><div class="feature-metric"><span>进入手术环节</span><strong>${surgery}</strong><small>阶段 ≥ 手术执行</small></div><div class="feature-metric"><span>建档至手术</span><strong>${total?Math.round(surgery/total*100)+'%':'—'}</strong><small>${surgery}/${total}，仅演示</small></div>`;
   $('#funnelRows').innerHTML=funnelSteps.map(([label,min])=>{const count=cohort.filter(p=>p.stage>=min).length;return `<div class="funnel-row"><span>${esc(label)}</span><div class="funnel-track"><span style="width:${total?count/total*100:0}%"></span></div><b>${count}</b></div>`}).join('');
   const reasons={};cohort.forEach(p=>{if(p.pauseReason)reasons[p.pauseReason]=(reasons[p.pauseReason]||0)+1});
