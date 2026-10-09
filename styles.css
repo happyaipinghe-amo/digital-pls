@@ -6,7 +6,7 @@
 .presentation-launch-actions,.presentation-resource-actions{display:flex;gap:10px;flex-wrap:wrap;flex:0 0 auto}
 .presentation-launch-actions a,.presentation-resource-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;text-decoration:none}
 .presentation-launch-actions .primary{background:#fff;color:#0f2f5d;border-color:#fff}
-.presentation-launch-actions .outline{color:#fff;border-color:#7189a8}
+.presentation-launch .presentation-launch-actions .outline{background:#fff;color:#0f2f5d;border-color:#fff}
 .presentation-followup{margin:-16px 0 28px;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;background:#eef4f7;border-left:6px solid #16724a}
 .presentation-followup h2{margin:4px 0 6px;font-size:23px;color:#163e6f;letter-spacing:0}
 .presentation-followup p{margin:0;max-width:760px;color:#53657b;line-height:1.6}
