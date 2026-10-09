@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>强生眼力健如何支持PLS体系建设</title>
+  <style>
+    :root{color-scheme:dark;--navy:#0f2f5d;--gold:#e6aa16;--red:#ed1b24;--panel:#13243a;--muted:#aebbd0}
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#07111f;color:#fff}
+    body{display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
+    header{height:64px;display:flex;align-items:center;gap:16px;padding:0 22px;background:#0b1728;border-bottom:1px solid #25354b}
+    header strong{font-size:18px;white-space:nowrap}
+    header span{color:var(--muted);font-size:14px}
+    .spacer{flex:1}
+    button,a{font:inherit}
+    .icon,.download{height:38px;min-width:38px;border:1px solid #34465e;background:#14243a;color:#fff;display:inline-grid;place-items:center;cursor:pointer;text-decoration:none}
+    .icon:hover,.icon:focus-visible,.download:hover,.download:focus-visible{border-color:var(--gold);outline:none}
+    .download{padding:0 14px;gap:8px;grid-auto-flow:column}
+    main{min-height:0;display:grid;grid-template-columns:1fr;position:relative}
+    .stage{min-height:0;display:grid;place-items:center;padding:22px 24px 12px}
+    .slide-frame{position:relative;width:min(100%,calc((100vh - 146px)*16/9));aspect-ratio:16/9;background:#fff;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+    .slide-frame img{display:block;width:100%;height:100%;object-fit:contain}
+    .nav-zone{position:absolute;top:0;bottom:0;width:16%;border:0;background:transparent;cursor:pointer}
+    .nav-zone.prev{left:0}.nav-zone.next{right:0}
+    .nav-zone:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+    .notes{position:absolute;right:24px;top:22px;bottom:12px;width:min(390px,36vw);background:rgba(11,23,40,.97);border:1px solid #34465e;padding:24px;overflow:auto;transform:translateX(calc(100% + 32px));transition:transform .2s ease;z-index:5}
+    .notes.open{transform:translateX(0)}
+    .notes h2{margin:0 0 14px;font-size:19px;color:var(--gold)}
+    .notes p{font-size:16px;line-height:1.75;color:#e8eef7;white-space:pre-line}
+    footer{height:70px;display:flex;align-items:center;gap:14px;padding:0 22px;background:#0b1728;border-top:1px solid #25354b}
+    .progress{height:4px;flex:1;background:#26384f;position:relative}
+    .progress span{position:absolute;inset:0 auto 0 0;background:var(--gold);width:6.25%}
+    .counter{min-width:72px;text-align:center;font-variant-numeric:tabular-nums}
+    .thumbs{position:fixed;inset:64px 0 70px;background:rgba(4,10,18,.97);padding:26px;overflow:auto;display:none;z-index:8}
+    .thumbs.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));align-content:start;gap:18px}
+    .thumb{border:2px solid transparent;background:#111f31;padding:0;cursor:pointer;position:relative}
+    .thumb.active{border-color:var(--gold)}
+    .thumb img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+    .thumb span{position:absolute;left:8px;bottom:7px;background:rgba(0,0,0,.72);padding:3px 7px;color:#fff}
+    @media(max-width:760px){
+      header{height:56px;padding:0 10px;gap:8px}header span{display:none}header strong{font-size:15px}
+      .download{padding:0 10px;font-size:14px}.stage{padding:10px}
+      footer{height:60px;padding:0 10px}.notes{inset:56px 0 60px auto;width:92vw;top:0;bottom:0;right:0}
+      .thumbs{inset:56px 0 60px;padding:12px}.thumbs.open{grid-template-columns:repeat(2,1fr);gap:10px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>强生眼力健如何支持PLS体系建设</strong>
+    <span id="slideTitle"></span>
+    <div class="spacer"></div>
+    <button class="icon" id="thumbButton" type="button" title="幻灯片目录" aria-label="幻灯片目录">☷</button>
+    <button class="icon" id="notesButton" type="button" title="讲者提示" aria-label="讲者提示">▤</button>
+    <button class="icon" id="fullscreenButton" type="button" title="全屏播放" aria-label="全屏播放">⛶</button>
+    <a class="download" href="../../downloads/强生眼力健如何支持PLS体系建设_20分钟演讲版.pptx" download><span aria-hidden="true">↓</span>下载PPT</a>
+  </header>
+  <main>
+    <section class="stage" aria-live="polite">
+      <div class="slide-frame">
+        <img id="slideImage" alt="">
+        <button class="nav-zone prev" id="prevZone" type="button" aria-label="上一页"></button>
+        <button class="nav-zone next" id="nextZone" type="button" aria-label="下一页"></button>
+      </div>
+    </section>
+    <aside class="notes" id="notesPanel" aria-label="讲者提示">
+      <h2>讲者提示</h2>
+      <p id="notesText"></p>
+    </aside>
+  </main>
+  <footer>
+    <button class="icon" id="prevButton" type="button" title="上一页" aria-label="上一页">‹</button>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+    <span class="counter" id="counter"></span>
+    <button class="icon" id="nextButton" type="button" title="下一页" aria-label="下一页">›</button>
+  </footer>
+  <section class="thumbs" id="thumbPanel" aria-label="幻灯片目录"></section>
+  <script>
+    const slides = [
+      ["强生眼力健如何支持PLS体系建设","从高质量产品与技术平台、Professional Education专业教育和Digital PLS项目工具三个层面，支持医院建设自己的PLS体系。所有支持都不替代医院管理、医生判断或患者选择。"],
+      ["院长真正需要的，不是更多单点资源","PLS不是采购清单，也不是一次培训活动。医院需要让产品、团队和流程同时工作，形成稳定交付能力。"],
+      ["强生眼力健支持PLS的三层结构","先明确患者价值和临床标准，再选择合适的产品与技术，并通过专业教育和项目工具把能力落实到日常。"],
+      ["TECNIS Odyssey：面向全程视觉需求","关注远、中、近多场景和不同光线下的整体视觉目标。患者意愿不等于适应证，需完成眼表、角膜、黄斑、视神经、散光及心理预期评估。"],
+      ["TECNIS PureSee：平衡视程与视觉干扰","纯折射型EDOF设计，强调远、中距离并兼顾部分近距离功能。EDOF不等于全近距离脱镜，需说明精细近距离任务仍可能需要眼镜。"],
+      ["TECNIS Eyhance：单焦路径下增强中距离功能","以高质量远视力为核心，并轻度延伸焦深以支持部分中距离任务。不能按多焦或全视程IOL承诺脱镜。"],
+      ["VERITAS：稳定、可控的Phaco手术平台","以流体管理、能量管理和人机工程支持手术流程。具体模式与参数由受训医生结合核硬度、前房条件、整体风险和说明书确定。"],
+      ["CATALYS：可视化的FLACS精准手术平台","以3D OCT、精准撕囊和切口规划支持手术。FLACS不是PLS必要条件，也不适合所有患者，必须由医生基于适应证、风险收益与知情选择决定。"],
+      ["Professional Education：从培训一位医生，到赋能一支团队","围绕医生、护士、特检科、咨询师、客服和市场部设计岗位学习内容，让不同岗位围绕同一位患者形成共同语言。"],
+      ["临床与手术团队：建立可复制的专业标准","培训结果不只看签到和满意度，更要看团队能否按标准完成关键动作、留下记录并接受病例复盘。"],
+      ["特检、咨询、客服：让信息不断点，让患者听得懂","共同边界是不替代医生诊断、不承诺疗效、不替患者作决定，让每个岗位提供一致、准确、可追溯的信息。"],
+      ["市场部：从推广活动升级为合规患者旅程设计","市场团队支持合规触达、患者旅程和跨部门交接，不创造医疗结论，也不依据支付能力给患者贴标签。"],
+      ["Digital PLS：把培训和共识变成日常工作","用六大支柱自评、IDEAL共同决策、岗位课程地图、患者交接和30/60/90天计划完成诊断、学习、执行、留证与复盘。"],
+      ["30/60/90天：从一个试点场景开始","前30天诊断与设计，31至60天试运行与辅导，61至90天复盘与固化。院方负责人拥有项目并推动执行。"],
+      ["合作成果：医院最终应该留下什么","项目应留下可执行的院内标准、能够协同的多岗位团队，以及持续复盘改进的机制。能力最终属于医院。"],
+      ["四方价值一致，PLS才能走得长久","产品不绑定、技术有替代、临床由医生决策、患者充分知情选择。强生支持应同时创造患者、医生、医院和合规合作价值。"],
+      ["下一步：用一次90分钟共创会形成路线图","选择一个试点场景，邀请关键岗位参加，现场形成能力判断、三至五项优先行动和第30天复盘日期。"]
+    ];
+    let index = Math.max(0, Math.min(slides.length - 1, Number(new URLSearchParams(location.search).get('slide')) - 1 || 0));
+    const image = document.querySelector('#slideImage');
+    const title = document.querySelector('#slideTitle');
+    const notes = document.querySelector('#notesText');
+    const counter = document.querySelector('#counter');
+    const bar = document.querySelector('#progressBar');
+    const notesPanel = document.querySelector('#notesPanel');
+    const thumbPanel = document.querySelector('#thumbPanel');
+    function src(i){return 'slides/slide-' + String(i + 1).padStart(2,'0') + '.png'}
+    slides.forEach((slide,i)=>{const preload=new Image();preload.src=src(i);const button=document.createElement('button');button.className='thumb';button.type='button';button.innerHTML='<img src="'+src(i)+'" alt=""><span>'+(i+1)+'</span>';button.addEventListener('click',()=>{show(i);thumbPanel.classList.remove('open')});thumbPanel.appendChild(button)});
+    function show(next){
+      index=(next+slides.length)%slides.length;
+      image.src=src(index);image.alt='第'+(index+1)+'页：'+slides[index][0];
+      title.textContent=slides[index][0];notes.textContent=slides[index][1];
+      counter.textContent=(index+1)+' / '+slides.length;bar.style.width=((index+1)/slides.length*100)+'%';
+      thumbPanel.querySelectorAll('.thumb').forEach((el,i)=>el.classList.toggle('active',i===index));
+      history.replaceState(null,'','?slide='+(index+1));
+    }
+    function previous(){show(index-1)} function next(){show(index+1)}
+    document.querySelector('#prevButton').addEventListener('click',previous);
+    document.querySelector('#prevZone').addEventListener('click',previous);
+    document.querySelector('#nextButton').addEventListener('click',next);
+    document.querySelector('#nextZone').addEventListener('click',next);
+    document.querySelector('#notesButton').addEventListener('click',()=>notesPanel.classList.toggle('open'));
+    document.querySelector('#thumbButton').addEventListener('click',()=>thumbPanel.classList.toggle('open'));
+    document.querySelector('#fullscreenButton').addEventListener('click',()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen());
+    document.addEventListener('keydown',event=>{
+      if(['ArrowRight','PageDown',' '].includes(event.key)){event.preventDefault();next()}
+      if(['ArrowLeft','PageUp'].includes(event.key)){event.preventDefault();previous()}
+      if(event.key==='Home')show(0);if(event.key==='End')show(slides.length-1);
+      if(event.key.toLowerCase()==='n')notesPanel.classList.toggle('open');
+      if(event.key==='Escape')thumbPanel.classList.remove('open');
+    });
+    show(index);
+  </script>
+</body>
+</html>
