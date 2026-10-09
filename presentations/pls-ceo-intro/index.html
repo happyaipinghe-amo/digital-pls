@@ -24,10 +24,16 @@
     .nav-zone{position:absolute;top:0;bottom:0;width:16%;border:0;background:transparent;cursor:pointer}
     .nav-zone.prev{left:0}.nav-zone.next{right:0}
     .nav-zone:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
-    .notes{position:absolute;right:24px;top:22px;bottom:12px;width:min(390px,36vw);background:rgba(11,23,40,.97);border:1px solid #34465e;padding:24px;overflow:auto;transform:translateX(calc(100% + 32px));transition:transform .2s ease;z-index:5}
+    .notes{position:absolute;right:24px;top:22px;bottom:12px;width:min(470px,42vw);background:rgba(11,23,40,.98);border:1px solid #34465e;padding:24px;overflow:auto;transform:translateX(calc(100% + 32px));transition:transform .2s ease;z-index:5}
     .notes.open{transform:translateX(0)}
-    .notes h2{margin:0 0 14px;font-size:19px;color:var(--gold)}
-    .notes p{font-size:16px;line-height:1.75;color:#e8eef7;white-space:pre-line}
+    .notes h2{margin:0 0 8px;font-size:20px;color:var(--gold)}
+    .notes-meta{margin:0 0 20px;color:var(--muted);font-size:14px}
+    .note-section{padding-top:16px;margin-top:16px;border-top:1px solid #2d4059}
+    .note-section:first-of-type{padding-top:0;margin-top:0;border-top:0}
+    .note-section h3{margin:0 0 8px;font-size:15px;color:#7fc5ff}
+    .note-section p{margin:0;font-size:15px;line-height:1.78;color:#e8eef7;white-space:pre-line}
+    .note-section.question{border-left:3px solid var(--gold);padding-left:14px}
+    .note-section.transition p{color:#c9d7e9;font-style:italic}
     footer{height:70px;display:flex;align-items:center;gap:14px;padding:0 22px;background:#0b1728;border-top:1px solid #25354b}
     .progress{height:4px;flex:1;background:#26384f;position:relative}
     .progress span{position:absolute;inset:0 auto 0 0;background:var(--gold);width:6.25%}
@@ -65,8 +71,20 @@
       </div>
     </section>
     <aside class="notes" id="notesPanel" aria-label="讲者提示">
-      <h2>讲者提示</h2>
-      <p id="notesText"></p>
+      <h2 id="notesHeading">逐页解说词</h2>
+      <p class="notes-meta" id="notesMeta"></p>
+      <section class="note-section">
+        <h3>建议讲法</h3>
+        <p id="notesText"></p>
+      </section>
+      <section class="note-section question">
+        <h3>与院方互动</h3>
+        <p id="notesQuestion"></p>
+      </section>
+      <section class="note-section transition">
+        <h3>转场提示</h3>
+        <p id="notesTransition"></p>
+      </section>
     </aside>
   </main>
   <footer>
@@ -78,27 +96,111 @@
   <section class="thumbs" id="thumbPanel" aria-label="幻灯片目录"></section>
   <script>
     const slides = [
-      ["Digital PLS体系建设","患者的目标已经从视力表延伸到阅读、工作、驾驶和生活。今天讨论医院如何把这些目标转化为稳定、可信、可追踪的专业服务。\n\n合规提示：本次不是产品宣讲，不承诺疗效、手术量、收入或患者转化。"],
-      ["CEO需要回答的五个问题","请院长先选一个最想讨论的问题，后面的内容都会回到这五个判断。"],
-      ["PLS晶状体卓越诊疗体系","先讲中文名称和医院能力，再说明医疗边界。白内障和CLE/RLE共享能力系统，但适应证、替代方案与风险收益判断必须分别把关。"],
-      ["患者目标已经走出视力表","把变化讲成院方能够观察到的患者问题和组织问题，不使用未经核实的市场数字。"],
-      ["患者愿意为哪一种价值作出选择","依次解释生活目标、方案理解、交付信任、自主决定和术后负责。"],
-      ["PLS给医院带来的价值","经营价值必须放在患者价值之后。不要把自费比例或某一产品使用量作为唯一成功指标。"],
-      ["PLS给医生和团队带来的价值","重点是临床信心、可信团队输入和可复盘的专业成长，不把医生价值表述为商业转化。"],
-      ["PLS合作的三条底线","主动讲清眼力健的商业身份和合作边界。透明比回避更能建立管理层信任。"],
-      ["六大支柱","六大支柱是医院后台能力系统，可根据院方现状选择重点展开。"],
-      ["IDEAL患者共同决策五步","共同决策的完成标准不是团队讲完了，而是患者能用自己的话说出目标、局限、替代方案、费用属性和术后联系路径。"],
-      ["两条路径，共享同一条医学底线","不要把基础医保路径与PLS路径讲成医疗质量高低。两条路径必须共享安全、质量和尊重患者的底线。"],
-      ["一家医院的七步建设路线","每一步都有明确输出。医院完成本阶段的责任、行动和证据后，再进入下一步。"],
-      ["第1至30天：建立最小可运行流程","前30天不追求一次铺开全部工作。先跑通一条完整路径，让团队知道如何协作。"],
-      ["第31至60天：小规模试运行","试运行的目的是发现问题。出现医学红线、风险复核缺失或患者理解不足时，应暂停并回到临床判断。"],
-      ["第61至90天：复盘、固化、再决定","CEO先看医疗质量、患者价值和服务体验，再看经营健康。经营指标不能替代前三类结果。"],
-      ["下一步","邀请院方选择一个具体院区或门诊场景进入诊断，不把下一步说成采购或销量目标。"]
+      {
+        title:"Digital PLS体系建设", time:"1分30秒",
+        script:"各位院长、各位老师，今天我们不从某一枚人工晶状体讲起，也不从设备采购讲起。我们想讨论的是一个更基础的问题：当患者已经不再只满足于“看得见”，而是希望更好地阅读、工作、驾驶和生活时，医院怎样把这些目标转化为稳定、可信、可以持续交付的专业服务？\n\nPLS的核心不是让更多患者选择更贵的方案，而是让适合的患者在充分评估、充分知情以后，自主选择与自身需求相匹配的诊疗路径。Digital PLS则把这套能力变成医院可以看见、执行、复盘和改进的数字工作站。",
+        question:"今天的30分钟里，您最希望解决的是患者识别、团队协作、服务交付，还是经营结果中的哪一个问题？",
+        transition:"我们先不急着讲答案，先看院长层面必须回答的五个管理问题。"
+      },
+      {
+        title:"CEO需要回答的五个问题", time:"2分钟",
+        script:"PLS能不能落地，首先不是医生会不会做手术，而是医院能不能回答这五个问题。第一，为什么要做，战略目标是什么？第二，为谁做，哪些患者真正适合？第三，谁来做，跨岗位责任如何衔接？第四，怎么做，流程、空间、工具和质量标准是否统一？第五，做得怎么样，医院用什么证据持续复盘？\n\n这五个问题决定PLS是一次短期活动，还是能够沉淀为医院能力。建议院方先选出当前最不清楚的一题。后面的每一页，都会回到这五个判断，并形成具体行动。",
+        question:"如果现在只能先解决一个问题，贵院最希望从“战略、患者、团队、流程、结果”中的哪一项开始？",
+        transition:"要回答这些问题，第一步必须先把PLS到底是什么讲清楚。"
+      },
+      {
+        title:"PLS晶状体卓越诊疗体系", time:"2分钟",
+        script:"PLS的中文名称是“PLS晶状体卓越诊疗体系”。三个字母来自Premium Lens Surgery，但在医院管理中，它不是一个产品项目，而是一套围绕白内障与屈光性透明晶状体置换，包括老视矫正，建设起来的全流程专业能力。\n\n这套能力覆盖患者评估、共同决策、精准手术和术后管理。白内障与适合的透明晶状体置换患者可以共享检查、团队协作和质量管理平台，但两类患者的适应证、替代方案、风险收益与知情同意必须分别把关。最终目标不是推动某一种产品，而是让医院对临床选择和患者结果负责。",
+        question:"贵院目前是把这项工作理解为“高端晶体项目”，还是已经形成了跨科室、跨岗位的诊疗体系？",
+        transition:"当定义清楚以后，我们再看患者的需求为什么已经发生了变化。"
+      },
+      {
+        title:"患者目标已经走出视力表", time:"1分30秒",
+        script:"过去白内障手术常用一张视力表判断成功，但今天越来越多患者会问：术后能不能看手机、看电脑、夜间开车、打球、旅行，能不能少依赖眼镜。患者评价的不只是视力数字，也包括视觉质量、生活便利和整个就医过程是否值得信任。\n\n这给医院带来的挑战是，医生、咨询师、验光师、特检人员和护士必须围绕同一个患者目标协同工作。如果这些信息只存在于某个人的经验里，患者每到一个岗位都要重新解释，方案就容易断裂。",
+        question:"贵院患者最常提出的术后生活目标是什么？这些目标目前有没有被结构化记录并传递给医生？",
+        transition:"需求升级并不等于患者自然愿意自费，关键在于医院交付了什么价值。"
+      },
+      {
+        title:"患者愿意为哪一种价值作出选择", time:"2分钟",
+        script:"患者愿意自费，通常不是因为听懂了更多产品参数，而是因为五件事情同时成立：第一，医院真正理解了他的生活目标；第二，医生解释了不同方案的获益、局限和替代选择；第三，团队能够稳定执行检查、手术与随访；第四，费用清楚，决定是患者自己作出的；第五，出现神经适应、光晕眩光或其他问题时，医院不会把患者推开。\n\n所以，自费价值不是价格表上的差异，而是专业判断、透明沟通、稳定交付与术后负责共同形成的信任。任何一个环节缺失，患者都可能把PLS理解成“推销贵晶体”。",
+        question:"如果让一位已经接受PLS的患者评价贵院，他最可能称赞什么，又最可能担心什么？",
+        transition:"当这种价值能够稳定交付，它才会进一步转化为医院层面的长期价值。"
+      },
+      {
+        title:"PLS给医院带来的价值", time:"1分30秒",
+        script:"对医院来说，PLS首先带来的是服务能力升级：从完成一台手术，走向管理患者完整视觉目标；从依赖个别专家，走向形成可复制的团队流程；从一次成交，走向长期随访和口碑积累。\n\n经营价值当然重要，但顺序不能倒过来。医院应先证明医疗质量、患者理解和服务体验，再看结构合理的自费收入、转介绍和品牌价值。自费比例、单一产品使用量或短期营业额，都不能单独代表PLS成功。",
+        question:"贵院更希望PLS优先解决品牌差异化、团队标准化、患者体验，还是学科经营中的哪一项问题？",
+        transition:"医院能力最终要由人来交付，因此还要看这套体系给医生和团队带来什么。"
+      },
+      {
+        title:"PLS给医生和团队带来的价值", time:"1分30秒",
+        script:"对医生来说，PLS的价值是获得更完整、可信的决策输入。患者的生活方式、眼表、角膜、黄斑、视功能和预期被提前整理，医生可以把时间用于真正的临床判断与共同决策。\n\n对团队来说，每个岗位都知道自己的标准、交接点和升级路径。咨询师不越过医疗边界，特检人员保障数据质量，护士确保流程与随访闭环，投诉出现时由团队按照标准响应。病例复盘又把个人经验沉淀为组织能力。",
+        question:"贵院目前最容易发生信息断点的是哪个岗位交接：接待到咨询、检查到医生，还是手术到术后随访？",
+        transition:"讲到这里，也必须主动说明合作边界，回应院方最合理的顾虑。"
+      },
+      {
+        title:"PLS合作的三条底线", time:"2分钟",
+        script:"眼力健是一家医疗科技企业，因此院方问“推动PLS是不是为了产品和设备”是合理的。我们的回答应当透明：企业有商业身份，但合作必须守住三条底线。第一，临床决定权在医生，适应证和方案不由商业目标替代；第二，患者拥有完整选择权，基础医保路径、自费路径、替代方案和费用属性都应被说明；第三，项目评价不能只看产品使用和收入，还要看质量、体验、随访和能力证据。\n\n眼力健能够提供技术、教育和项目共建工具，但不能替代医院管理，也不能保证疗效、手术量、收入或转化率。边界讲清楚，合作才有长期信任。",
+        question:"院方对企业参与医院能力建设最关心的边界是什么？我们可以现场把责任与不承担的责任写清楚。",
+        transition:"在这些底线之上，医院需要建设六个彼此连接的能力支柱。"
+      },
+      {
+        title:"六大支柱", time:"2分钟",
+        script:"六大支柱不是六个独立项目，而是一套后台能力系统。战略与管理明确目标、负责人和复盘机制；患者旅程定义从引流、初筛、检查、共同决策到随访的标准；临床与技术保证检查完整、方案复核和手术质量；团队与人才定义各岗位胜任标准并通过培训和考试；患者教育与体验让患者听得懂、问得清、能自主决定；数据与持续改进则用事实发现问题。\n\n医院不需要同时把六项都做到满分。更实际的做法是先评估短板，确定优先级，再让六项能力逐步闭环。",
+        question:"如果现在给六大支柱做快速自评，贵院最强的一项和最需要补课的一项分别是什么？",
+        transition:"六大支柱最终要落到患者面前，IDEAL五步就是共同决策的核心工作法。"
+      },
+      {
+        title:"IDEAL患者共同决策五步", time:"2分钟",
+        script:"IDEAL强调个体化视觉设计，但它不是简单的问卷。第一步识别患者真正重视的生活场景；第二步用完整检查确认医学条件；第三步把患者目标与临床条件放在一起讨论；第四步解释可选方案、局限、风险、费用和替代选择；第五步由患者在理解后作出决定，并进入术后管理。\n\n共同决策是否完成，不是看团队讲了多少，而是看患者能不能用自己的话说清楚：我为什么选择、可能得到什么、可能遇到什么问题、还有哪些替代方案、费用如何，以及术后有问题找谁。",
+        question:"贵院现在的知情同意更像“签字环节”，还是已经成为患者真正理解和参与决策的过程？",
+        transition:"共同决策之后，患者可能进入不同路径，但医学底线必须一致。"
+      },
+      {
+        title:"两条路径，共享同一条医学底线", time:"2分钟",
+        script:"分流不能发生得太早，也不能只看支付能力。患者应先经过统一入口、基础检查和医生初诊，确认疾病、手术适应证和基本视觉需求；在此基础上，再根据临床条件、更高视觉需求和患者知情选择，进入标准诊疗路径或进一步的PLS视觉质量评估路径。\n\n两条路径绝不是“低质量”和“高质量”的区别。它们共享同一条医疗安全、诊疗质量、隐私保护和尊重患者的底线。区别主要在于检查深度、视觉目标设计、共同决策时间和术后视觉质量管理。不能因患者选择医保路径而降低基本服务，也不能因其支付能力强就自动进入PLS。",
+        question:"贵院目前在哪个节点分流？这个节点是否已经完成医生初诊、临床条件确认和患者需求识别？",
+        transition:"明确分流闸门后，就可以把体系建设拆成CEO能够管理的七个步骤。"
+      },
+      {
+        title:"一家医院的七步建设路线", time:"2分钟",
+        script:"七步路线把一个抽象概念变成可执行项目：先与领导层统一PLS定义和边界；再完成医院现状自评；确定负责人和30天计划；梳理患者旅程、岗位交接和空间动线；针对能力差距开展岗位培训；用少量适合病例试运行；最后依据数据复盘，决定下一阶段扩展。\n\n每一步都要有输出物和证据，例如职责表、路径图、检查清单、共同决策记录、随访记录和改进事项。完成上一阶段的责任、行动和证据后，再进入下一步，避免一开始就追求大规模。",
+        question:"贵院现在更接近七步中的哪一步？下一步最需要谁参与，才能真正推进？",
+        transition:"下面用90天把这七步展开，先看第一个30天。"
+      },
+      {
+        title:"第1至30天：建立最小可运行流程", time:"2分钟",
+        script:"前30天的目标不是马上增加手术量，而是跑通一位患者的完整旅程。院方需要确定项目负责人和PLS团队，完成六大支柱自评；画出从入院前、统一入口、检查、医生决策、费用说明、知情同意、手术到随访和投诉处理的流程；明确每个岗位的交接标准；同时核对空间、设备、工具和数据记录条件。\n\n这一阶段最重要的成果，是团队能用同一张流程图回答“谁在什么时候做什么、使用什么工具、异常交给谁”。如果还答不清，就不宜急着扩大。",
+        question:"贵院是否愿意选一个院区、一个医生团队和一条患者路径，先完成首个30天行动计划？",
+        transition:"流程跑通以后，第二个30天不是扩张，而是受控试运行。"
+      },
+      {
+        title:"第31至60天：小规模试运行", time:"2分钟",
+        script:"第31至60天选择少量、医学上适合且充分知情的患者开展试运行。团队要观察的不只是最终方案，还包括患者来源是否记录、检查是否遗漏、医生是否收到完整信息、费用是否透明、知情同意是否真实、库存与手术准备是否匹配，以及术后随访和问题响应是否闭环。\n\n试运行的目的就是暴露问题。出现医学红线、数据缺失、复核不足、患者理解不充分或责任不清时，应暂停该病例的路径推进，回到医生判断和团队复核，而不是为了进度继续向前。",
+        question:"试运行期间，贵院希望每天、每周分别看哪些异常信号？由谁有权按下暂停键？",
+        transition:"经过小规模验证，第三个30天才进入复盘、固化和是否扩展的决定。"
+      },
+      {
+        title:"第61至90天：复盘、固化、再决定", time:"2分钟",
+        script:"第61至90天，CEO需要看的不是一张销售报表，而是一组平衡证据。先看医疗质量与安全，再看患者是否理解、术后视觉目标是否得到管理、投诉和异常是否闭环；然后看团队执行、岗位能力和流程效率；最后再看患者结构、合理收入与资源投入是否健康。\n\n有效做法被固化为SOP、表单、培训标准和数据看板；问题形成责任人和改进期限。只有当质量、患者价值和团队能力得到验证后，医院才决定是否扩大院区、医生或患者范围。经营指标不能替代前三类结果。",
+        question:"90天后，什么证据会让院长愿意继续投入？什么红线又会让院长决定暂停并整改？",
+        transition:"最后，我们把今天的讨论收束为一个具体、低风险的下一步。"
+      },
+      {
+        title:"下一步", time:"1分30秒",
+        script:"今天不需要院方当场决定采购什么，也不需要承诺手术量。更合适的下一步，是选择一个具体院区或门诊场景，组织CEO或院长、医疗负责人、护士、咨询、视光特检、市场客服和运营人员，完成一次PLS能力自评与患者旅程研讨。\n\n研讨结束后共同形成三项成果：一张当前能力差距图、一份30天行动计划、一个首批试运行范围。Digital PLS可以提供评估、路径、培训、工具、记录和复盘支持，但最终责任仍由医院团队共同承担。先证明能力，再讨论规模。",
+        question:"如果把下一次会议定为一次90分钟工作坊，贵院希望选择哪个院区、哪条患者路径、哪些关键岗位参加？",
+        transition:"感谢各位。现在请院方提出最关心的问题，我们回到第二页的五个管理判断逐项讨论。"
+      }
     ];
     let index = Math.max(0, Math.min(slides.length - 1, Number(new URLSearchParams(location.search).get('slide')) - 1 || 0));
     const image = document.querySelector('#slideImage');
     const title = document.querySelector('#slideTitle');
+    const notesHeading = document.querySelector('#notesHeading');
+    const notesMeta = document.querySelector('#notesMeta');
     const notes = document.querySelector('#notesText');
+    const notesQuestion = document.querySelector('#notesQuestion');
+    const notesTransition = document.querySelector('#notesTransition');
     const counter = document.querySelector('#counter');
     const bar = document.querySelector('#progressBar');
     const notesPanel = document.querySelector('#notesPanel');
@@ -107,8 +209,13 @@
     slides.forEach((slide,i)=>{const preload=new Image();preload.src=src(i);const button=document.createElement('button');button.className='thumb';button.type='button';button.innerHTML='<img src="'+src(i)+'" alt=""><span>'+(i+1)+'</span>';button.addEventListener('click',()=>{show(i);thumbPanel.classList.remove('open')});thumbPanel.appendChild(button)});
     function show(next){
       index=(next+slides.length)%slides.length;
-      image.src=src(index);image.alt='第'+(index+1)+'页：'+slides[index][0];
-      title.textContent=slides[index][0];notes.textContent=slides[index][1];
+      image.src=src(index);image.alt='第'+(index+1)+'页：'+slides[index].title;
+      title.textContent=slides[index].title;
+      notesHeading.textContent='第'+(index+1)+'页解说词';
+      notesMeta.textContent=slides[index].title+' · 建议时长 '+slides[index].time;
+      notes.textContent=slides[index].script;
+      notesQuestion.textContent=slides[index].question;
+      notesTransition.textContent=slides[index].transition;
       counter.textContent=(index+1)+' / '+slides.length;bar.style.width=((index+1)/slides.length*100)+'%';
       thumbPanel.querySelectorAll('.thumb').forEach((el,i)=>el.classList.toggle('active',i===index));
       history.replaceState(null,'','?slide='+(index+1));
