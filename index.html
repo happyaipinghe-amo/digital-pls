@@ -31,6 +31,8 @@
   </script>
   <script src="training-data.js" defer>
   </script>
+  <link rel="stylesheet" href="team.css">
+  <script src="team.js" defer></script>
   <script src="qa-data.js" defer>
 </script>
   <script src="qa-extra-data.js" defer>
@@ -300,7 +302,7 @@
 <div>
 <span class="eyebrow">CEO WORKSHOP PRESENTATION</span>
 <h2 id="presentationLaunchTitle">30分钟PLS项目介绍</h2>
-<p>院长与CEO研讨会版本，涵盖PLS定位、患者与医院价值、IDEAL路径、六大支柱及90天建设路线。</p>
+<p>18页院长与CEO研讨会版本，涵盖PLS定位、IDEAL路径、六大支柱、院方团队分工及90天建设。预留5分钟，由CEO与院长现场指定六类角色成员，确认备岗、到位时间和首次复盘日期。</p>
 </div>
 <div class="presentation-launch-actions">
 <a class="primary" href="presentations/pls-ceo-intro/index.html" target="_blank" rel="noopener">开始播放</a>
@@ -954,6 +956,15 @@
 <div class="organization-model-head"><div><span class="eyebrow">CROSS-DEPARTMENT CAPABILITY</span><h2 id="capabilityOrganizationTitle">先建跨科服务线，再决定是否调整组织</h2><p>白内障科与屈光科保留专业边界，通过统一患者入口、共同SOP、MDT和质量指标实现协作。</p></div><button class="outline" type="button" data-qa="22">查看组织设计 →</button></div>
 <div class="organization-model-flow"><span>白内障科</span><i>+</i><span>屈光科</span><i>→</i><strong>PLS服务线 / 虚拟中心</strong><i>→</i><span>条件成熟后评估“白内障与老视矫正中心”</span></div>
 </section>
+<section id="plsTeam" class="pls-team" aria-labelledby="plsTeamTitle">
+<header><span class="eyebrow">PLS TEAM · RESPONSIBILITY & HANDOFF</span><h2 id="plsTeamTitle">PLS试点团队：角色、分工与交接</h2><p>1位项目负责人 + 5类核心角色。先明确责任，再安排人员；六类责任不等于新增六名员工。</p></header>
+<div class="team-organization"><strong>PLS项目负责人：统筹资源、任命责任人与复盘</strong><div><span>临床主诊医生</span><span>视觉质量评估角色</span><span>患者旅程管理师</span><span>手术质量与护理协调角色</span><span>运营与合规支持角色</span></div><p>临床主诊医生承担最终医学判断；患者旅程管理师保持全程联系；各专业岗位在资质与授权范围内执行。</p></div>
+<div id="teamRoleDetails" class="team-role-list"></div>
+<h3>试点怎么配人？</h3><div class="team-config"><article><h4>试点配置</h4><p>项目负责人1位，核心医生1–2位；指定视觉质量评估、患者旅程管理、护理协调及运营支持责任人。负责人和运营支持可兼任，检查与护理可由现有专业团队承担。</p><p>患者旅程管理师须有明确服务时段与备岗。能否兼任取决于工作量、专业资质及交接可靠性。</p></article><article><h4>扩展配置</h4><p>出现预约积压、重复解释、检查复核延误、随访遗漏或备岗不足时，增加旅程管理与专业执行人员。患者旅程管理可分为术前与术后执行，但每位患者始终有一位明确的联系责任人。</p></article></div>
+<h3>原岗位如何归入PLS责任？</h3><div class="team-table-wrap"><table><thead><tr><th>原岗位或职能</th><th>PLS责任角色</th><th>保留的专业边界</th></tr></thead><tbody><tr><td>谈话师、咨询师、患教师、客服；医助中的协调工作</td><td>患者旅程管理师</td><td>不代替医生诊断、定方案或医疗风险告知；医疗操作按资质授权执行</td></tr><tr><td>验光师、特殊检查技师</td><td>视觉质量评估角色</td><td>各自完成授权检查，异常与数据不一致交医生复核</td></tr><tr><td>手术护士、复诊及随访护士</td><td>手术质量与护理协调角色</td><td>护理及医疗随访由专业人员执行；旅程管理师协调预约并追踪完成</td></tr><tr><td>院长、科主任、运营、财务及合规人员</td><td>项目负责人及运营与合规支持角色</td><td>医院确定管理权限；财务核对收费，专业部门审核材料与制度</td></tr></tbody></table></div>
+<h3>启动前逐项核查</h3><ul><li>六类责任均有明确责任人、备岗与服务时段。</li><li>每位患者有联系责任人，专业节点有执行人与交接记录。</li><li>医生确认方案后才进入正式费用与签署确认。</li><li>异常症状、数据疑点和投诉均有升级对象、时限与处理记录。</li><li>第30、60、90天复盘交接缺漏、患者结果、随访与改进证据。</li></ul>
+<div class="team-actions"><button class="outline" type="button" data-team-download="roles">下载团队分工表</button><button class="outline" type="button" data-team-download="handoff">下载患者交接清单</button><button class="primary" type="button" data-go="operations">进入90天建设 →</button></div>
+</section>
 <section class="panel mdt-panel">
 <div class="panel-head">
 <div>
@@ -1139,7 +1150,7 @@
 <div>
 <span class="eyebrow">院方研讨会材料</span>
 <h2 id="presentationResourceTitle">Digital PLS院方研讨会30分钟介绍</h2>
-<p>适用于一线销售人员与民营眼科院长、CEO开展首次PLS项目沟通。网页版本支持全屏播放、键盘翻页、目录跳转和讲者提示。</p>
+<p>18页、30分钟。包含院方PLS团队角色分工、现场成员指定表与会议确认；下载PPT后可直接填写主责姓名、部门职务、备岗及到位日期。网页提供同步逐页解说和主持提示。</p>
 <div class="presentation-resource-actions">
 <a class="primary" href="presentations/pls-ceo-intro/index.html" target="_blank" rel="noopener">网页播放</a>
 <a class="outline" href="downloads/强生眼力健_Digital_PLS院方研讨会30分钟介绍PPT.pptx" download>下载PPT</a>

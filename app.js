@@ -36,6 +36,19 @@ function seed(){return {role:'院长/CEO',selected:'P001',mdtRole:'咨询师',co
 ]};}
 function load(){try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!saved||!Array.isArray(saved.patients)||!Array.isArray(saved.tasks)||!Array.isArray(saved.audit))return seed();saved.competency ||= {};saved.learning ||= {};saved.courseProgress ||= {};saved.courseRole=roleCourseCatalog?.[saved.courseRole]?saved.courseRole:'咨询师';saved.mdtRole=mdtRoles[saved.mdtRole]?saved.mdtRole:'咨询师';if(!saved.inventory||!Array.isArray(saved.inventory.iol)||!Array.isArray(saved.inventory.consumables))saved.inventory=demoInventory();saved.inventoryLookup ||= {model:'puresee',power:'+20.0 D',cylinder:''};if(!saved.tasks.some(t=>t.id===5||t.title.includes('空间分区、患者动线'))){saved.tasks.push({id:5,title:'走查空间分区、患者动线与路径确认闸门',owner:'院长/CEO',phase:'第 1–30 天',done:false})}saved.patients.forEach(p=>{p.handoffs ||= {};featurePatient(p)});return saved}catch{return seed()}}
 let state=load();
+state.mdtRole=plsRoleAliases[state.mdtRole] || state.mdtRole;
+for(const [oldName,newName] of Object.entries(plsRoleAliases)) {
+  if(state.competency[oldName] && !state.competency[newName])state.competency[newName]=state.competency[oldName];
+  if(state.learning[oldName] && !state.learning[newName])state.learning[newName]=state.learning[oldName];
+  if(state.courseProgress[oldName] && !state.courseProgress[newName])state.courseProgress[newName]=state.courseProgress[oldName];
+}
+state.courseRole=plsRoleAliases[state.courseRole] || state.courseRole;
+state.tasks.forEach(task=>{task.owner=plsRoleAliases[task.owner] || task.owner;});
+[
+  {id:101,title:'确认六类责任人、备岗与患者联系责任人',owner:'PLS项目负责人',phase:'第 1–30 天',done:false},
+  {id:102,title:'试运行患者交接清单及异常升级，复盘缺漏',owner:'患者旅程管理师',phase:'第 31–60 天',done:false},
+  {id:103,title:'复评岗位能力、固化SOP并核查团队配置',owner:'PLS项目负责人',phase:'第 61–90 天',done:false}
+].forEach(task=>{if(!state.tasks.some(existing=>existing.id===task.id))state.tasks.push(task);});
 let viewedStage=null;
 const $=s=>document.querySelector(s);
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
