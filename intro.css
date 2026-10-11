@@ -17,6 +17,8 @@ body.intro-mode>.topbar,body.intro-mode>footer{display:none}
 #intro .intro-primary:hover{background:#a9231b}
 #intro .intro-primary span{padding-left:10px}
 #intro .intro-secondary{color:#fff;font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+#intro .intro-concept-link{background:#fff;color:#14315b;border-radius:4px;padding:13px 20px;text-decoration:none}
+#intro .intro-concept-link:hover{background:#edf4fa;color:#102746}
 #intro .intro-hero small{display:block;margin-top:19px;color:#e4ebf2;font-size:11px}
 #intro .intro-content,#intro .intro-partner-inner,#intro .intro-close{max-width:1320px;margin:auto;padding:55px clamp(18px,4vw,54px)}
 #intro .intro-section-head{max-width:900px}
