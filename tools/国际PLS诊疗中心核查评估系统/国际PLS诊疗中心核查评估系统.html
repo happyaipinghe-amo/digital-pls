@@ -206,7 +206,8 @@ saveBtn.addEventListener('click',()=>{save();saveBtn.textContent='已保存';set
 autoPlanBtn.addEventListener('click',()=>{const gaps=ITEMS.filter(x=>x.priority==='高'&&(scoreValue(x.id)??0)<2).sort((a,b)=>(b.gate?1:0)-(a.gate?1:0)).slice(0,6);state.actions=Array.from({length:6},(_,i)=>{const x=gaps[i];return x?{action:`补强 ${x.id} ${x.title}`,owner:x.owner,deadline:x.gate||scoreValue(x.id)===0?'30天':'60天',evidence:x.evidence}:{action:'',owner:'',deadline:'',evidence:''}});save();renderActions();autoPlanBtn.textContent='已生成';setTimeout(()=>autoPlanBtn.textContent='生成优先行动',1200)});
 exportBtn.addEventListener('click',()=>{save();const blob=new Blob([JSON.stringify({...state,exportedAt:new Date().toISOString(),version:'2026-full-journey'},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`PLS全旅程能力评估-${hospital.value||'医院'}-${date.value||'未填写'}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)});
 resetBtn.addEventListener('click',()=>{if(!confirm('确定清空本浏览器中的全部评估记录？'))return;localStorage.removeItem(STORE);location.reload()});
-render();
+// Extension keeps the existing item framework and migrates existing self-assessments.
 </script>
+<script src="capability-evaluation.js"></script>
 </body>
 </html>
