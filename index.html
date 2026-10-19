@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="holistic-upgrade.css">
   <link rel="stylesheet" href="pls-brand.css">
   <link rel="stylesheet" href="space-flow.css">
+  <script src="journey-data.js" defer></script>
   <script src="mdt-data.js" defer>
 </script>
   <script src="inventory-data.js" defer>
@@ -412,7 +413,7 @@
 </div>
 <div>
 <h2 id="homeRoutingTitle">先确认医学与需求，再分诊疗路径</h2>
-<p>到院时只做预识别；完成基础医学筛查和简版视觉需求访谈后，由医生或授权团队确认进入标准诊疗路径、PLS 深度评估，或暂缓并进一步复核。</p>
+<p>第2环节仅初步分诊，第3—4环节按需完成需求评估与检查；第5环节由医生判断医学可行性，第6环节经充分告知与患者自主选择确认方案及路径。信息不足或有危险信号时先复核，不按支付能力提前分流。</p>
 </div>
 <button type="button" class="outline" data-go="journey" data-routing-focus="true">查看分流闸门 →</button>
 </section>
@@ -659,7 +660,7 @@
       </section>
 
       <section class="concept-next" aria-labelledby="conceptNextTitle">
-        <div><span class="eyebrow">FROM CONCEPT TO PRACTICE</span><h2 id="conceptNextTitle">概念清楚以后，进入医院的真实工作</h2><p>IDEAL是前端患者路径，六大支柱是后台能力系统，CEO驾驶舱用于持续复盘质量、团队和行动。</p></div>
+        <div><span class="eyebrow">FROM CONCEPT TO PRACTICE</span><h2 id="conceptNextTitle">概念清楚以后，进入医院的真实工作</h2><p>IDEAL评估是患者九环节中的第3环节，六大支柱是后台能力系统，CEO驾驶舱用于持续复盘质量、团队和行动。</p></div>
         <div class="concept-next-actions"><button class="primary" type="button" data-go="journey">查看患者旅程 →</button><button class="outline" type="button" data-go="capability">查看医院PLS能力 →</button><button class="outline" type="button" data-go="ceo">进入CEO驾驶舱 →</button></div>
       </section>
       <p class="concept-source">内容依据《PLS的定义、边界与医学基础：从DLS到PLS》整理。页面用于项目沟通与团队学习，不替代临床指南、医生判断及医院合规审核。</p>
@@ -720,7 +721,7 @@
 </div>
 <div class="panel">
 <div class="panel-head">
-<h2>患者路径</h2>
+<h2>患者全流程九环节</h2>
 <span id="patientCode" class="muted">
 </span>
 </div>
@@ -728,6 +729,7 @@
 </div>
 </div>
 </div>
+<section data-journey-reference></section>
 <section id="routingGate" class="panel routing-gate">
 <div class="panel-head">
 <div>
@@ -924,7 +926,7 @@
 <div><span class="eyebrow">PILLAR 1 · FACILITY & PATIENT FLOW</span><h2 id="spaceFlowTitle">PLS空间、功能分区与患者动线</h2><p>空间建设不是把患者按支付能力分开，而是把统一医学入口、路径确认、隐私沟通、精准检查、共同决策和术后管理连接得更顺畅。</p></div>
 <button class="outline" type="button" data-go="journey" data-routing-focus>查看路径确认闸门 →</button>
 </header>
-<div class="space-principle"><b>同一条医学底线</b><span>统一入口与共享基础检查</span><i>→</i><span>医生初诊 + IDEAL简版需求评估</span><i>→</i><strong>标准诊疗 / PLS路径确认闸门</strong><i>→</i><span>按临床需要进入后续路径</span></div>
+<div class="space-principle"><b>同一条医学底线</b><span>统一入口与共享基础检查</span><i>→</i><span>第3—4环节：IDEAL评估与全面检查</span><i>→</i><span>第5环节：医生诊断</span><i>→</i><strong>第5—6环节：路径确认闸门</strong><i>→</i><span>第6环节：方案确定</span></div>
 <div class="space-flow-map" aria-label="眼科医院PLS功能分区与患者动线">
 <div class="flow-common flow-top"><b>医院统一入口</b><span>接待、挂号与初步安全筛查</span></div>
 <div class="flow-arrow" aria-hidden="true">↓</div>
@@ -932,7 +934,7 @@
 <div class="flow-arrow" aria-hidden="true">↓</div>
 <div class="flow-common"><b>医生初诊与IDEAL简版需求评估</b><span>判断主要眼病、危险信号、下一步检查方向和真实视觉需求</span></div>
 <div class="flow-arrow" aria-hidden="true">↓</div>
-<div class="flow-gate"><small>确认节点</small><b>标准诊疗 / PLS路径确认闸门</b><span>医学安全 + 真实需求 + 知情自主；信息不足时保持共享候诊并补齐信息</span></div>
+<div class="flow-gate"><small>确认节点</small><b>标准诊疗 / PLS路径确认闸门</b><span>第5—6环节：医生判断医学可行性，充分告知、复述确认与自主选择；信息不足先补齐</span></div>
 <div class="flow-branches">
 <article class="flow-path basic"><header><small>PATH A</small><h3>基础诊疗路径</h3></header><ol><li>普通候诊与标准诊室</li><li>按临床需要完成检查与诊断</li><li>说明治疗选择、风险与替代方案</li><li>医保资格、报销范围和费用另行核对</li><li>进入规范手术预约或其他治疗</li></ol></article>
 <article class="flow-path assessment"><header><small>SHARED PLATFORM</small><h3>视觉质量评估平台</h3></header><ol><li>视功能与屈光检查</li><li>角膜、散光、眼表与眼底评估</li><li>视觉任务、术后预期与双眼策略沟通</li><li>发现风险或条件变化时返回医生复核</li></ol></article>
@@ -1002,7 +1004,7 @@
 <div class="page-grid lower">
 <div class="panel">
 <h2>从评估到改进</h2>
-<p>每项“需改进”都应进入30/60/90天行动计划，明确医院责任人、期限和复评证据。六大支柱是后台能力系统；IDEAL是前台患者路径。</p>
+<p>每项“需改进”都应进入30/60/90天行动计划，明确医院责任人、期限和复评证据。六大支柱是后台能力系统；IDEAL评估对应患者九环节中的第3环节。</p>
 <button class="wide-button" data-go="operations">前往30/60/90天行动 →</button>
 </div>
 <div class="panel">
@@ -1332,12 +1334,12 @@
 <section class="panel certification-modules">
 <div class="panel-head">
 <div>
-<span class="eyebrow">NINE PATIENT JOURNEY DOMAINS</span>
-<h2>九个患者旅程评估模块</h2>
+<span class="eyebrow">NINE PATIENT JOURNEY STAGES</span>
+<h2>患者全流程九环节与评价覆盖</h2>
 </div>
 <span class="badge">所有级别共同框架</span>
 </div>
-<div class="module-grid"><article><b>01 合规触达与入院前管理</b><p>按统一评价表核查制度、连续执行、结果及改进证据。</p><small>自评与专家核定分别记录；证据等级E0—E3。</small></article><article><b>02 到院接待与路径确认</b><p>按统一评价表核查制度、连续执行、结果及改进证据。</p><small>自评与专家核定分别记录；证据等级E0—E3。</small></article><article><b>03 精准检查与医学评估</b><p>按统一评价表核查制度、连续执行、结果及改进证据。</p><small>自评与专家核定分别记录；证据等级E0—E3。</small></article><article><b>04 方案解释与共同决策</b><p>按统一评价表核查制度、连续执行、结果及改进证据。</p><small>自评与专家核定分别记录；证据等级E0—E3。</small></article><article><b>05 术前准备与手术交付</b><p>按统一评价表核查制度、连续执行、结果及改进证据。</p><small>自评与专家核定分别记录；证据等级E0—E3。</small></article><article><b>06 出院与早期随访</b><p>按统一评价表核查制度、连续执行、结果及改进证据。</p><small>自评与专家核定分别记录；证据等级E0—E3。</small></article><article><b>07 长期视觉质量管理</b><p>按统一评价表核查制度、连续执行、结果及改进证据。</p><small>自评与专家核定分别记录；证据等级E0—E3。</small></article><article><b>08 投诉、异常与体验修复</b><p>按统一评价表核查制度、连续执行、结果及改进证据。</p><small>自评与专家核定分别记录；证据等级E0—E3。</small></article><article><b>09 团队、环境、数据与持续改进</b><p>按统一评价表核查制度、连续执行、结果及改进证据。</p><small>自评与专家核定分别记录；证据等级E0—E3。</small></article></div>
+<div class="module-grid"><article><b>01 引流／预约</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>02 到院分流</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>03 IDEAL评估</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>04 全面检查</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>05 医生诊断</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>06 方案确定</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>07 手术执行</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>08 术后随访</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>09 持续改进</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article></div>
 </section>
 <div class="certification-columns">
 <section class="panel">
@@ -1557,11 +1559,11 @@
 <label>演示患者 <select id="educationPatient">
 </select>
 </label>
-<label>旅程阶段 <select id="educationStageFilter">
+<label>患教使用时段（九环节的分组） <select id="educationStageFilter">
 <option value="all">全部阶段</option>
-<option value="术前">术前</option>
-<option value="方案讨论">方案讨论</option>
-<option value="术后">术后</option>
+<option value="术前">IDEAL评估／全面检查（3—4）</option>
+<option value="方案讨论">医生诊断／方案确定（5—6）</option>
+<option value="术后">手术执行的出院交接／术后随访（7—8）</option>
 </select>
 </label>
 </div>

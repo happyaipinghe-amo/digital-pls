@@ -6,6 +6,7 @@ function searchExcerpt(text,max=105){const clean=String(text??'').replace(/\s+/g
 function searchTerms(raw){return String(raw).trim().split(/\s+/).filter(Boolean).flatMap(part=>{const groups=part.match(/[a-z0-9]+|[\u3400-\u9fff]+/gi);return groups?.length>1?groups:[part]}).map(searchNormalize)}
 function buildSiteSearchIndex(){
   const items=[];
+  (window.plsJourney||[]).forEach(step=>items.push({kind:'page',type:'患者全流程九环节',title:`第${step.id}环节 ${step.name}`,text:`${step.roles} ${step.work} ${step.handoff}`,view:'journey',target:'',order:step.id}));
   document.querySelectorAll('main .view').forEach(view=>{
     const viewId=view.id;if(!viewId||viewId==='qa'||viewId==='resources')return;
     const seen=new Set();

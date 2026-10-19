@@ -14,6 +14,6 @@ const educationTopics = [
   {id:'choices',stage:'方案讨论',title:'比较可选方案、费用与局限',detail:'医生说明适用性、收益、局限和替代选择；咨询与收费岗位核对每眼及双眼总价、具体晶体、包含项、另计项、3个月复查范围及改选退费安排，再确认患者理解。'},
   {id:'followup',stage:'术后',title:'术后复查与症状反馈',detail:'按医嘱复查；如出现突发视力下降、明显疼痛等情况，及时联系医疗团队。'}
 ];
-const funnelSteps = [['到院/建档',0],['完成初步筛查',1],['完成 IDEAL 评估',2],['医生诊断',4],['方案确定',5],['进入手术环节',6]];
+const funnelSteps = window.plsJourney.map((step,index) => [step.name,index]);
 function localDate(day = new Date().getDate()) { const now = new Date(); return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`; }
 function monthOf(value) { return typeof value === 'string' ? value.slice(0,7) : ''; }
