@@ -1,0 +1,11 @@
+.tool-journey-note{color:#526b83;font-size:13px;margin:0 0 18px}
+.resource-library{display:grid;gap:23px}
+.resource-stage h3{font-size:17px;color:#143d68;margin:0 0 11px;padding:0 0 8px;border-bottom:2px solid #d6e6f1}
+.resource-stage h3 span{font-size:12px;font-weight:400;color:#667f96;margin-left:12px}
+.resource-stage-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.resource-stage .resource-card{display:flex;flex-direction:column;min-width:0}
+.resource-stage .resource-card p{min-height:0}
+.resource-stage .tool-role{font-size:11px;color:#6a7c8c;margin:auto 0 10px}
+.resource-stage .tool-card-actions{margin-top:0}
+@media(max-width:900px){.resource-stage-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.resource-stage-grid{grid-template-columns:1fr}}

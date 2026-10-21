@@ -23,6 +23,21 @@ const resources = [
   ['JJSV 产品与技术概览','专业人员使用的产品及技术资料','资源库 · 医生/PLS团队','知识库','JJSV IOL flcac和LipiFlow概览/index.html',['doctor','team']]
   ,['IOL计算公式导航与临床选择','公式类别、关键输入、特殊眼路径及专业计算器入口；最终由医生复核决策','临床工作台 · 医生/检查团队','交互知识库','IOL计算公式导航与临床选择/index.html',['doctor','team']]
 ];
+const resourceJourney = {
+  '术前视觉需求问卷': {stage:3,related:'第3环节 · IDEAL评估'},
+  'IOL计算公式导航与临床选择': {stage:4,related:'第4—5环节 · 全面检查／医生诊断'},
+  '人工晶体匹配决策树': {stage:5,related:'第5—6环节 · 医生诊断／方案确定'},
+  'JJSV 产品与技术概览': {stage:5,related:'第5—6环节 · 医生诊断／方案确定'},
+  '术前心理预期复核': {stage:6,related:'第6环节 · 方案确定'},
+  'PLS方案与费用说明': {stage:6,related:'第6环节 · 方案确定'},
+  'PLS知情同意与费用选择确认书': {stage:6,related:'第6环节 · 方案确定'},
+  '术后护理随访 SOP': {stage:8,related:'第8—9环节 · 术后随访／持续改进'},
+  '医院遴选打分表': {stage:10,related:'全程支撑 · 试点医院遴选'},
+  '运营辅导研讨会议程': {stage:10,related:'全程支撑 · 项目启动'},
+  'PLS诊疗体系建设能力评价（63项）': {stage:10,related:'全程支撑 · 九环节能力评估'},
+  '90 天行动表': {stage:10,related:'全程支撑 · 改进与复盘'},
+  'PLS 六大支柱核心内容': {stage:10,related:'全程支撑 · 能力建设'}
+};
 function seed(){return {role:'院长/CEO',selected:'P001',mdtRole:'咨询师',competency:{},learning:{},courseRole:'咨询师',courseProgress:{},inventory:demoInventory(),inventoryLookup:{model:'puresee',power:'+20.0 D',cylinder:''},patients:[
   {id:'P001',name:'患者 A',age:'58 岁',stage:4,priority:'电脑与中距离',concern:'希望改善工作和阅读体验，担心夜间眩光',glasses:'希望减少戴镜'},
   {id:'P002',name:'患者 B',age:'64 岁',stage:2,priority:'阅读与近距离',concern:'关注阅读舒适度',glasses:'愿意按需戴镜'},
@@ -116,13 +131,24 @@ function renderMdt(){
 function renderSelfResult(){const record=competencyFor(state.mdtRole),count=record.self.filter(n=>n>0).length,score=record.self.reduce((a,b)=>a+b,0)*4;$('#selfResult').innerHTML=count<5?`已评 ${count}/5 项 · 请完成全部项目后查看总分`: `自评 ${score} 分 · <strong class="${score>=80?'pass':'fail'}">${score>=80?'达到演示建议线':'建议补强'}</strong>`}
 function renderQuizResult(){const result=competencyFor(state.mdtRole).quiz;if(!result){$('#quizResult').textContent='尚未提交短测';return}const questions=mdtRoles[state.mdtRole].questions;$('#quizResult').innerHTML=`最近一次：${result.score} 分 · <strong class="${result.score>=80?'pass':'fail'}">${result.score>=80?'及格':'未及格'}</strong><small>${esc(result.at)}</small>${result.score<100?`<details><summary>查看错题与正确答案</summary><ol>${questions.map(([q,opts,correct],i)=>result.answers[i]===correct?'':`<li>${esc(q)}<br>正确答案：${esc(opts[correct])}</li>`).join('')}</ol></details>`:''}`}
 function renderOperations(){let done=state.tasks.filter(t=>t.done).length;$('#taskList').innerHTML=state.tasks.map(t=>`<label class="task-row ${t.done?'done':''}"><input type="checkbox" data-task="${t.id}" ${t.done?'checked':''}><span>${esc(t.title)}<small>${esc(t.owner)} · ${esc(t.phase)}</small></span></label>`).join('');$('#opsSummary').innerHTML=`<div class="ops-big">${done}/${state.tasks.length}</div><p class="muted">演示行动已完成</p><div class="progress"><span style="width:${state.tasks.length?done/state.tasks.length*100:0}%"></span></div><div class="ops-line">六大支柱已评估：<b>${state.audit.filter(a=>a!=='未评估').length}/6</b></div><div class="ops-line">患者旅程记录：<b>${state.patients.length}</b> 份演示档案</div>`}
-function renderResources(){const query=$('#toolSearch').value.trim().toLowerCase(),role=$('#toolRoleFilter').value;const matched=resources.map((r,i)=>({r,i})).filter(({r})=>(role==='all'||r[5].includes(role))&&(!query||`${r[0]} ${r[1]} ${r[2]}`.toLowerCase().includes(query)));$('#toolCount').textContent=`${matched.length} / ${resources.length} 个工具`;$('#resourceGrid').innerHTML=matched.map(({r,i})=>{const [name,desc,where,type,path]=r,url=encodeURI(`tools/${path}`);return `<article class="resource-card"><small>${esc(where)}</small><h2>${esc(name)}</h2><p>${esc(desc)}</p><div class="tool-card-actions"><button class="wide-button" type="button" data-open-tool="${i}">站内查看 →</button><a href="${url}" target="_blank" rel="noopener">独立打开 ↗</a></div><span class="badge">${esc(type)} · 已收录</span></article>`}).join('')||'<p class="muted">未找到匹配工具，请调整搜索或岗位筛选。</p>'}
+function renderResources(){
+  const query=$('#toolSearch').value.trim().toLowerCase(),role=$('#toolRoleFilter').value,stage=$('#toolStageFilter').value;
+  const matched=resources.map((r,i)=>({r,i,mapping:resourceJourney[r[0]]})).filter(({r,mapping})=>(role==='all'||r[5].includes(role))&&(stage==='all'||String(mapping.stage)===stage)&&(!query||`${r[0]} ${r[1]} ${r[2]} ${mapping.related}`.toLowerCase().includes(query))).sort((a,b)=>a.mapping.stage-b.mapping.stage||a.i-b.i);
+  $('#toolCount').textContent=`${matched.length} / ${resources.length} 个工具`;
+  if(!matched.length){$('#resourceGrid').innerHTML='<p class="muted">未找到匹配工具，请调整搜索或岗位筛选。</p>';return}
+  const groups=new Map();for(const item of matched){const key=item.mapping.stage;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(item)}
+  $('#resourceGrid').innerHTML=[...groups].map(([stage,items])=>{
+    const label=stage===10?'全程支撑 · 医院体系建设':`第${stage}环节 · ${stages[stage-1]}`;
+    const cards=items.map(({r,i,mapping})=>{const [name,desc,where,type,path]=r,url=encodeURI(`tools/${path}`);return `<article class="resource-card"><small>${esc(mapping.related)}</small><h2>${esc(name)}</h2><p>${esc(desc)}</p><p class="tool-role">${esc(where)}</p><div class="tool-card-actions"><button class="wide-button" type="button" data-open-tool="${i}">站内查看 →</button><a href="${url}" target="_blank" rel="noopener">独立打开 ↗</a></div><span class="badge">${esc(type)} · 已收录</span></article>`}).join('');
+    return `<section class="resource-stage" aria-label="${esc(label)}"><h3>${esc(label)}<span>${items.length} 个工具</span></h3><div class="resource-stage-grid">${cards}</div></section>`
+  }).join('');
+}
 function openTool(index){const resource=resources[index];if(!resource)return;const url=encodeURI(`tools/${resource[4]}`);$('#toolViewerTitle').textContent=resource[0];$('#toolViewerNote').textContent=`${resource[2]} · 原工具独立运行，记录不会同步到 Digital PLS 患者档案。`;$('#toolOpenLink').href=url;$('#toolFrame').src=url;$('#toolFrame').title=resource[0];$('#toolViewer').hidden=false;$('#toolViewer').scrollIntoView({behavior:'smooth',block:'start'})}
 document.addEventListener('click',event=>{if(event.target.closest('[data-consent-tool]')){nav('resources');openTool(resources.findIndex(r=>r[4]==='PLS知情同意与费用选择确认书/index.html'))}});
 document.addEventListener('click',event=>{if(event.target.closest('[data-pricing-tool]')){nav('resources');openTool(resources.findIndex(r=>r[4]==='PLS方案与费用说明/index.html'))}});
 function closeTool(){$('#toolFrame').removeAttribute('src');$('#toolViewer').hidden=true}
 function render(){renderHome();renderJourney();renderClinical();renderCapability();renderOperations();renderResources();renderFeatures();if(typeof renderQa==='function')renderQa()}
-document.addEventListener('click',e=>{const go=e.target.closest('[data-go]');if(go)nav(go.dataset.go);const item=e.target.closest('[data-view]');if(item)nav(item.dataset.view);const tool=e.target.closest('[data-open-tool]');if(tool)openTool(Number(tool.dataset.openTool));const roleTools=e.target.closest('[data-tools-role]');if(roleTools){$('#toolRoleFilter').value=roleTools.dataset.toolsRole;$('#toolSearch').value='';renderResources();nav('resources')}const patient=e.target.closest('[data-patient]');if(patient){state.selected=patient.dataset.patient;viewedStage=null;save()}const stage=e.target.closest('[data-stage],[data-handoff-step]');if(stage){viewedStage=Number(stage.dataset.stage??stage.dataset.handoffStep);renderJourney()}});
+document.addEventListener('click',e=>{const go=e.target.closest('[data-go]');if(go)nav(go.dataset.go);const item=e.target.closest('[data-view]');if(item)nav(item.dataset.view);const tool=e.target.closest('[data-open-tool]');if(tool)openTool(Number(tool.dataset.openTool));const roleTools=e.target.closest('[data-tools-role]');if(roleTools){$('#toolRoleFilter').value=roleTools.dataset.toolsRole;$('#toolStageFilter').value='all';$('#toolSearch').value='';renderResources();nav('resources')}const patient=e.target.closest('[data-patient]');if(patient){state.selected=patient.dataset.patient;viewedStage=null;save()}const stage=e.target.closest('[data-stage],[data-handoff-step]');if(stage){viewedStage=Number(stage.dataset.stage??stage.dataset.handoffStep);renderJourney()}});
 document.addEventListener('change',e=>{if(e.target.matches('[data-audit]')){state.audit[Number(e.target.dataset.audit)]=e.target.value;save();toast('能力评估已保存')}if(e.target.matches('[data-task]')){const task=state.tasks.find(t=>t.id===Number(e.target.dataset.task));task.done=e.target.checked;save()}if(e.target.id==='roleSelect'){state.role=e.target.value;save();toast(`已切换为${state.role}视角`)}if(e.target.id==='mdtRoleSelect'){state.mdtRole=e.target.value;save()}if(e.target.matches('[data-self]')){competencyFor(state.mdtRole).self[Number(e.target.dataset.self)]=Number(e.target.value);localStorage.setItem(STORAGE_KEY,JSON.stringify(state));renderSelfResult()}});
 document.addEventListener('change',e=>{
   if(e.target.id==='inventoryModel'){state.inventoryLookup.model=e.target.value;state.inventoryLookup.power='';state.inventoryLookup.cylinder='';save()}
@@ -140,5 +166,6 @@ $('#resetButton').addEventListener('click',()=>{if(!confirm('重置本浏览器�
 $('#menuButton').addEventListener('click',()=>{const open=$('#mainNav').classList.toggle('open');$('#menuButton').setAttribute('aria-expanded',String(open))});
 $('#toolSearch').addEventListener('input',renderResources);
 $('#toolRoleFilter').addEventListener('change',renderResources);
+$('#toolStageFilter').addEventListener('change',renderResources);
 $('#toolCloseButton').addEventListener('click',closeTool);
 if(!Array.from($('#roleSelect').options).some(o=>o.value===state.role))state.role='院长/CEO';$('#roleSelect').value=state.role;$('#todayDate').textContent=new Intl.DateTimeFormat('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'}).format(new Date());$('#inventory').appendChild($('.inventory-band'));render();if(['#concept','#inventory','#ceo','#funnel','#revenue','#education','#certification','#qa','#home'].includes(location.hash))nav(location.hash.slice(1));else{let seen=false;try{seen=sessionStorage.getItem('digital-pls-intro-seen')==='1'}catch{}if(seen)nav('home')}
