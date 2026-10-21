@@ -131,9 +131,12 @@
     .metric span{color:var(--muted);font-size:13px}
     .grid{
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:16px;
+      gap:24px;
     }
+    .journey-group h2{font-size:21px;margin:0 0 10px;border-bottom:2px solid #dbe4e0;padding-bottom:8px}
+    .journey-group h2 small{font-size:13px;color:var(--muted);font-weight:400;margin-left:10px}
+    .journey-group-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .journey-stage{font-size:12px;font-weight:700;color:var(--blue)}
     .tool-card{
       background:var(--panel);
       border:1px solid var(--line);
@@ -218,7 +221,7 @@
     }
     @media (max-width:760px){
       header{padding-top:30px}
-      .summary,.grid{grid-template-columns:1fr}
+      .summary,.journey-group-grid{grid-template-columns:1fr}
       .toolbar-inner{align-items:stretch}
       .filter-btn{flex:1 1 auto}
       h1{font-size:32px}
@@ -233,7 +236,7 @@
   <header>
     <div class="brand"><div class="mark">PLS</div><span>JJSV内部支持建设</span></div>
     <h1>民营眼科PLS项目运营 JJSV工具箱</h1>
-    <p class="subtitle">一个入口汇总全部网页工具，覆盖医院遴选、六大支柱、患者评估、晶体匹配、术后随访、研讨会议程和产品能力概览。</p>
+    <p class="subtitle">按患者全流程九环节查找工具；医院遴选、能力评价及行动计划集中在全程支撑。各工具以首次使用环节排序，可跨环节使用。</p>
   </header>
 
   <nav class="toolbar" aria-label="工具筛选">
@@ -249,8 +252,8 @@
 
   <main>
     <section class="summary" aria-label="工具箱概览">
-      <div class="metric"><strong>11</strong><span>个网页工具已汇总</span></div>
-      <div class="metric"><strong>4</strong><span>类关键使用场景</span></div>
+      <div class="metric"><strong>13</strong><span>个网页工具已汇总</span></div>
+      <div class="metric"><strong>9</strong><span>个患者旅程环节</span></div>
       <div class="metric"><strong>1</strong><span>个网址即可进入</span></div>
     </section>
 
@@ -320,6 +323,16 @@
         <p>梳理常规、现代、数据驱动、屈光术后与Toric计算路径，提供专业计算器及中文学习入口。</p>
         <div class="actions"><span class="path">IOL计算公式导航与临床选择</span><a class="open" href="./IOL计算公式导航与临床选择/index.html">打开</a></div>
       </article>
+      <article class="tool-card" data-category="clinical operation" data-keywords="PLS 方案 费用 价格 自费 医保 确认">
+        <div class="card-head"><h2>PLS方案与费用说明</h2><span class="tag operation">方案确定</span></div>
+        <p>展示方案包含项目、费用边界与确认步骤；示例价格仅供内部设计讨论。</p>
+        <div class="actions"><span class="path">PLS方案与费用说明</span><a class="open" href="./PLS方案与费用说明/index.html">打开</a></div>
+      </article>
+      <article class="tool-card" data-category="clinical assessment" data-keywords="PLS 知情同意 费用选择 白内障 老视 替代方案 签署">
+        <div class="card-head"><h2>PLS知情同意与费用选择确认书</h2><span class="tag assessment">方案确定</span></div>
+        <p>用于解释方案、替代选择、费用与风险，并记录患者知情和自主选择。</p>
+        <div class="actions"><span class="path">PLS知情同意与费用选择确认书</span><a class="open" href="./PLS知情同意与费用选择确认书/index.html">打开</a></div>
+      </article>
     </section>
 
     <div class="empty" id="emptyState">没有找到匹配的工具，请换一个关键词试试。</div>
@@ -332,6 +345,23 @@
   <script>
     const search = document.getElementById('search');
     const cards = Array.from(document.querySelectorAll('.tool-card'));
+    const groups = [
+      ['第3环节 · IDEAL评估',['全自费白内障手术术前视觉需求问卷']],
+      ['第4环节 · 全面检查',['IOL计算公式导航与临床选择']],
+      ['第5环节 · 医生诊断',['全自费患者人工晶体匹配决策树','JJSV IOL、Phaco、FLACS和LipiFlow概览']],
+      ['第6环节 · 方案确定',['全自费白内障手术术前心理红线评估量表','PLS方案与费用说明','PLS知情同意与费用选择确认书']],
+      ['第8环节 · 术后随访',['AIOLIS PCIOL RLE术后护理随访SOP记录表']],
+      ['全程支撑 · 医院体系建设',['PLS项目目标医院遴选工具','全国民营眼科医院PLS项目运营辅导研讨会议程模板','PLS诊疗体系建设能力评价','PLS项目初步共识议题与90天建议行动表','六大支柱核心内容逐层展开网页']]
+    ];
+    const grid=document.getElementById('toolGrid');
+    for(const [label,titles] of groups){
+      const section=document.createElement('section');section.className='journey-group';
+      const heading=document.createElement('h2');heading.textContent=label;
+      const list=document.createElement('div');list.className='journey-group-grid';
+      for(const title of titles){const card=cards.find(item=>item.querySelector('h2').textContent===title);if(card){const marker=document.createElement('span');marker.className='journey-stage';marker.textContent=label;card.prepend(marker);list.appendChild(card)}}
+      heading.appendChild(document.createElement('small')).textContent=`${list.children.length} 个工具`;
+      section.append(heading,list);grid.appendChild(section);
+    }
     const buttons = Array.from(document.querySelectorAll('.filter-btn'));
     const empty = document.getElementById('emptyState');
     let activeFilter = 'all';
@@ -352,6 +382,7 @@
         card.style.display = visible ? '' : 'none';
         if(visible) visibleCount += 1;
       });
+      document.querySelectorAll('.journey-group').forEach(group=>{group.style.display=Array.from(group.querySelectorAll('.tool-card')).some(card=>card.style.display!=='none')?'':'none'});
       empty.style.display = visibleCount ? 'none' : 'block';
     }
 
