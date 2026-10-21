@@ -3,399 +3,1596 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>民营眼科PLS项目运营 JJSV工具箱</title>
-  <style>
-    :root{
-      --ink:#17242b;
-      --muted:#5c6b73;
-      --line:#dbe4e0;
-      --bg:#f5f7f6;
-      --panel:#ffffff;
-      --green:#0d6b57;
-      --blue:#245f8f;
-      --gold:#a97828;
-      --rose:#9e4a58;
-      --soft-green:#edf6f2;
-      --soft-blue:#eef5fb;
-      --shadow:0 18px 42px rgba(23,36,43,.09);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;
-      color:var(--ink);
-      background:
-        linear-gradient(135deg,rgba(13,107,87,.10),rgba(36,95,143,.09) 44%,rgba(169,120,40,.10)),
-        var(--bg);
-      line-height:1.6;
-      letter-spacing:0;
-    }
-    header{
-      max-width:1180px;
-      margin:0 auto;
-      padding:42px 22px 20px;
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      color:var(--green);
-      font-weight:800;
-    }
-    .mark{
-      width:42px;
-      height:42px;
-      border-radius:8px;
-      display:grid;
-      place-items:center;
-      color:#fff;
-      background:linear-gradient(135deg,var(--green),var(--blue));
-      box-shadow:0 10px 24px rgba(13,107,87,.25);
-    }
-    h1{
-      margin:18px 0 10px;
-      font-size:clamp(30px,5vw,52px);
-      line-height:1.12;
-      max-width:900px;
-    }
-    .subtitle{
-      margin:0;
-      color:#35464e;
-      max-width:900px;
-      font-size:17px;
-    }
-    .toolbar{
-      position:sticky;
-      top:0;
-      z-index:10;
-      border-block:1px solid var(--line);
-      background:rgba(245,247,246,.92);
-      backdrop-filter:blur(14px);
-    }
-    .toolbar-inner{
-      max-width:1180px;
-      margin:0 auto;
-      padding:12px 22px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    .filter-btn,
-    input{
-      height:42px;
-      border:1px solid var(--line);
-      border-radius:7px;
-      background:#fff;
-      color:var(--ink);
-      font:inherit;
-    }
-    input{
-      flex:1 1 280px;
-      min-width:220px;
-      padding:0 13px;
-    }
-    .filter-btn{
-      padding:0 13px;
-      cursor:pointer;
-      font-weight:700;
-    }
-    .filter-btn.active{
-      border-color:var(--green);
-      color:var(--green);
-      background:var(--soft-green);
-    }
-    main{
-      max-width:1180px;
-      margin:0 auto;
-      padding:22px 22px 58px;
-    }
-    .summary{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin-bottom:18px;
-    }
-    .metric{
-      background:rgba(255,255,255,.82);
-      border:1px solid var(--line);
-      border-radius:8px;
-      padding:15px 16px;
-    }
-    .metric strong{
-      display:block;
-      font-size:24px;
-      line-height:1.1;
-      color:var(--green);
-    }
-    .metric span{color:var(--muted);font-size:13px}
-    .grid{
-      display:grid;
-      gap:24px;
-    }
-    .journey-group h2{font-size:21px;margin:0 0 10px;border-bottom:2px solid #dbe4e0;padding-bottom:8px}
-    .journey-group h2 small{font-size:13px;color:var(--muted);font-weight:400;margin-left:10px}
-    .journey-group-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-    .journey-stage{font-size:12px;font-weight:700;color:var(--blue)}
-    .tool-card{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:8px;
-      padding:18px;
-      box-shadow:var(--shadow);
-      min-height:190px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .card-head{
-      display:flex;
-      justify-content:space-between;
-      gap:14px;
-      align-items:flex-start;
-    }
-    h2{
-      margin:0;
-      font-size:20px;
-      line-height:1.28;
-    }
-    .tag{
-      flex:0 0 auto;
-      border-radius:7px;
-      padding:4px 8px;
-      font-size:12px;
-      font-weight:800;
-      color:var(--green);
-      background:var(--soft-green);
-      border:1px solid #cfe4dc;
-      white-space:nowrap;
-    }
-    .tag.clinical{color:var(--blue);background:var(--soft-blue);border-color:#cfe0ef}
-    .tag.operation{color:var(--gold);background:#fff7e8;border-color:#ead7b4}
-    .tag.assessment{color:var(--rose);background:#fff0f2;border-color:#efd0d6}
-    p{margin:0;color:#43535b}
-    .actions{
-      margin-top:auto;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-    }
-    .path{
-      color:var(--muted);
-      font-size:12px;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-    a.open{
-      flex:0 0 auto;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:92px;
-      height:38px;
-      padding:0 14px;
-      border-radius:7px;
-      color:#fff;
-      background:var(--green);
-      text-decoration:none;
-      font-weight:800;
-    }
-    a.open:hover{background:#095342}
-    .empty{
-      display:none;
-      background:#fff;
-      border:1px dashed var(--line);
-      border-radius:8px;
-      padding:30px;
-      text-align:center;
-      color:var(--muted);
-    }
-    footer{
-      max-width:1180px;
-      margin:0 auto;
-      padding:0 22px 32px;
-      color:var(--muted);
-      font-size:12px;
-    }
-    @media (max-width:760px){
-      header{padding-top:30px}
-      .summary,.journey-group-grid{grid-template-columns:1fr}
-      .toolbar-inner{align-items:stretch}
-      .filter-btn{flex:1 1 auto}
-      h1{font-size:32px}
-      .card-head{display:block}
-      .tag{display:inline-block;margin-top:10px}
-    }
-  </style>
-  <script src="../pls-brand.js" defer></script>
-<script src="../journey-data.js" defer></script>
+  <meta name="theme-color" content="#0757ba">
+  <title>眼科医院PLS能力建设数字工作站</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="mdt.css">
+  <link rel="stylesheet" href="tools.css">
+  <link rel="stylesheet" href="tool-journey.css">
+  <link rel="stylesheet" href="inventory.css">
+  <link rel="stylesheet" href="features.css">
+  <link rel="stylesheet" href="education-experience.css">
+  <link rel="stylesheet" href="intro.css">
+  <link rel="stylesheet" href="certification.css">
+  <link rel="stylesheet" href="qa.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="revenue.css">
+  <link rel="stylesheet" href="pls-concept.css">
+  <link rel="stylesheet" href="project-flow.css">
+  <link rel="stylesheet" href="training.css">
+  <link rel="stylesheet" href="search.css">
+  <link rel="stylesheet" href="holistic-upgrade.css">
+  <link rel="stylesheet" href="pls-brand.css">
+  <link rel="stylesheet" href="space-flow.css">
+  <script src="journey-data.js" defer></script>
+  <script src="mdt-data.js" defer>
+</script>
+  <script src="inventory-data.js" defer>
+</script>
+  <script src="features-data.js" defer>
+  </script>
+  <script src="training-data.js" defer>
+  </script>
+  <link rel="stylesheet" href="team.css">
+  <script src="team.js" defer></script>
+  <script src="qa-data.js" defer>
+</script>
+  <script src="qa-extra-data.js" defer>
+</script>
+  <script src="features.js" defer>
+</script>
+  <script src="education-experience.js" defer>
+</script>
+  <script src="qa.js" defer>
+  </script>
+  <script src="search.js" defer>
+  </script>
+  <script src="app.js" defer>
+</script>
+  <script src="auth.js" defer>
+</script>
 </head>
-<body>
-  <header>
-    <div class="brand"><div class="mark">PLS</div><span>JJSV内部支持建设</span></div>
-    <h1>民营眼科PLS项目运营 JJSV工具箱</h1>
-    <p class="subtitle">按患者全流程九环节查找工具；医院遴选、能力评价及行动计划集中在全程支撑。各工具以首次使用环节排序，可跨环节使用。</p>
+<body class="intro-mode auth-locked">
+  <section id="loginGate" class="login-gate" aria-labelledby="loginTitle">
+    <div class="login-visual" aria-hidden="true">
+<div>
+<img class="login-pls-logo" src="PLS Logo标准文件/PLS晶状体卓越诊疗体系-logo-标准横版-反白版透明背景.png" alt="">
+<span>DIGITAL PLS</span>
+<strong>连接患者旅程、临床协作与医院能力建设</strong>
+</div>
+</div>
+    <div class="login-panel">
+      <div class="login-brand">
+<img class="login-brand-logo" src="PLS Logo标准文件/PLS晶状体卓越诊疗体系-logo-标准横版-标准色透明背景.png" alt="PLS晶状体卓越诊疗体系">
+<div>
+<strong>上海Happy卓越眼科医院</strong>
+<small>Digital PLS · 授权访问</small>
+</div>
+</div>
+      <form id="loginForm" class="login-form">
+        <span class="eyebrow">AUTHORIZED USERS</span>
+        <h1 id="loginTitle">登录 Digital PLS</h1>
+        <p>请输入已授权的用户名和密码。</p>
+        <label>用户名<input id="loginUsername" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+</label>
+        <label>密码<input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+</label>
+        <p id="loginError" class="login-error" role="alert" aria-live="polite">
+</p>
+        <button class="login-button" type="submit">登录并进入系统 →</button>
+      </form>
+      <p class="login-boundary">演示级访问控制。请勿在本网站录入真实患者信息。</p>
+    </div>
+  </section>
+  <header class="topbar">
+    <div class="brand">
+<img class="topbar-pls-logo" src="PLS Logo标准文件/PLS晶状体卓越诊疗体系-logo-紧凑版-标准色透明背景.png" alt="PLS晶状体卓越诊疗体系">
+<span>
+<strong>上海Happy卓越眼科医院</strong>
+<small>眼科医院PLS能力建设数字工作站</small>
+</span>
+</div>
+    <button class="mobile-menu" id="menuButton" aria-label="打开导航" aria-expanded="false">☰</button>
+    <nav id="mainNav" aria-label="主导航">
+      <button data-view="home" class="active">CEO项目总览</button>
+<button data-view="concept">认识PLS</button>
+<button data-view="capability">医院能力诊断</button>
+<button data-view="operations">90天建设</button>
+<button data-view="journey">患者价值交付</button>
+<button data-view="ceo">CEO驾驶舱</button>
+<button data-view="resources">知识与工具</button>
+    </nav>
+    <div class="top-actions">
+<div class="site-search" id="siteSearch">
+<button id="siteSearchButton" class="site-search-button" type="button" aria-label="搜索本站" aria-expanded="false" title="搜索本站">⌕</button>
+<div id="siteSearchPanel" class="site-search-panel" hidden>
+<label class="site-search-input"><span>⌕</span><input id="siteSearchInput" type="search" placeholder="搜索页面、问答、课程或工具" autocomplete="off" aria-label="搜索本站内容"></label>
+<div class="site-search-meta"><span id="siteSearchCount">输入关键词开始搜索</span><button id="siteSearchClose" type="button">关闭</button></div>
+<div id="siteSearchResults" class="site-search-results" role="listbox" aria-label="全站搜索结果"></div>
+</div>
+</div>
+<label>角色 <select id="roleSelect">
+<option>院长/CEO</option>
+<option>市场/客服</option>
+<option>前台/接待护士</option>
+<option>咨询师</option>
+<option>验光师</option>
+<option>特殊检查技师</option>
+<option>手术医生</option>
+<option>手术护士</option>
+<option>术后随访护士</option>
+<option>PLS团队</option>
+</select>
+</label>
+<span id="signedInUser" class="signed-in-user">
+</span>
+<button id="logoutButton" class="logout-button" type="button" title="退出当前账号">退出</button>
+<span class="demo-tag">演示环境</span>
+</div>
   </header>
 
-  <nav class="toolbar" aria-label="工具筛选">
-    <div class="toolbar-inner">
-      <input id="search" type="search" placeholder="搜索工具名称、场景或关键词" aria-label="搜索工具">
-      <button class="filter-btn active" data-filter="all">全部</button>
-      <button class="filter-btn" data-filter="strategy">项目策略</button>
-      <button class="filter-btn" data-filter="clinical">临床患者</button>
-      <button class="filter-btn" data-filter="operation">运营会议</button>
-      <button class="filter-btn" data-filter="assessment">评估表单</button>
-    </div>
-  </nav>
-
   <main>
-    <section class="summary" aria-label="工具箱概览">
-      <div class="metric"><strong>13</strong><span>个网页工具已汇总</span></div>
-      <div class="metric"><strong>9</strong><span>个患者旅程环节</span></div>
-      <div class="metric"><strong>1</strong><span>个网址即可进入</span></div>
+    <section id="intro" class="view active" aria-labelledby="introTitle">
+      <div class="intro-topline">
+<strong>强生眼力健 · PLS 项目</strong>
+<span>民营眼科医院合作场景 · 演示资料</span>
+<button type="button" class="intro-skip" data-go="home">跳过介绍，进入工作台 →</button>
+</div>
+      <div class="intro-hero">
+<div class="intro-hero-inner">
+<span class="intro-eyebrow">PREMIUM LENS SURGERY · HOSPITAL CAPABILITY</span>
+<h1 id="introTitle">强生眼力健<br>PLS 项目</h1>
+<p class="intro-lead">从晶状体手术，走向高质量视觉医疗。</p>
+<p class="intro-sub">患者问的不再只是“能否看见”，还有能否舒适地阅读、工作、驾驶与生活。医院需要的不只是一个新产品，而是一套可以长期运行的临床与服务能力。</p>
+<div class="intro-actions">
+<button type="button" class="intro-primary" data-go="home">进入 Digital PLS 工作台 <span aria-hidden="true">→</span>
+</button>
+<button type="button" class="intro-secondary intro-concept-link" data-go="concept">PLS到底是什么？</button>
+<a href="#introValue" class="intro-secondary">了解项目价值 ↓</a>
+</div>
+<small>背景为生成的医院场景示意，并非合作医院实景。</small>
+</div>
+</div>
+      <div id="introValue" class="intro-content">
+<div class="intro-section-head">
+<span class="intro-index">01 / 一个值得院长思考的问题</span>
+<h2>当患者的目标从视力表走向真实生活，医院准备好了吗？</h2>
+<p>白内障与老视患者的关注点正在延伸到远、中、近距离的使用场景、夜间视觉、戴镜意愿与长期体验。只把一台手术做好很重要，但院长还需要确保：从首次接触到术后随访，每个岗位都能稳定交付同样严谨的标准。</p>
+</div>
+<div class="intro-benefits">
+<article>
+<span class="intro-num">患者</span>
+<h3>看见自己的生活目标</h3>
+<p>充分表达需求与顾虑，理解可选方案、局限和费用，在知情基础上与医生共同决策，术后遇到问题有人负责。</p>
+</article>
+<article>
+<span class="intro-num">医生</span>
+<h3>获得可信赖的团队输入</h3>
+<p>高质量检查、完整的需求摘要与异常转介让医生把时间用于临床判断，复杂问题可由 MDT 协同复核。</p>
+</article>
+<article>
+<span class="intro-num">医院</span>
+<h3>把能力沉淀为组织资产</h3>
+<p>将患者旅程、岗位交接、手术质控与随访复盘形成标准，而不是依赖少数个人；在创造患者价值的基础上评估合理、可持续的经营结果。</p>
+</article>
+</div>
+<p class="intro-bridge">PLS ≠ 高价晶体 + 全自费营销。它是以严守适应证为底线的高质量视觉医疗体系。</p>
+</div>
+      <div class="intro-framework">
+<div class="intro-framework-inner">
+<div class="intro-section-head">
+<span class="intro-index">02 / 医院真正要建设什么</span>
+<h2>四项能力，构成可复制的质量闭环</h2>
+<p>以患者的视觉目标为起点，以医生的临床判断为核心，以团队和流程保障交付。</p>
+</div>
+<div class="intro-four">
+<div>
+<b>理解目标</b>
+<p>把视觉需求从“视力多少”延伸到阅读、屏幕、驾驶和生活方式。</p>
+</div>
+<div>
+<b>严守边界</b>
+<p>完成眼表、眼底与生物测量等必要评估，识别不适合或需要进一步复核的情况。</p>
+</div>
+<div>
+<b>精准执行</b>
+<p>医生确认方案，团队核对眼别、参数、器械与交接节点，让关键步骤可追溯。</p>
+</div>
+<div>
+<b>长期负责</b>
+<p>主动随访视觉质量和患者感受，及时处理光晕、眩光与不满意反馈。</p>
+</div>
+</div>
+</div>
+</div>
+      <div class="intro-content intro-path">
+<div class="intro-section-head">
+<span class="intro-index">03 / 从蓝图到试运行</span>
+<h2>先做一条完整路径，再谈规模化</h2>
+<p>项目可从一个院区或一个门诊场景开始。院长牵头确定责任人，让临床、咨询、检查、护理、运营围绕同一位患者完成交接。</p>
+</div>
+<div class="intro-phases">
+<div>
+<span>术前</span>
+<b>筛查与共同决策</b>
+<p>需求问卷 → 检查质控 → 风险分层 → 医生确认与透明沟通</p>
+</div>
+<div>
+<span>术中</span>
+<b>安全而稳定地执行</b>
+<p>术前交叉核查 → 个体化参数确认 → 手术质量记录</p>
+</div>
+<div>
+<span>术后</span>
+<b>让责任延续到结果</b>
+<p>规范随访 → 视觉体验记录 → 异常转医与投诉闭环</p>
+</div>
+</div>
+<p class="intro-measure">管理层不仅看手术量，更要看医学适配、知情选择、检查完整性、交接质量、随访完成和患者反馈；经营表现应在医疗质量与合规基础上评估。</p>
+</div>
+      <div class="intro-partner">
+<div class="intro-partner-inner">
+<div class="intro-section-head">
+<span class="intro-index">04 / 合作原则与利益边界</span>
+<h2>眼力健为什么积极推动PLS？</h2>
+<p>眼力健是商业公司，拥有Odyssey、PureSee、Catalys等产品和技术，也期待在合规、合理的医学应用中获得业务发展。但PLS不以某一产品或设备为必要条件；它建设的是医院本来就需要的患者评估、临床决策、手术质量、充分知情和术后管理能力。</p>
+</div>
+<div class="intro-support">
+<div>
+<b>技术与产品信息</b>
+<p>围绕不同视觉需求提供相关技术资料，帮助医疗团队理解选择条件、局限与操作要求。</p>
+</div>
+<div>
+<b>临床与教育支持</b>
+<p>聚焦术前评估、手术质量、患者沟通与术后随访的专业学习，并由医院完成本地化审核。</p>
+</div>
+<div>
+<b>项目共建工具</b>
+<p>支持建立患者旅程、MDT 分工、SOP、质量复盘与 90 天行动表，把经验留在医院。</p>
+</div>
+<div class="intro-motive-boundary">
+<div class="intro-motive-statement"><span>OUR CREDO IN PRACTICE</span><h3>承认商业身份，用可验证的边界建立信任</h3><p>强生Our Credo要求我们将患者、医生、护士及产品和服务使用者的需求与福祉放在首要责任中。Credo不是要求医院相信我们的口号，而是要落实为患者优先、尊重专业判断和透明披露利益边界的行为。</p><a href="https://www.jnj.com/our-credo" target="_blank" rel="noopener">Johnson &amp; Johnson Our Credo ↗</a></div>
+<div class="intro-boundary-list"><b>医院可以用五个问题检验这项合作</b><ol><li>是否强制绑定指定IOL或设备？</li><li>是否尊重医生选择其他合理技术？</li><li>是否同样支持规范的基础诊疗路径？</li><li>是否把安全、适应证、知情和结果放在使用量之前？</li><li>项目结束后，能力是否真正留在医院？</li></ol></div>
+</div>
+<p class="intro-ownership"><strong>合作底线：</strong>PLS能力属于医院，临床决策属于医生，最终选择属于充分知情的患者。</p>
+<button class="intro-boundary-button" type="button" data-qa="23">查看完整回答 →</button>
+</div>
+</div>
+</div>
+      <div class="intro-roadmap">
+<div class="intro-roadmap-inner">
+<div class="intro-section-head">
+<span class="intro-index">05 / 90 天如何开始</span>
+<h2>先验证，再固化；以医院自己的数据决定下一步</h2>
+</div>
+<div class="intro-three">
+<div>
+<small>第 1–30 天</small>
+<b>盘点与共识</b>
+<p>建立 MDT 项目组，梳理基线，选定 3–5 个优先改进流程。</p>
+</div>
+<div>
+<small>第 31–60 天</small>
+<b>小规模试运行</b>
+<p>在选定门诊场景跑通筛查、共同决策、手术核查与随访。</p>
+</div>
+<div>
+<small>第 61–90 天</small>
+<b>复盘与固化</b>
+<p>查看临床质量、患者体验和流程缺口，修订本院标准后再讨论扩大。</p>
+</div>
+</div>
+</div>
+</div>
+      <div class="intro-close">
+<div>
+<span class="intro-index">DIGITAL PLS DEMO</span>
+<h2>把战略蓝图变成每天都用得上的工作台</h2>
+<p>进入 IDEAL 患者路径、六大支柱、岗位能力与运营复盘的演示系统。</p>
+</div>
+<button type="button" class="intro-primary" data-go="home">进入 Digital PLS <span aria-hidden="true">→</span>
+</button>
+</div>
+<p class="intro-legal">本页为项目沟通演示，所述建设路径需由医院结合实际条件验证，不构成疗效、手术量、收入或患者转化承诺。临床适应证、诊疗方案和产品选择由医疗团队决定；项目、产品和素材使用须遵循当地法规、准入政策及公司合规要求。</p>
+    </section>
+    <section id="home" class="view" aria-labelledby="homeTitle">
+<section class="single-hospital-banner" aria-label="网站演示范围">
+<div><span class="eyebrow">SINGLE-HOSPITAL DEMONSTRATION</span><strong>本网站以上海Happy卓越眼科医院为示例</strong><p>演示一家医院如何从项目启动走向流程运行、复盘改进和能力认证；不展示全国42家医院的名单、排名或项目数据。</p></div>
+<span class="single-hospital-badge">单院建设蓝图</span>
+</section>
+      <section class="presentation-launch" aria-labelledby="presentationLaunchTitle">
+<div>
+<span class="eyebrow">CEO WORKSHOP PRESENTATION</span>
+<h2 id="presentationLaunchTitle">30分钟PLS项目介绍</h2>
+<p>18页院长与CEO研讨会版本，涵盖PLS定位、IDEAL路径、六大支柱、院方团队分工及90天建设。预留5分钟，由CEO与院长现场指定六类角色成员，确认备岗、到位时间和首次复盘日期。</p>
+</div>
+<div class="presentation-launch-actions">
+<a class="primary" href="presentations/pls-ceo-intro/index.html" target="_blank" rel="noopener">开始播放</a>
+<a class="outline" href="downloads/强生眼力健_Digital_PLS院方研讨会30分钟介绍PPT.pptx" download>下载PPT</a>
+</div>
+</section>
+<section class="presentation-followup" aria-labelledby="supportPresentationLaunchTitle">
+<div><span class="eyebrow">NEXT · J&J VISION SUPPORT</span><h2 id="supportPresentationLaunchTitle">已了解PLS？进一步了解强生眼力健能够提供的支持</h2><p>20分钟院长与CEO版本：产品与技术平台、Professional Education多岗位赋能及Digital PLS项目建设支持。</p></div>
+<div class="presentation-launch-actions"><a class="primary" href="presentations/jjsv-support-pls/index.html" target="_blank" rel="noopener">网页播放</a><a class="outline" href="downloads/强生眼力健如何支持PLS体系建设_20分钟演讲版.pptx" download>下载PPT</a></div>
+</section>
+      <div class="home-top">
+        <div class="hero">
+<div class="hero-content">
+<span class="eyebrow">SHANGHAI · DIGITAL PLS PILOT</span>
+<h1 id="homeTitle">让患者为真实价值作出选择<br>
+<span>医院PLS能力建设数字工作站</span>
+</h1>
+<p>把患者对视觉生活的期待，转化为医院可理解、可选择、可交付、可追踪的专业服务。合理的全自费选择，应当是医疗质量与信任建立后的结果。</p>
+<div class="hero-buttons">
+<button class="primary" data-go="concept">CEO先看 PLS 到底是什么 <span aria-hidden="true">→</span>
+</button>
+<button class="ghost" data-go="capability">判断本院是否准备好</button>
+</div>
+<small>医院建筑为生成的场景示意，并非实景照片</small>
+</div>
+</div>
+        <div class="today">
+<div class="section-line">
+<h2>项目概览</h2>
+<span id="todayDate">
+</span>
+</div>
+<p class="muted">以下指标均为演示数据</p>
+<div class="metric-grid">
+<div>
+<b id="metricPatients">3</b>
+<span>试运行患者</span>
+</div>
+<div>
+<b id="metricTasks">4</b>
+<span>待推进任务</span>
+</div>
+<div>
+<b id="metricAudit">0%</b>
+<span>六支柱已评估</span>
+</div>
+<div>
+<b id="metricFollowup">1</b>
+<span>随访待办</span>
+</div>
+</div>
+<div class="mini-heading">试运行患者阶段</div>
+<div id="stageBars" class="stage-bars">
+</div>
+</div>
+      </div>
+      <section class="project-roadmap" aria-labelledby="projectRoadmapTitle">
+<div class="roadmap-heading"><div><span class="eyebrow">ONE HOSPITAL · ONE IMPLEMENTATION PATH</span><h2 id="projectRoadmapTitle">一家医院的PLS建设路线</h2><p>每一阶段都要形成明确输出；完成本阶段的责任、行动和证据后，再进入下一步。</p></div><div class="current-phase"><span>当前演示阶段</span><b>04 30天行动与流程试运行</b><small>下一次复盘：第30天</small></div></div>
+<div class="roadmap-steps">
+<button type="button" class="done" data-go="concept"><i>01</i><b>认识PLS</b><span>CEO理解定位与边界</span><em>已完成</em></button>
+<button type="button" class="done" data-go="capability"><i>02</i><b>项目启动</b><span>负责人和MDT到位</span><em>已完成</em></button>
+<button type="button" class="done" data-go="capability"><i>03</i><b>基线自评</b><span>看见六大支柱差距</span><em>已完成</em></button>
+<button type="button" class="active" data-go="operations"><i>04</i><b>30天行动</b><span>三至五项重点任务</span><em>进行中</em></button>
+<button type="button" data-go="journey"><i>05</i><b>流程实施</b><span>各部门围绕患者协作</span><em>待验证</em></button>
+<button type="button" data-go="ceo"><i>06</i><b>复盘改进</b><span>第30/60/90天复盘</span><em>待开始</em></button>
+<button type="button" data-go="certification"><i>07</i><b>固化与认证</b><span>SOP、证据与持续改进</span><em>待开始</em></button>
+</div>
+<div class="roadmap-next"><div><span>本阶段需要CEO支持</span><b>确认跨部门责任人，并为第30天复盘预留时间</b></div><button class="primary" type="button" data-go="operations">查看当前行动 →</button></div>
+</section>
+      <section class="home-concept-band" aria-labelledby="homeConceptTitle">
+<div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="homeConceptTitle">先统一概念，再进入患者旅程</h2><p><strong>PLS晶状体卓越诊疗体系</strong>，围绕白内障与屈光性透明晶体置换（包括老视矫正），建设患者评估、共同决策、精准手术和术后管理的全流程医院专业能力。</p></div>
+<button type="button" class="outline" data-go="concept">认识PLS →</button>
+</section>
+      <section class="value-thesis" aria-labelledby="valueThesisTitle">
+<div class="value-thesis-lead"><span class="eyebrow">FROM PRICE TO TRUST</span><h2 id="valueThesisTitle">患者支付的不是一枚更贵的晶状体，而是一套值得信任的专业价值</h2><p>医院不能把PLS理解成产品升级。患者真正能够感知并愿意为之支付的，是需求被认真理解、选择被透明解释、手术被精准执行、术后有人持续负责。</p></div>
+<div class="value-thesis-chain">
+<article><i>01</i><b>看见需要</b><span>生活场景和视觉困扰被准确记录</span></article>
+<article><i>02</i><b>理解选择</b><span>收益、局限、风险、费用和替代方案说清楚</span></article>
+<article><i>03</i><b>相信交付</b><span>检查、医生、手术和团队标准可验证</span></article>
+<article><i>04</i><b>安心决定</b><span>患者可以选择、暂缓或改变方案</span></article>
+<article><i>05</i><b>持续负责</b><span>随访、不适与投诉得到闭环处理</span></article>
+</div>
+<p class="value-thesis-rule"><strong>管理原则：</strong>不以收入、职业或支付能力作为分流起点；不以某一IOL或设备作为PLS前提；不以“成交”替代共同决策。</p>
+</section>
+      <section class="ceo-decision-path" aria-labelledby="ceoDecisionTitle">
+<div class="section-line"><div><span class="eyebrow">CEO DECISION PATH</span><h2 id="ceoDecisionTitle">CEO只需要沿一条路径推进项目</h2></div><span class="badge">从判断到验证</span></div>
+<div class="ceo-decision-grid">
+<button type="button" data-go="concept"><i>1</i><b>为什么做</b><span>确认患者价值、战略定位和合作边界</span><em>认识PLS →</em></button>
+<button type="button" data-go="capability"><i>2</i><b>凭什么做</b><span>评估六大支柱、岗位能力与负责人</span><em>完成诊断 →</em></button>
+<button type="button" data-go="operations"><i>3</i><b>先做什么</b><span>选三至五项重点，运行第一个90天</span><em>制定行动 →</em></button>
+<button type="button" data-go="journey"><i>4</i><b>如何交付</b><span>围绕同一位患者连接临床与服务</span><em>进入旅程 →</em></button>
+<button type="button" data-go="ceo"><i>5</i><b>如何证明</b><span>同时看质量、患者、团队和经营健康</span><em>查看驾驶舱 →</em></button>
+</div>
+</section>
+      <div class="journey-strip">
+<div class="section-line">
+<h2>PLS 患者旅程</h2>
+<button class="text-button" data-go="journey">进入旅程 →</button>
+</div>
+<div id="homeSteps" class="steps">
+</div>
+</div>
+      <section class="home-routing-gate" aria-labelledby="homeRoutingTitle">
+<div class="routing-marker">
+<span>最佳分流节点</span>
+<b>IDEAL 初评后 · PLS 专项检查前</b>
+</div>
+<div>
+<h2 id="homeRoutingTitle">先确认医学与需求，再分诊疗路径</h2>
+<p>第2环节仅初步分诊，第3—4环节按需完成需求评估与检查；第5环节由医生判断医学可行性，第6环节经充分告知与患者自主选择确认方案及路径。信息不足或有危险信号时先复核，不按支付能力提前分流。</p>
+</div>
+<button type="button" class="outline" data-go="journey" data-routing-focus="true">查看分流闸门 →</button>
+</section>
+      <section class="role-work-band" aria-labelledby="roleWorkTitle">
+<div>
+<span class="eyebrow">MY WORK TODAY</span>
+<h2 id="roleWorkTitle">我的工作台</h2>
+<p id="roleWorkSubtitle">
+</p>
+</div>
+<div id="roleWorkItems" class="role-work-items">
+</div>
+</section>
+      <section class="inventory-band" aria-labelledby="inventoryTitle">
+<div class="inventory-heading">
+<div>
+<span class="eyebrow">OPERATIONS & INVENTORY</span>
+<h2 id="inventoryTitle">IOL 与设备耗材库存</h2>
+<p>演示库存 · 选定拟讨论规格后即时查看余量</p>
+</div>
+<span class="badge">仅本浏览器 · 非实时库存</span>
+</div>
+<div class="inventory-layout">
+<div class="inventory-lookup">
+<div class="panel-head">
+<h3>IOL 度数查询</h3>
+<span id="inventoryPatient" class="muted">
+</span>
+</div>
+<div class="inventory-fields">
+<label>型号<select id="inventoryModel" aria-label="IOL 型号">
+</select>
+</label>
+<label>球镜度数<select id="inventoryPower" aria-label="IOL 球镜度数">
+</select>
+</label>
+<label id="inventoryCylinderWrap" hidden>散光规格<select id="inventoryCylinder" aria-label="IOL 散光规格">
+</select>
+</label>
+</div>
+<div id="inventoryResult" class="inventory-result" role="status" aria-live="polite">
+</div>
+<p class="inventory-boundary">库存查询不构成 IOL 推荐；实际型号、度数和散光规格须由医生确认。</p>
+</div>
+<div class="inventory-overview">
+<div>
+<h3>IOL 库存概览</h3>
+<div id="iolStockRows">
+</div>
+</div>
+<div>
+<h3>设备耗材</h3>
+<div id="consumableRows">
+</div>
+</div>
+</div>
+</div>
+<details class="inventory-edit">
+<summary>维护演示库存数量</summary>
+<p class="muted">仅用于展示库存联动。请勿填写真实医院库存。</p>
+<div id="inventoryEditor">
+</div>
+<form id="addIolStockForm" class="add-iol-form">
+<label>型号<select name="model" aria-label="新增型号">
+<option value="puresee">TECNIS PureSee</option>
+<option value="odyssey">TECNIS Odyssey</option>
+<option value="eyhance">TECNIS Eyhance</option>
+<option value="toric2">TECNIS Toric II</option>
+</select>
+</label>
+<label>球镜度数<input name="power" required maxlength="20" placeholder="例如 +21.5 D" aria-label="新增球镜度数">
+</label>
+<label>散光规格<input name="cylinder" maxlength="25" placeholder="Toric II 才需填写" aria-label="新增散光规格">
+</label>
+<label>片数<input name="qty" type="number" min="0" max="9999" step="1" required value="0" aria-label="新增库存片数">
+</label>
+<button class="outline" type="submit">＋ 新增规格</button>
+</form>
+</details>
+</section>
+      <div class="dashboard-grid">
+<section class="panel">
+<div class="panel-head">
+<div>
+<span class="eyebrow">PATIENT</span>
+<h2>患者档案</h2>
+</div>
+<button class="text-button" data-go="journey">查看全部 →</button>
+</div>
+<div id="featuredPatient">
+</div>
+</section>
+<section class="panel clinical-panel">
+<div class="panel-head">
+<div>
+<span class="eyebrow">IDEAL</span>
+<h2>临床协作工作台</h2>
+</div>
+<span class="badge">医生最终确认</span>
+</div>
+<div id="clinicalPreview">
+</div>
+<button class="wide-button" data-go="clinical">进入工作台 →</button>
+</section>
+<section class="panel">
+<div class="panel-head">
+<div>
+<span class="eyebrow">TEAM</span>
+<h2>能力建设</h2>
+</div>
+<button class="text-button" data-go="capability">查看评估 →</button>
+</div>
+<div id="pillarPreview">
+</div>
+</section>
+<section class="panel">
+<div class="panel-head">
+<div>
+<span class="eyebrow">ACTION</span>
+<h2>30/60/90 天行动</h2>
+</div>
+<button class="text-button" data-go="operations">查看计划 →</button>
+</div>
+<div id="taskPreview">
+</div>
+</section>
+</div>
+      <section class="home-education" aria-labelledby="homeEducationTitle">
+<div class="home-education-image">
+<img src="assets/vision-scene.png" alt="书本、电脑与远处街景，用于理解近中远视觉场景" loading="lazy">
+</div>
+<div class="home-education-copy">
+<span class="eyebrow">PATIENT EDUCATION · VISUAL EXPERIENCE</span>
+<h2 id="homeEducationTitle">看见不同，先理解不同</h2>
+<p>患者与家属可以体验白内障、老花及不同人工晶状体的视觉示意，了解 Phaco 与飞秒激光辅助手术，并知道术后不适或投诉时该找谁。</p>
+<div class="home-education-links">
+<button class="primary" data-go="education" data-education-tab="vision">体验视觉示意 →</button>
+<button class="outline" data-go="education" data-education-tab="support">术后困扰与投诉回应 →</button>
+</div>
+<small>模拟不是个人术后效果预测；具体检查、方案和处理由医生决定。</small>
+</div>
+</section>
+      <section class="role-band">
+<div>
+<span class="eyebrow">ONE PATIENT · ONE CONNECTED TEAM</span>
+<h2>一位患者，连接每一个岗位</h2>
+</div>
+<div id="roleCards" class="role-cards">
+</div>
+</section>
+      <section class="education-pathway-entry" aria-labelledby="homePricingTitle"><div><span class="eyebrow">AFTER CLINICAL ASSESSMENT &amp; SHARED DECISION-MAKING</span><h2 id="homePricingTitle">方案确定后的费用透明</h2><p>完成医学评估、方案比较和患者理解确认后，再核对包含项目、医保及自费属性、单眼或双眼费用和可能另计项目。费用说明用于支持患者知情选择，不作为患者分流或方案推荐的起点。</p></div><button class="outline" type="button" data-pricing-tool>查看PLS方案与费用说明 →</button></section>
+      <div class="home-inventory-corner">
+<section class="home-inventory-card" aria-labelledby="homeInventoryTitle">
+<div>
+<span class="eyebrow">OPERATIONS</span>
+<h2 id="homeInventoryTitle">库存速览</h2>
+</div>
+<p id="homeInventorySummary">
+</p>
+<button class="text-button" data-go="inventory">查看 IOL 与设备耗材 →</button>
+</section>
+</div>
     </section>
 
-    <section class="grid" id="toolGrid">
-      <article class="tool-card" data-category="strategy assessment" data-keywords="医院遴选 首批医院 打分 目标医院 PLS 全自费">
-        <div class="card-head"><h2>PLS项目目标医院遴选工具</h2><span class="tag assessment">评估表单</span></div>
-        <p>用于首批试点医院筛选和打分，帮助区域团队判断项目基础、运营意愿与落地优先级。</p>
-        <div class="actions"><span class="path">PLS项目项目目标医院遴选工具</span><a class="open" href="./PLS项目项目目标医院遴选工具/index.html">打开</a></div>
-      </article>
+    <section id="concept" class="view concept-page" aria-labelledby="conceptTitle">
+      <header class="concept-hero">
+        <div class="concept-hero-copy">
+          <span class="eyebrow">FOR CEO · PLS EXPLAINED</span>
+          <h1 id="conceptTitle">PLS到底是啥？</h1>
+          <div class="concept-cn-name"><span>PLS中文名称</span><strong>PLS晶状体卓越诊疗体系</strong></div>
+          <p class="concept-lead">PLS是<strong>Premium Lens Surgery</strong>的缩写。PLS指的是围绕白内障与屈光性透明晶体置换（包括老视矫正），建设从患者评估、共同决策、精准手术到术后管理的全流程医院专业能力。</p>
+          <p class="concept-definition-note">它不是某一款人工晶状体、某一台设备或某一种术式，而是把临床、流程、团队和患者服务连接起来的医院能力体系。</p>
+          <p class="concept-keyline">这里的Premium，首先代表更高标准、更精准匹配和更完整责任，而不是单纯代表更高价格。</p>
+        </div>
+        <aside class="concept-ceo-answer" aria-label="给CEO的一句话">
+          <span>给CEO的一句话</span>
+          <blockquote>PLS晶状体卓越诊疗体系，是围绕白内障与屈光性透明晶体置换，贯通患者评估、共同决策、精准手术和术后管理的全流程医院专业能力。</blockquote>
+        </aside>
+      </header>
 
-      <article class="tool-card" data-category="strategy" data-keywords="六大支柱 临床 卓越 MDT SOP 患者教育 定价 获客">
-        <div class="card-head"><h2>六大支柱核心内容逐层展开网页</h2><span class="tag">项目策略</span></div>
-        <p>把全自费PLS项目成功运营的六大支柱做成逐层展开页面，适合培训、共创和院长层沟通。</p>
-        <div class="actions"><span class="path">六大支柱核心内容逐层展开网页</span><a class="open" href="./六大支柱核心内容逐层展开网页/index.html">打开</a></div>
-      </article>
+      <section class="concept-section concept-letters" aria-labelledby="lettersTitle">
+        <div class="concept-section-head"><span>01</span><div><p>UNDERSTAND THE NAME</p><h2 id="lettersTitle">三个字母，分别意味着什么？</h2></div></div>
+        <div class="letter-grid">
+          <article><b>P</b><div><h3>Premium</h3><strong>更高的医疗与服务标准</strong><p>更完整的医学检查、更精准的需求与技术匹配、更充分的知情沟通、更稳定的手术质量，以及更连续的术后随访。</p><small>不是“更贵”，也不是寻找“更有钱”的患者。</small></div></article>
+          <article><b>L</b><div><h3>Lens</h3><strong>自然晶状体与人工晶状体</strong><p>既要评估人眼原有的自然晶状体，也要讨论人工晶状体能否与眼健康、视觉目标和生活场景相匹配。</p><small>不是简单选择一枚IOL。</small></div></article>
+          <article><b>S</b><div><h3>Surgery</h3><strong>以安全和视觉质量为核心的手术</strong><p>主要涵盖白内障患者的晶状体手术，以及对严格筛选的老视患者开展的CLE/RLE讨论。</p><small>两条路径的医学背景与决策门槛不同。</small></div></article>
+        </div>
+      </section>
 
-      <article class="tool-card" data-category="operation strategy" data-keywords="共识 90天 行动计划 建议行动表 研讨会">
-        <div class="card-head"><h2>PLS项目初步共识议题与90天建议行动表</h2><span class="tag operation">运营会议</span></div>
-        <p>用于现场共创后形成共识议题、责任人和90天行动节奏，便于把讨论落到下一步执行。</p>
-        <div class="actions"><span class="path">PLS项目初步共识议题与90天建议行动表-通用版</span><a class="open" href="./PLS项目初步共识议题与90天建议行动表-通用版/index.html">打开</a></div>
-      </article>
+      <section class="concept-section concept-newness" aria-labelledby="newnessTitle">
+        <div class="concept-section-head"><span>02</span><div><p>WHAT IS NEW</p><h2 id="newnessTitle">PLS是一个新概念吗？</h2></div></div>
+        <div class="newness-layout">
+          <div><h3>医学技术并非凭空出现</h3><p>白内障手术、CLE/RLE、人工晶状体、精准生物测量、眼表与眼底评估、Phaco、FLACS、患者教育和术后随访，都有各自既有的医学与实践基础。</p></div>
+          <div><h3>新的，是体系化的连接</h3><p>PLS把过去分散的技术和服务连接起来：从只关注“手术是否完成”，进一步走向“患者是否获得适合其生活方式的视觉结果，以及医院能否稳定、规范地交付这种结果”。</p></div>
+        </div>
+      </section>
 
-      <article class="tool-card" data-category="operation" data-keywords="研讨会 议程模板 民营眼科 辅导 workshop">
-        <div class="card-head"><h2>全国民营眼科医院PLS项目运营辅导研讨会议程模板</h2><span class="tag operation">运营会议</span></div>
-        <p>提供通用研讨会议程框架，可用于医院拜访、项目启动会和跨部门共创工作坊。</p>
-        <div class="actions"><span class="path">全国民营眼科医院_PLS项目运营辅导研讨会_通用议程模板</span><a class="open" href="./全国民营眼科医院_PLS项目运营辅导研讨会_通用议程模板/index.html">打开</a></div>
-      </article>
+      <section class="concept-section" aria-labelledby="pathsTitle">
+        <div class="concept-section-head"><span>03</span><div><p>TWO CLINICAL PATHWAYS</p><h2 id="pathsTitle">PLS主要涉及两条临床路径</h2></div></div>
+        <div class="path-table" role="table" aria-label="PLS两条临床路径比较">
+          <div class="path-row path-header" role="row"><span role="columnheader">临床路径</span><span role="columnheader">适用背景</span><span role="columnheader">决策重点</span></div>
+          <div class="path-row" role="row"><strong role="cell">白内障患者的晶状体手术</strong><span role="cell">晶状体混浊已经影响视功能和合理生活需求。</span><span role="cell">在治疗白内障的同时，根据眼健康、散光和视觉目标进行屈光规划。</span></div>
+          <div class="path-row" role="row"><strong role="cell">严格筛选后的CLE/RLE</strong><span role="cell">晶状体透明或混浊不明显，但患者有明确老视矫正需求。</span><span role="cell">需要更审慎地权衡风险、替代方案、长期影响和患者可接受的取舍。</span></div>
+        </div>
+        <p class="concept-note">两条路径都必须以患者安全和视觉质量为核心，但不能使用同一种筛选尺度、沟通语言或预期管理方式。</p>
+      </section>
 
-      <article class="tool-card" data-category="clinical assessment" data-keywords="术前 视觉需求 问卷 患者需求 全自费白内障">
-        <div class="card-head"><h2>全自费白内障手术术前视觉需求问卷</h2><span class="tag clinical">临床患者</span></div>
-        <p>帮助术前采集患者生活场景、视觉目标和脱镜期待，为医生进行个体化方案沟通提供依据。</p>
-        <div class="actions"><span class="path">全自费白内障手术术前视觉需求问卷</span><a class="open" href="./全自费白内障手术术前视觉需求问卷/index.html">打开</a></div>
-      </article>
+      <section class="concept-section concept-flow" aria-labelledby="dlsTitle">
+        <div class="concept-section-head"><span>04</span><div><p>FROM DLS TO PLS</p><h2 id="dlsTitle">DLS帮助理解晶状体老化，但不是手术指征</h2></div></div>
+        <div class="flow-steps" aria-label="从DLS医学认知到PLS医院能力">
+          <div><b>晶状体老化连续谱</b><span>老视 → 光学质量变化 → 早期白内障 → 明显白内障</span></div><i aria-hidden="true">↓</i>
+          <div><b>两类临床需求</b><span>治疗白内障 · 为严格筛选且适合的患者矫正老视</span></div><i aria-hidden="true">↓</i>
+          <div><b>规范评估与共同决策</b><span>眼健康检查 → 需求分析 → 适应证 → 方案比较 → 风险告知</span></div><i aria-hidden="true">↓</i>
+          <div><b>PLS医院能力体系</b><span>精准匹配 → 稳定手术 → 全旅程体验 → 主动随访 → 结果复盘</span></div>
+        </div>
+        <p class="concept-boundary"><strong>必须说清楚：</strong>DLS不是一个已经建立统一诊断标准和治疗指南的独立疾病实体，也不能推出“患者应该做手术”。任何治疗决定仍须回到规范诊断、检查发现、医学适应证、替代方案和共同决策。</p>
+      </section>
 
-      <article class="tool-card" data-category="clinical assessment" data-keywords="心理红线 术前 风险 投诉 预期管理 患者筛查">
-        <div class="card-head"><h2>全自费白内障手术术前心理红线评估量表</h2><span class="tag assessment">评估表单</span></div>
-        <p>用于识别过高期待、沟通风险和潜在不满意因素，支持术前预期管理与风险防控。</p>
-        <div class="actions"><span class="path">全自费白内障手术术前心理红线评估量表</span><a class="open" href="./全自费白内障手术术前心理红线评估量表/index.html">打开</a></div>
-      </article>
+      <section class="concept-section concept-organization" aria-labelledby="organizationTitle">
+        <div class="concept-section-head"><span>05</span><div><p>FROM TWO DEPARTMENTS TO ONE PATIENT PATHWAY</p><h2 id="organizationTitle">白内障科和屈光科要合并吗？</h2></div></div>
+        <p class="organization-lead">不以行政合并为起点。PLS首先要连接两科的专业能力，让白内障治疗与老视矫正在各自的适应证和责任边界内，共享患者入口、评估标准、转诊交接和质量复盘。</p>
+        <div class="organization-stages">
+          <article><small>起点</small><h3>保留两科建制</h3><p>不因PLS项目立即调整行政架构，先明确两科专业分工与临床责任。</p></article>
+          <article class="recommended"><small>推荐形式</small><h3>跨科PLS服务线或虚拟中心</h3><p>建立统一入口、共同SOP、MDT、明确主诊医生和共同质量指标。</p></article>
+          <article><small>条件成熟后</small><h3>白内障与老视矫正中心</h3><p>先运行6至12个月，证明路径、责任、绩效、数据和质量管理成熟后，再讨论组织整合。</p></article>
+        </div>
+        <div class="organization-responsibilities"><div><b>白内障科的核心贡献</b><span>白内障诊断、复杂眼病评估、晶状体手术和围手术期安全。</span></div><div><b>屈光科的核心贡献</b><span>屈光与功能视觉评估、老视需求、眼表角膜、双眼视觉和预期管理。</span></div></div>
+        <button class="outline" type="button" data-qa="22">查看组织协作完整回答 →</button>
+      </section>
 
-      <article class="tool-card" data-category="clinical" data-keywords="人工晶体 匹配 决策树 IOL TECNIS Odyssey PureSee Synergy">
-        <div class="card-head"><h2>全自费患者人工晶体匹配决策树</h2><span class="tag clinical">临床患者</span></div>
-        <p>围绕患者需求、眼部条件和产品特点，辅助完成TECNIS人工晶体方案匹配沟通。</p>
-        <div class="actions"><span class="path">全自费患者人工晶体匹配决策树</span><a class="open" href="./全自费患者人工晶体匹配决策树/index.html">打开</a></div>
-      </article>
+      <section class="concept-section" aria-labelledby="notTitle">
+        <div class="concept-section-head"><span>06</span><div><p>FOUR BOUNDARIES</p><h2 id="notTitle">PLS不是什么？</h2></div></div>
+        <ol class="boundary-list">
+          <li><b>不是单一产品、设备或术式的名称</b><p>使用屈光型IOL、飞秒激光或先进检查设备，不能自动等同于PLS。</p></li>
+          <li><b>不等同于“全自费白内障手术”</b><p>支付方式只能说明费用来源，不能定义医疗价值。</p></li>
+          <li><b>不是脱离医学适应证的消费手术</b><p>患者支付能力不能替代风险收益判断，更不能成为放宽医学标准的理由。</p></li>
+          <li><b>不是由医生或患者单方面决定的方案</b><p>医生把关医学适应证，患者表达生活目标与可接受取舍，通过充分沟通形成共同决策。</p></li>
+        </ol>
+      </section>
 
-      <article class="tool-card" data-category="clinical operation" data-keywords="术后护理 随访 SOP AIOLIS PCIOL RLE 记录表">
-        <div class="card-head"><h2>AIOLIS PCIOL RLE术后护理随访SOP记录表</h2><span class="tag clinical">临床患者</span></div>
-        <p>用于术后随访记录、护理节点管理和患者体验闭环，适合项目运行后持续追踪。</p>
-        <div class="actions"><span class="path">AIOLIS_PCIOL_RLE术后护理随访SOP记录表</span><a class="open" href="./AIOLIS_PCIOL_RLE术后护理随访SOP记录表/index.html">打开</a></div>
-      </article>
+      <section class="concept-section concept-outcomes" aria-labelledby="outcomesTitle">
+        <div class="concept-section-head"><span>07</span><div><p>TWO OUTCOMES</p><h2 id="outcomesTitle">PLS最终要实现什么？</h2></div></div>
+        <div class="outcome-grid"><div><b>01</b><h3>适合患者的精准视觉结果</h3><p>不是只追求一个屈光数字，而是让术后表现尽可能符合已经充分讨论的工作距离、双眼视觉需求和生活场景。</p></div><div><b>02</b><h3>透明、安心的全旅程体验</h3><p>患者知道为什么检查、为什么适合或不适合、不同选择有什么取舍，以及术后何时观察、何时联系医院。</p></div></div>
+      </section>
 
-      <article class="tool-card" data-category="assessment strategy" data-keywords="国际 PLS 诊疗中心 核查 评估 系统 标准">
-        <div class="card-head"><h2>PLS诊疗体系建设能力评价</h2><span class="tag assessment">评估表单</span></div>
-        <p>用于对标国际化PLS诊疗中心能力，形成模块化核查、评分和改进方向。</p>
-        <div class="actions"><span class="path">国际PLS诊疗中心核查评估系统</span><a class="open" href="./国际PLS诊疗中心核查评估系统/国际PLS诊疗中心核查评估系统.html">打开</a></div>
-      </article>
-
-      <article class="tool-card" data-category="clinical strategy" data-keywords="JJSV IOL Phaco FLACS LipiFlow 产品 概览 Catalys">
-        <div class="card-head"><h2>JJSV IOL、Phaco、FLACS和LipiFlow概览</h2><span class="tag">项目策略</span></div>
-        <p>汇总JJSV相关产品和技术能力，便于医院领导、项目团队和内部支持团队快速建立共同语言。</p>
-        <div class="actions"><span class="path">JJSV IOL flcac和LipiFlow概览</span><a class="open" href="./JJSV IOL flcac和LipiFlow概览/index.html">打开</a></div>
-      </article>
-
-      <article class="tool-card" data-category="clinical assessment" data-keywords="IOL 人工晶体 计算 公式 Barrett Kane EVO Hill RBF PEARL ASCRS ESCRS LASIK Toric">
-        <div class="card-head"><h2>IOL计算公式导航与临床选择</h2><span class="tag clinical">临床知识</span></div>
-        <p>梳理常规、现代、数据驱动、屈光术后与Toric计算路径，提供专业计算器及中文学习入口。</p>
-        <div class="actions"><span class="path">IOL计算公式导航与临床选择</span><a class="open" href="./IOL计算公式导航与临床选择/index.html">打开</a></div>
-      </article>
-      <article class="tool-card" data-category="clinical operation" data-keywords="PLS 方案 费用 价格 自费 医保 确认">
-        <div class="card-head"><h2>PLS方案与费用说明</h2><span class="tag operation">方案确定</span></div>
-        <p>展示方案包含项目、费用边界与确认步骤；示例价格仅供内部设计讨论。</p>
-        <div class="actions"><span class="path">PLS方案与费用说明</span><a class="open" href="./PLS方案与费用说明/index.html">打开</a></div>
-      </article>
-      <article class="tool-card" data-category="clinical assessment" data-keywords="PLS 知情同意 费用选择 白内障 老视 替代方案 签署">
-        <div class="card-head"><h2>PLS知情同意与费用选择确认书</h2><span class="tag assessment">方案确定</span></div>
-        <p>用于解释方案、替代选择、费用与风险，并记录患者知情和自主选择。</p>
-        <div class="actions"><span class="path">PLS知情同意与费用选择确认书</span><a class="open" href="./PLS知情同意与费用选择确认书/index.html">打开</a></div>
-      </article>
+      <section class="concept-next" aria-labelledby="conceptNextTitle">
+        <div><span class="eyebrow">FROM CONCEPT TO PRACTICE</span><h2 id="conceptNextTitle">概念清楚以后，进入医院的真实工作</h2><p>IDEAL评估是患者九环节中的第3环节，六大支柱是后台能力系统，CEO驾驶舱用于持续复盘质量、团队和行动。</p></div>
+        <div class="concept-next-actions"><button class="primary" type="button" data-go="journey">查看患者旅程 →</button><button class="outline" type="button" data-go="capability">查看医院PLS能力 →</button><button class="outline" type="button" data-go="ceo">进入CEO驾驶舱 →</button></div>
+      </section>
+      <p class="concept-source">内容依据《PLS的定义、边界与医学基础：从DLS到PLS》整理。页面用于项目沟通与团队学习，不替代临床指南、医生判断及医院合规审核。</p>
     </section>
 
-    <div class="empty" id="emptyState">没有找到匹配的工具，请换一个关键词试试。</div>
+    <section id="inventory" class="view page inventory-page" aria-labelledby="inventoryPageTitle">
+<div class="page-head">
+<div>
+<span class="eyebrow">OPERATIONS & INVENTORY</span>
+<h1 id="inventoryPageTitle">IOL 与设备耗材库存</h1>
+<p>查询型号、度数与耗材余量；演示数据仅保存在当前浏览器。</p>
+</div>
+<button class="outline" data-go="home">← 返回首页</button>
+</div>
+</section>
+
+    <section id="journey" class="view page" aria-labelledby="journeyTitle">
+<div class="page-head">
+<div>
+<span class="eyebrow">PATIENT JOURNEY</span>
+<h1 id="journeyTitle">患者价值交付</h1>
+<p>以一位患者为主线，把需求发现、共同决策、精准手术、持续随访和体验修复连接起来。</p>
+</div>
+<button class="primary" id="addPatientButton">＋ 新建演示患者</button>
+</div>
+<section class="patient-value-architecture" aria-labelledby="patientValueArchitectureTitle">
+<div class="patient-value-head"><div><span class="eyebrow">PATIENT VALUE DELIVERY</span><h2 id="patientValueArchitectureTitle">患者愿意自费的五个必要条件</h2><p>五项条件缺少任何一项，都不应把患者的犹豫简单理解为“价格问题”。</p></div><button class="outline" type="button" data-go="clinical">进入价值发现与共同决策 →</button></div>
+<div class="patient-value-grid">
+<article><b>01 需求真实</b><p>患者能够说清楚哪些视觉任务影响生活，而不是被贴上“高端患者”标签。</p><small>证据：IDEAL需求记录</small></article>
+<article><b>02 医学适合</b><p>检查、诊断、风险与替代方案支持进一步讨论，支付能力不能替代适应证。</p><small>证据：医生复核摘要</small></article>
+<article><b>03 选择透明</b><p>基础路径与个体化路径都被公平解释，费用、局限和术后戴镜可能性清楚。</p><small>证据：方案比较与复述确认</small></article>
+<article><b>04 交付可信</b><p>患者看见医院有明确责任人、规范流程、手术质控和异常升级机制。</p><small>证据：SOP与岗位交接</small></article>
+<article><b>05 术后负责</b><p>适应、困扰、非预期结果和投诉有人响应，并进入医疗与服务闭环。</p><small>证据：随访与投诉复盘</small></article>
+</div>
+</section>
+<section class="service-standard" aria-labelledby="serviceStandardTitle">
+<div><span class="eyebrow">PLS SERVICE STANDARD</span><h2 id="serviceStandardTitle">把专业能力变成患者可感知的服务标准</h2></div>
+<div class="service-standard-grid"><span>完整视觉任务访谈</span><span>规范眼表与眼底评估</span><span>精准生物测量与复核</span><span>医生个体化方案讨论</span><span>双眼整体策略</span><span>费用与替代方案透明</span><span>手术日关键核查</span><span>标准随访与适应辅导</span><span>异常与投诉快速升级</span><span>患者报告结果复盘</span></div>
+<p>这些是医院应该稳定交付的专业标准，不是消费权益套餐，也不构成术后效果承诺。</p>
+</section>
+<section class="implementation-hub" aria-labelledby="implementationHubTitle">
+<div class="implementation-hub-head"><div><span class="eyebrow">DEPARTMENT IMPLEMENTATION</span><h2 id="implementationHubTitle">医院各部门如何开始工作</h2><p>先进入对应岗位的二级工作台，再回到患者旅程完成交接和复盘。</p></div><span class="notice">当前阶段 · 试运行</span></div>
+<div class="implementation-links">
+<button type="button" data-go="clinical"><b>医生与检查团队</b><span>IDEAL需求、检查完整性和术前摘要</span><em>进入临床工作台 →</em></button>
+<button type="button" data-go="education"><b>咨询师与患者教育</b><span>方案解释、视觉示意和投诉回应</span><em>进入患者教育 →</em></button>
+<button type="button" data-go="capability"><b>HR与MDT团队</b><span>岗位标准、自评、学习和短测</span><em>查看岗位能力 →</em></button>
+<button type="button" data-go="inventory"><b>运营与手术支持</b><span>IOL规格及设备耗材演示查询</span><em>查看运营支持 →</em></button>
+</div>
+</section>
+<div class="page-grid">
+<div class="panel">
+<div class="panel-head">
+<h2>患者列表</h2>
+<span class="badge">仅演示资料</span>
+</div>
+<div id="patientList">
+</div>
+</div>
+<div class="panel">
+<div class="panel-head">
+<h2>患者全流程九环节</h2>
+<span id="patientCode" class="muted">
+</span>
+</div>
+<div id="patientDetail">
+</div>
+</div>
+</div>
+<section data-journey-reference></section>
+<section id="routingGate" class="panel routing-gate">
+<div class="panel-head">
+<div>
+<span class="eyebrow">PATHWAY GATE · 关键节点</span>
+<h2>标准诊疗 / PLS 路径确认闸门</h2>
+</div>
+<span class="notice">IDEAL 初评后 · 专项检查前</span>
+</div>
+<div id="routingGateContent">
+</div>
+</section>
+<section class="pathway-comparison" aria-labelledby="pathwayComparisonTitle">
+<div class="pathway-comparison-head"><div><span class="eyebrow">TWO PATHWAYS · ONE MEDICAL BASELINE</span><h2 id="pathwayComparisonTitle">两条路径，共同底线</h2><p>基础诊疗路径与PLS视觉质量深度评估路径不是高低关系，也不是医保患者与自费患者的身份分类；两条路径都必须安全、规范、尊重患者。</p></div><button class="outline" type="button" data-qa="21">查看完整回答 →</button></div>
+<div class="pathway-comparison-grid">
+<article class="baseline-path"><span>基础诊疗路径</span><h3>安全、规范、可及地解决主要医学问题</h3><p>以规范诊断、手术安全、视力改善、并发症控制和基本生活能力恢复为主要评价；医保资格与报销范围另行核对。</p></article>
+<div class="shared-baseline"><span>共同底线</span><b>适应证</b><b>规范检查</b><b>手术安全</b><b>充分告知</b><b>术后随访</b></div>
+<article class="pls-path"><span>PLS视觉质量深度评估路径</span><h3>在共同医学底线之上匹配个体化视觉任务</h3><p>进一步评估功能视觉、眼镜依赖、夜间视觉、双眼策略、患者报告结果与长期体验；进入评估不等于确定手术、产品或付费方案。</p></article>
+</div>
+<p class="pathway-order"><strong>分流顺序：</strong>医学安全与适应证 → 真实视觉需求 → 医学适合性 → 方案与费用的平衡告知 → 患者自主选择。收入、职业和支付能力不是分流起点。</p>
+<button class="outline pathway-space-link" type="button" data-go="capability" data-space-flow-focus>查看空间与患者动线如何承接两条路径 →</button>
+</section>
+<section class="education-pathway-entry"><div><h2>方案与费用比较</h2><p>医生判断适合方案后，比较总价、包含项目和另计费用，再进入正式确认。</p></div><button class="outline" type="button" data-pricing-tool>查看PLS方案与费用说明 →</button></section>
+<section class="panel handoff-panel">
+<div class="panel-head">
+<div>
+<span class="eyebrow">ONE PATIENT · ONE TEAM</span>
+<h2>岗位交接看板</h2>
+</div>
+<span class="badge">按患者保存</span>
+</div>
+<div id="handoffBoard">
+</div>
+<section class="education-pathway-entry"><div><h2>方案确定与正式签署</h2><p>在医生诊断之后、手术执行之前，核对替代方案、患者理解、逐项医保及费用属性和签署文件。交接演示记录不构成医疗同意或电子签名。</p></div><button class="outline" type="button" data-consent-tool>查看知情同意与费用确认模板 →</button></section>
+</section>
+<section class="panel patient-context">
+<div class="panel-head">
+<h2>患者来源与暂缓记录</h2>
+<span class="badge">按患者保存</span>
+</div>
+<div class="context-fields">
+<label>患者来源<select id="patientSource">
+<option>现场登记</option>
+<option>公众号</option>
+<option>老患者转介绍</option>
+<option>医生转诊</option>
+<option>其他</option>
+</select>
+</label>
+<label>暂缓原因<select id="pauseReason">
+<option value="">无</option>
+<option>希望继续了解</option>
+<option>等待检查或医生评估</option>
+<option>费用相关疑问</option>
+<option>选择其他诊疗路径</option>
+<option>暂时无法联系</option>
+</select>
+</label>
+</div>
+<p class="muted">仅用于演示漏斗分析，不作为患者是否适合手术的判断。</p>
+</section>
+</section>
+
+    <section id="clinical" class="view page" aria-labelledby="clinicalTitle">
+<div class="page-head">
+<div>
+<span class="eyebrow">IDEAL CLINICAL WORKSPACE</span>
+<h1 id="clinicalTitle">价值发现与临床协作</h1>
+<p>识别需要、解释选择、记录共识。所有方案由医生结合检查结果决定。</p>
+</div>
+<button class="outline" data-tools-role="doctor">查阅医生工具 →</button>
+</div>
+<div class="page-grid">
+<div class="panel">
+<div class="panel-head">
+<h2>患者视觉需求</h2>
+<span id="clinicalPatientName" class="badge">
+</span>
+</div>
+<form id="needsForm">
+<label>最重要的用眼场景<select name="priority">
+<option value="">请选择</option>
+<option>远距离与户外</option>
+<option>电脑与中距离</option>
+<option>阅读与近距离</option>
+<option>夜间驾驶</option>
+</select>
+</label>
+<label>期望与顾虑<textarea name="concern" rows="4" placeholder="例如：希望看清手机，同时担心夜间眩光">
+</textarea>
+</label>
+<label>患者可接受的术后戴镜情况<select name="glasses">
+<option value="">请选择</option>
+<option>愿意按需戴镜</option>
+<option>希望减少戴镜</option>
+<option>尚需解释与讨论</option>
+</select>
+</label>
+<label>患者最希望改善的生活结果<textarea name="desiredOutcome" rows="3" placeholder="例如：能更安心地夜间驾驶，或长时间使用电脑更方便"></textarea></label>
+<label>患者可以接受的取舍<select name="tradeoff"><option value="">请选择</option><option>优先视觉范围，可接受一定适应过程</option><option>优先夜间视觉与对比敏感度</option><option>优先减少戴镜，但理解不能保证完全脱镜</option><option>希望继续比较后再决定</option></select></label>
+<label>患者复述确认<textarea name="teachBack" rows="3" placeholder="记录患者用自己的话复述：为什么选择、主要局限、替代方案和术后注意事项"></textarea></label>
+<button class="primary" type="submit">保存需求记录</button>
+</form>
+</div>
+<div class="panel">
+<div class="panel-head">
+<h2>IDEAL 五步</h2>
+<span class="badge">患者共同决策</span>
+</div>
+<ol class="ideal-list">
+<li>
+<b>Identify</b>
+<span>识别就诊动机与临床问题</span>
+</li>
+<li>
+<b>Discover</b>
+<span>探索生活场景、检查结果与风险</span>
+<button class="outline" type="button" data-qa="24">理解生活目标与选择动机 →</button>
+</li>
+<li>
+<b>Educate</b>
+<span>解释可选方案、获益与局限</span>
+</li>
+<li>
+<b>Align</b>
+<span>确认患者理解、偏好与共识</span>
+<button class="outline" type="button" data-qa="24">核对患者接受的风险与取舍 →</button>
+<button class="outline" type="button" data-consent-tool>查看知情同意与费用确认模板</button>
+</li>
+<li>
+<b>Lifestyle Vision Plan</b>
+<span>形成个体化视觉计划与随访安排</span>
+</li>
+</ol>
+<div class="shared-decision-check"><h3>共同决策不是“讲完了”，而是患者真正理解了</h3><div><span>□ 能说出自己的主要视觉目标</span><span>□ 知道并非所有方案都适合自己</span><span>□ 理解可能收益、局限和适应过程</span><span>□ 知道基础路径、替代方案和费用属性</span><span>□ 知道可以暂缓、改选或寻求第二意见</span><span>□ 知道术后出现问题如何联系医院</span></div></div>
+<div class="callout">
+<strong>风险复核节点</strong>
+<p>视觉需求、心理预期和眼部检查应由合适岗位记录，最终由主诊医生复核。警示项只用于提示进一步沟通。</p>
+</div>
+</div>
+</div>
+<section class="panel doctor-brief">
+<div class="panel-head">
+<div>
+<span class="eyebrow">CLINICAL SUMMARY PREVIEW</span>
+<h2>医生术前摘要（预览）</h2>
+</div>
+<span class="notice">规则化演示 · 未接入 AI 模型</span>
+</div>
+<div class="brief-grid">
+<div>
+<h3>检查完成情况</h3>
+<div id="clinicalCheckList">
+</div>
+<label class="brief-label">需医生复核的问题<textarea id="riskNote" rows="3" maxlength="300" placeholder="填写需要进一步核对的情况；勿录入真实患者信息">
+</textarea>
+</label>
+<label class="brief-label">医生讨论记录<textarea id="doctorNote" rows="3" maxlength="300" placeholder="记录讨论重点与下一步">
+</textarea>
+</label>
+<button id="reviewBriefButton" class="outline" type="button">标记摘要已复核</button>
+<p id="doctorReviewResult" class="muted">
+</p>
+</div>
+<div>
+<h3>结构化摘要</h3>
+<div id="doctorBrief">
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <section id="capability" class="view page" aria-labelledby="capabilityTitle">
+<section class="education-pathway-entry"><div><h2>收费解释能力核查</h2><p>核查统一报价、收费清单、理解确认、双眼计费和改选退费机制。</p></div><button class="outline" type="button" data-pricing-tool>查看PLS方案与费用说明 →</button></section>
+<div class="page-head">
+<div>
+<span class="eyebrow">SIX PILLARS · MDT</span>
+<h1 id="capabilityTitle">项目启动与基线自评</h1>
+<p>明确医院负责人和MDT团队，通过六大支柱与岗位能力评估找到最优先的建设差距。</p>
+</div>
+<span class="notice">演示性标准与短测，非正式岗位认证</span>
+</div>
+<div class="panel">
+<div class="panel-head">
+<h2>六大支柱 · 快速评估</h2>
+<span id="auditSummary" class="badge">
+</span>
+</div>
+<div id="pillarAssessment" class="pillar-grid">
+</div>
+</div>
+<section id="spaceFlowCapability" class="space-flow-capability" aria-labelledby="spaceFlowTitle">
+<header class="space-flow-head">
+<div><span class="eyebrow">PILLAR 1 · FACILITY & PATIENT FLOW</span><h2 id="spaceFlowTitle">PLS空间、功能分区与患者动线</h2><p>空间建设不是把患者按支付能力分开，而是把统一医学入口、路径确认、隐私沟通、精准检查、共同决策和术后管理连接得更顺畅。</p></div>
+<button class="outline" type="button" data-go="journey" data-routing-focus>查看路径确认闸门 →</button>
+</header>
+<div class="space-principle"><b>同一条医学底线</b><span>统一入口与共享基础检查</span><i>→</i><span>第3—4环节：IDEAL评估与全面检查</span><i>→</i><span>第5环节：医生诊断</span><i>→</i><strong>第5—6环节：路径确认闸门</strong><i>→</i><span>第6环节：方案确定</span></div>
+<div class="space-flow-map" aria-label="眼科医院PLS功能分区与患者动线">
+<div class="flow-common flow-top"><b>医院统一入口</b><span>接待、挂号与初步安全筛查</span></div>
+<div class="flow-arrow" aria-hidden="true">↓</div>
+<div class="flow-common"><b>共享基础检查区</b><span>视力 · 眼压 · 裂隙灯 · 必要的基础生物测量</span></div>
+<div class="flow-arrow" aria-hidden="true">↓</div>
+<div class="flow-common"><b>医生初诊与IDEAL简版需求评估</b><span>判断主要眼病、危险信号、下一步检查方向和真实视觉需求</span></div>
+<div class="flow-arrow" aria-hidden="true">↓</div>
+<div class="flow-gate"><small>确认节点</small><b>标准诊疗 / PLS路径确认闸门</b><span>第5—6环节：医生判断医学可行性，充分告知、复述确认与自主选择；信息不足先补齐</span></div>
+<div class="flow-branches">
+<article class="flow-path basic"><header><small>PATH A</small><h3>基础诊疗路径</h3></header><ol><li>普通候诊与标准诊室</li><li>按临床需要完成检查与诊断</li><li>说明治疗选择、风险与替代方案</li><li>医保资格、报销范围和费用另行核对</li><li>进入规范手术预约或其他治疗</li></ol></article>
+<article class="flow-path assessment"><header><small>SHARED PLATFORM</small><h3>视觉质量评估平台</h3></header><ol><li>视功能与屈光检查</li><li>角膜、散光、眼表与眼底评估</li><li>视觉任务、术后预期与双眼策略沟通</li><li>发现风险或条件变化时返回医生复核</li></ol></article>
+<article class="flow-path pls"><header><small>PATH B</small><h3>PLS视觉质量管理中心</h3></header><ol><li>独立安静的候诊与沟通空间</li><li>医生讨论个体化医学方案</li><li>患者与家属共同决策</li><li>解释替代方案、风险、局限和费用</li><li>完成知情同意与手术预约</li></ol></article>
+</div>
+<div class="flow-return"><span>两条路径可以双向返回和重新评估</span><b>不以收入、职业、外观或支付能力作为入口标签</b></div>
+<div class="flow-arrow" aria-hidden="true">↓</div>
+<div class="flow-common flow-bottom"><b>共享手术平台与共享复查区</b><span>术前核查 · 手术室 · 术后观察 · 按临床需要复查 · 视觉质量随访</span></div>
+</div>
+<div class="space-requirements">
+<article><b>适老化与无障碍</b><span>清楚标识、防滑地面、连续扶手、充足座椅、轮椅通行与紧急呼叫。</span></article>
+<article><b>隐私与声环境</b><span>方案、风险和费用沟通应在独立空间进行，避免候诊区公开讨论个人信息。</span></article>
+<article><b>照明与视觉友好</b><span>控制眩光和明暗突变，字体与导视清晰，便于白内障和老视患者阅读。</span></article>
+<article><b>医疗安全与感控</b><span>诊疗、检查和手术区域须符合医院感控、消防、洁污流线与设备安全要求。</span></article>
+<article><b>设备与数据连接</b><span>检查设备、复核节点和信息系统应减少重复录入，并保留责任人和时间记录。</span></article>
+<article><b>建设验收与复盘</b><span>先用患者动线走查发现拥堵、折返和隐私风险，再形成整改清单与验收证据。</span></article>
+</div>
+<footer class="space-flow-note"><b>使用边界：</b>本图是功能关系与患者动线示意，不是按比例建筑平面图。正式设计须由医院联合建筑、感控、消防、无障碍、信息与设备专业人员审核，并符合当地法规和院内制度。</footer>
+</section>
+<section class="organization-model-entry" aria-labelledby="capabilityOrganizationTitle">
+<div class="organization-model-head"><div><span class="eyebrow">CROSS-DEPARTMENT CAPABILITY</span><h2 id="capabilityOrganizationTitle">先建跨科服务线，再决定是否调整组织</h2><p>白内障科与屈光科保留专业边界，通过统一患者入口、共同SOP、MDT和质量指标实现协作。</p></div><button class="outline" type="button" data-qa="22">查看组织设计 →</button></div>
+<div class="organization-model-flow"><span>白内障科</span><i>+</i><span>屈光科</span><i>→</i><strong>PLS服务线 / 虚拟中心</strong><i>→</i><span>条件成熟后评估“白内障与老视矫正中心”</span></div>
+</section>
+<section id="plsTeam" class="pls-team" aria-labelledby="plsTeamTitle">
+<header><span class="eyebrow">PLS TEAM · RESPONSIBILITY & HANDOFF</span><h2 id="plsTeamTitle">PLS试点团队：角色、分工与交接</h2><p>1位项目负责人 + 5类核心角色。先明确责任，再安排人员；六类责任不等于新增六名员工。</p></header>
+<div class="team-organization"><strong>PLS项目负责人：统筹资源、任命责任人与复盘</strong><div><span>临床主诊医生</span><span>视觉质量评估角色</span><span>患者旅程管理师</span><span>手术质量与护理协调角色</span><span>运营与合规支持角色</span></div><p>临床主诊医生承担最终医学判断；患者旅程管理师保持全程联系；各专业岗位在资质与授权范围内执行。</p></div>
+<div id="teamRoleDetails" class="team-role-list"></div>
+<h3>试点怎么配人？</h3><div class="team-config"><article><h4>试点配置</h4><p>项目负责人1位，核心医生1–2位；指定视觉质量评估、患者旅程管理、护理协调及运营支持责任人。负责人和运营支持可兼任，检查与护理可由现有专业团队承担。</p><p>患者旅程管理师须有明确服务时段与备岗。能否兼任取决于工作量、专业资质及交接可靠性。</p></article><article><h4>扩展配置</h4><p>出现预约积压、重复解释、检查复核延误、随访遗漏或备岗不足时，增加旅程管理与专业执行人员。患者旅程管理可分为术前与术后执行，但每位患者始终有一位明确的联系责任人。</p></article></div>
+<h3>原岗位如何归入PLS责任？</h3><div class="team-table-wrap"><table><thead><tr><th>原岗位或职能</th><th>PLS责任角色</th><th>保留的专业边界</th></tr></thead><tbody><tr><td>谈话师、咨询师、患教师、客服；医助中的协调工作</td><td>患者旅程管理师</td><td>不代替医生诊断、定方案或医疗风险告知；医疗操作按资质授权执行</td></tr><tr><td>验光师、特殊检查技师</td><td>视觉质量评估角色</td><td>各自完成授权检查，异常与数据不一致交医生复核</td></tr><tr><td>手术护士、复诊及随访护士</td><td>手术质量与护理协调角色</td><td>护理及医疗随访由专业人员执行；旅程管理师协调预约并追踪完成</td></tr><tr><td>院长、科主任、运营、财务及合规人员</td><td>项目负责人及运营与合规支持角色</td><td>医院确定管理权限；财务核对收费，专业部门审核材料与制度</td></tr></tbody></table></div>
+<h3>启动前逐项核查</h3><ul><li>六类责任均有明确责任人、备岗与服务时段。</li><li>每位患者有联系责任人，专业节点有执行人与交接记录。</li><li>医生确认方案后才进入正式费用与签署确认。</li><li>异常症状、数据疑点和投诉均有升级对象、时限与处理记录。</li><li>第30、60、90天复盘交接缺漏、患者结果、随访与改进证据。</li></ul>
+<div class="team-actions"><button class="outline" type="button" data-team-download="roles">下载团队分工表</button><button class="outline" type="button" data-team-download="handoff">下载患者交接清单</button><button class="primary" type="button" data-go="operations">进入90天建设 →</button></div>
+</section>
+<section class="panel mdt-panel">
+<div class="panel-head">
+<div>
+<span class="eyebrow">MDT CAPABILITY</span>
+<h2>岗位知识与技能标准</h2>
+</div>
+<label class="role-picker">选择岗位 <select id="mdtRoleSelect">
+</select>
+</label>
+</div>
+<div id="mdtRoleIntro">
+</div>
+<div class="mdt-columns">
+<div>
+<h3>逐项自评</h3>
+<p class="muted">每项 1–5 分，五项合计换算为百分制；全部完成且 ≥80 分为达到演示建议线。</p>
+<div id="selfAssessment">
+</div>
+<div id="selfResult" class="score-result">
+</div>
+</div>
+<div>
+<h3>在线知识短测</h3>
+<p class="muted">五题单选，每题 20 分；≥80 分及格，可重复作答。</p>
+<form id="quizForm">
+<div id="quizQuestions">
+</div>
+<button type="submit" class="primary">提交试卷</button>
+</form>
+<div id="quizResult" class="score-result">
+</div>
+</div>
+</div>
+</section>
+<div class="page-grid lower">
+<div class="panel">
+<h2>从评估到改进</h2>
+<p>每项“需改进”都应进入30/60/90天行动计划，明确医院责任人、期限和复评证据。六大支柱是后台能力系统；IDEAL评估对应患者九环节中的第3环节。</p>
+<button class="wide-button" data-go="operations">前往30/60/90天行动 →</button>
+</div>
+<div class="panel">
+<h2>Collective Genius</h2>
+<div class="model-list">
+<p>
+<b>Architect</b> 建立路径、标准与数据规则</p>
+<p>
+<b>Bridger</b> 连接医生、护理、咨询、运营与患者</p>
+<p>
+<b>Catalyst</b> 将试点经验验证、复盘并推广</p>
+</div>
+</div>
+</div>
+<section class="panel learning-panel">
+<div class="panel-head">
+<div>
+<span class="eyebrow">ROLE LEARNING</span>
+<h2>岗位学习计划与考核进度</h2>
+</div>
+<span id="trainingOverview" class="badge">
+</span>
+</div>
+<p id="learningRoleHeading" class="muted">
+</p>
+<div id="learningModules">
+</div>
+<div id="learningProgress" class="score-result">
+</div>
+</section>
+<section class="panel training-map" aria-labelledby="trainingMapTitle">
+<div class="panel-head training-map-head">
+<div>
+<span class="eyebrow">ROLE-BASED CURRICULUM</span>
+<h2 id="trainingMapTitle">岗位培训课程地图</h2>
+<p class="muted">初次评估后，按岗位能力差距分配课程；同一员工可以在不同能力项处于不同级别。</p>
+</div>
+<div class="training-filters">
+<label>培训岗位<select id="courseRoleFilter"></select></label>
+<label>课程级别<select id="courseLevelFilter"><option value="all">全部级别</option><option value="junior">初级</option><option value="intermediate">中级</option></select></label>
+</div>
+</div>
+<div class="training-path"><b>岗位标准</b><i>→</i><b>初次评估</b><i>→</i><b>识别差距</b><i>→</i><b>分配课程</b><i>→</i><b>学习与考试</b><i>→</i><b>在岗验证</b><i>→</i><b>复评</b></div>
+<div id="courseSummary" class="course-summary"></div>
+<div id="courseGap" class="course-gap"></div>
+<div id="courseGrid" class="course-grid"></div>
+<section class="education-pathway-entry" aria-labelledby="patientDecisionTrainingTitle"><div><h2 id="patientDecisionTrainingTitle">医生、患教护士与咨询师：理解患者选择</h2><p>通过生活场景访谈与复述确认，区分真实需求、支付意愿和疗效误解。病例讨论：患者愿意支付几万元，却认为可以保证完全脱镜，下一步应怎样处理？</p></div><button class="outline" type="button" data-qa="24">学习框架与病例讨论 →</button></section>
+<div class="training-boundary"><b>达标规则：</b>初级课程知识考试建议≥80分；中级课程建议≥85分，并完成病例、情景或在岗考核。自我评分用于发现差距，不能单独作为岗位能力达标或医院认证依据。</div>
+</section>
+<section class="panel certification-entry">
+<div>
+<span class="eyebrow">PRACTICE EXCELLENCE PATHWAY</span>
+<h2>PLS诊疗体系建设能力评价</h2>
+<p>从“体系搭建”到“稳定运行”，再到“长期示范”，用标准、真实证据和年度复评推动医院持续进步。</p>
+</div>
+<div class="certification-entry-levels">
+<span>规范诊疗能力中心</span>
+<i>→</i>
+<span>进阶诊疗能力中心</span>
+<i>→</i>
+<span>卓越诊疗能力中心</span>
+</div>
+<button class="primary" type="button" data-go="certification">查看三级能力评价 →</button>
+</section>
+</section>
+
+    <section id="operations" class="view page" aria-labelledby="operationsTitle">
+<section class="education-pathway-entry"><div><h2>收费方案建立与验证</h2><p>医疗与财务第1–30天核算成本和清单；第31–60天完成医院审核、团队培训与试运行；第61–90天复盘费用疑问、成本与取消退费。</p></div><button class="outline" type="button" data-pricing-tool>查看PLS方案与费用说明 →</button></section>
+<div class="page-head">
+<div>
+<span class="eyebrow">PILOT OPERATIONS</span>
+<h1 id="operationsTitle">30/60/90天行动</h1>
+<p>先建立最小可运行流程，再通过复盘优化，最后把有效做法固化为医院标准。</p>
+</div>
+<button class="outline" id="exportButton">导出演示数据</button>
+</div>
+<section class="action-cycle" aria-labelledby="actionCycleTitle">
+<div class="action-cycle-head"><span class="eyebrow">IMPLEMENTATION CYCLE</span><h2 id="actionCycleTitle">三个周期，不一次铺开所有工作</h2></div>
+<div class="action-cycle-grid">
+<article class="active"><small>第1至30天</small><h3>建立最小可运行流程</h3><p>选择三至五项重点：患者分流、IDEAL访谈、检查清单、岗位交接、患者教育或随访升级。</p><b>输出：责任人、完成时间、验收证据</b></article>
+<article><small>第31至60天</small><h3>发现问题并优化</h3><p>检查患者在哪里暂缓、信息在哪里断开、哪些岗位没有执行，以及哪些内容需要医生或CEO介入。</p><b>输出：问题清单、修订流程、新行动</b></article>
+<article><small>第61至90天</small><h3>固化并准备认证</h3><p>形成SOP、完成岗位复评、沉淀病例复盘，并判断是否具备扩大运行和能力认证的条件。</p><b>输出：医院标准、运行证据、下一周期</b></article>
+</div>
+</section>
+<section class="organization-action-entry" aria-labelledby="organizationActionTitle">
+<div><span class="eyebrow">FIRST 90 DAYS</span><h2 id="organizationActionTitle">跨科协作的90天行动</h2><p>前30天明确两科责任与统一入口；31至60天试运行共同评估、转诊和MDT；61至90天复盘质量、交接与患者结果。不把“合并科室”设为启动项目的前置条件。</p></div><button class="outline" type="button" data-qa="22">查看完整回答 →</button>
+</section>
+<section class="partnership-action-entry" aria-labelledby="partnershipActionTitle">
+<div><span class="eyebrow">PARTNERSHIP BOUNDARY</span><h2 id="partnershipActionTitle">启动项目时，把合作边界写清楚</h2><p>明确医院主体责任、医生决策权、产品与设备选择权、数据与患者信息边界，以及眼力健能够和不能提供的支持。</p></div><button class="outline" type="button" data-qa="23">查看统一回答 →</button>
+</section>
+<div class="page-grid">
+<div class="panel">
+<div class="panel-head">
+<h2>行动清单</h2>
+<span class="badge">点击复选框更新状态</span>
+</div>
+<div id="taskList">
+</div>
+<form id="taskForm" class="task-form">
+<input name="title" placeholder="新增行动事项" required maxlength="80" aria-label="行动事项">
+<select name="owner" aria-label="责任人">
+<option>院长/CEO</option>
+<option>眼科医生</option>
+<option>咨询师</option>
+<option>护士</option>
+<option>市场/客服</option>
+<option>PLS团队</option>
+</select>
+<button class="primary" type="submit">添加</button>
+</form>
+</div>
+<div class="panel">
+<div class="panel-head">
+<h2>项目进展</h2>
+<span class="badge">演示医院</span>
+</div>
+<div id="opsSummary">
+</div>
+<div class="callout">
+<strong>数据边界</strong>
+<p>此演示版使用浏览器本地存储，无登录、服务端同步或真实医疗系统连接。请勿录入真实患者个人信息。</p>
+</div>
+<button class="quiet-button" id="resetButton">重置演示数据</button>
+</div>
+</div>
+<div class="operations-shortcuts">
+<button class="outline" data-go="ceo">CEO 驾驶舱 →</button>
+<button class="outline" data-go="funnel">本月患者价值旅程 →</button>
+<button class="outline" data-go="revenue">未来12个月经营情景测算 →</button>
+</div>
+</section>
+
+    <section id="resources" class="view page" aria-labelledby="resourcesTitle">
+<div class="page-head">
+<div>
+<span class="eyebrow">RESOURCES</span>
+<h1 id="resourcesTitle">知识与工具</h1>
+<p>查找经过审核的项目决策问答和现有PLS工具网页。</p>
+</div>
+</div>
+<section class="presentation-resource" aria-labelledby="presentationResourceTitle">
+<div class="presentation-resource-preview" aria-hidden="true">
+<img src="presentations/pls-ceo-intro/slides/slide-01.png" alt="">
+</div>
+<div>
+<span class="eyebrow">院方研讨会材料</span>
+<h2 id="presentationResourceTitle">Digital PLS院方研讨会30分钟介绍</h2>
+<p>18页、30分钟。包含院方PLS团队角色分工、现场成员指定表与会议确认；下载PPT后可直接填写主责姓名、部门职务、备岗及到位日期。网页提供同步逐页解说和主持提示。</p>
+<div class="presentation-resource-actions">
+<a class="primary" href="presentations/pls-ceo-intro/index.html" target="_blank" rel="noopener">网页播放</a>
+<a class="outline" href="downloads/强生眼力健_Digital_PLS院方研讨会30分钟介绍PPT.pptx" download>下载PPT</a>
+</div>
+</div>
+</section>
+<section class="presentation-resource presentation-resource-secondary" aria-labelledby="supportPresentationResourceTitle">
+<div class="presentation-resource-preview" aria-hidden="true"><img src="presentations/jjsv-support-pls/slides/slide-01.png" alt=""></div>
+<div>
+<span class="eyebrow">院方研讨会材料 · 第二步</span>
+<h2 id="supportPresentationResourceTitle">强生眼力健如何支持PLS体系建设</h2>
+<p>面向已经了解PLS基本定位的院长与CEO，Odyssey、PureSee、Eyhance、VERITAS和CATALYS各有独立产品页，并介绍Professional Education多岗位培训及Digital PLS项目工具支持。网页版本支持全屏播放、键盘翻页、目录跳转和讲者提示。</p>
+<div class="presentation-resource-actions"><a class="primary" href="presentations/jjsv-support-pls/index.html" target="_blank" rel="noopener">网页播放</a><a class="outline" href="downloads/强生眼力健如何支持PLS体系建设_20分钟演讲版.pptx" download>下载PPT</a><a class="outline" href="downloads/强生眼力健如何支持PLS体系建设_20分钟解说词.md" target="_blank" rel="noopener">查看解说词</a></div>
+</div>
+</section>
+<section class="qa-library-entry">
+<div>
+<span class="eyebrow">PLS DECISION Q&A</span>
+<h2>PLS项目决策Q&A</h2>
+<p>24个医院体系建设常见问题，保留简明回答、管理要点与不能做什么；可按岗位和主题检索。</p>
+</div>
+<div>
+<b>24</b>
+<span>个完整问答</span>
+</div>
+<button class="primary" type="button" data-go="qa">进入决策Q&A →</button>
+</section>
+<div class="section-line tool-library-title">
+<h2>PLS工具库</h2>
+<span class="muted">按患者旅程九环节排列 · 13个独立网页</span>
+</div>
+<div class="tool-controls">
+<label>搜索工具 <input id="toolSearch" type="search" placeholder="名称、用途或岗位" autocomplete="off">
+</label>
+<label>使用岗位 <select id="toolRoleFilter">
+<option value="all">全部岗位</option>
+<option value="doctor">医生</option>
+<option value="nurse">护士</option>
+<option value="consultant">咨询师</option>
+<option value="manager">院长/管理者</option>
+<option value="team">PLS团队</option>
+</select>
+</label>
+<label>旅程环节 <select id="toolStageFilter">
+<option value="all">全部环节</option>
+<option value="3">03 IDEAL评估</option>
+<option value="4">04 全面检查</option>
+<option value="5">05 医生诊断</option>
+<option value="6">06 方案确定</option>
+<option value="8">08 术后随访</option>
+<option value="10">全程支撑</option>
+</select>
+</label>
+<span id="toolCount" class="muted">
+</span>
+</div>
+<p class="tool-journey-note">从院外引流到持续改进，按工具首次使用的环节查找；工具也可能用于后续环节。暂无独立工具的环节仍由工作台流程和岗位协作覆盖。</p>
+<div id="resourceGrid" class="resource-library">
+</div>
+<section id="toolViewer" class="panel tool-viewer" hidden aria-labelledby="toolViewerTitle">
+<div class="panel-head">
+<div>
+<span class="eyebrow">站内工具预览</span>
+<h2 id="toolViewerTitle">
+</h2>
+</div>
+<div class="viewer-actions">
+<a id="toolOpenLink" class="outline" target="_blank" rel="noopener">单独打开 ↗</a>
+<button id="toolCloseButton" class="quiet-button" type="button">关闭</button>
+</div>
+</div>
+<p id="toolViewerNote" class="muted">
+</p>
+<iframe id="toolFrame" title="PLS 工具预览" loading="lazy">
+</iframe>
+</section>
+<div class="callout resource-note">
+<strong>使用边界</strong>
+<p>原工具保持独立网页及原有逻辑，尚未与患者档案或医院系统连接。临床量表、晶体匹配规则、产品资料和患者教育内容应由医院及相关职能审核后再用于实际诊疗。公开 GitHub Pages 不适合录入真实患者资料。</p>
+</div>
+</section>
+    <section id="qa" class="view page qa-page" aria-labelledby="qaTitle">
+<div class="page-head">
+<div>
+<span class="eyebrow">PLS DECISION SUPPORT</span>
+<h1 id="qaTitle">PLS项目决策Q&A</h1>
+<p>医院不同岗位在PLS体系建设和患者旅程中遇到的24个常见问题。</p>
+</div>
+<button class="outline" data-go="resources">← 返回知识与工具</button>
+</div>
+<p class="qa-boundary">本知识库不替代个体化诊疗、属地医保和价格规则，也不替代法律、财税或合规专业意见。遇到患者安全、适应证、收费政策或投诉升级问题，请由相应责任岗位确认。</p>
+<div class="qa-controls">
+<label>搜索问题<input id="qaSearch" type="search" placeholder="例如：医保、脱镜、投诉、散光" autocomplete="off">
+</label>
+<label>使用岗位<select id="qaRoleFilter">
+<option value="all">全部岗位</option>
+<option>院长/CEO</option>
+<option>手术医生</option>
+<option>咨询师</option>
+<option>患教护士</option>
+<option>患教专员</option>
+<option>验光师</option>
+<option>特殊检查技师</option>
+<option>前台/接待护士</option>
+<option>术后随访护士</option>
+<option>市场/客服</option>
+<option>PLS团队</option>
+<option>HR/培训经理</option>
+<option>财务/医保</option>
+<option>财务/收费</option>
+<option>合规</option>
+</select>
+</label>
+<label>问题主题<select id="qaCategoryFilter">
+<option value="all">全部主题</option>
+<option>伦理与患者自主</option>
+<option>战略与组织</option>
+<option>合作与利益边界</option>
+<option>临床与适应证</option>
+<option>患者教育与共同决策</option>
+<option>收费、医保与记录</option>
+<option>质量、满意度与投诉</option>
+<option>传播与口碑</option>
+</select>
+</label>
+</div>
+<div class="qa-summary">
+<span id="qaCount">
+</span>
+<button id="qaExpandAll" type="button" class="text-button">展开全部</button>
+</div>
+<div id="qaList" class="qa-list">
+</div>
+<p class="qa-version">内容来源：《PLS项目常见问题与决策问答》内部参考稿。正式上线前应由医院临床、医保、财务及合规岗位完成本地化审核并标注版本日期。</p>
+</section>
+    <section id="certification" class="view page certification-page" aria-labelledby="certificationTitle">
+<div class="page-head">
+<div>
+<span class="eyebrow">PLS PRACTICE EXCELLENCE PATHWAY</span>
+<h1 id="certificationTitle">PLS诊疗体系建设能力评价</h1>
+<p>从项目建设走向可验证、可持续的医院能力。</p>
+</div>
+<button class="outline" data-go="capability">← 返回医院PLS能力建设</button>
+</div>
+<div class="certification-boundary">
+<strong>能力证明的边界</strong>
+<p>PLS体系建设能力证明不是行政许可或官方医疗资质，不构成疗效保证，不代表某项产品或技术适合所有患者，也不能替代医生对个体患者的医学判断。认证所确认的是医院完成了相应的体系建设、运行评估和持续质量改进。</p>
+</div>
+<section class="certification-ladder" aria-label="三级能力成长路径">
+<article class="level-card foundation">
+<span class="level-number">LEVEL 1</span>
+<h2>一级能力证明</h2>
+<h3>PLS规范诊疗能力中心</h3>
+<b>体系已经搭建起来</b>
+<p>医院已经建立基础患者路径、团队分工、SOP、患者教育、费用说明、术后随访和异常升级机制，并完成至少一次90天试运行复盘。</p>
+<ul>
+<li>完成PLS共识声明和患者路径图</li>
+<li>明确医生、检查、护理、咨询、客服、手术室及管理岗位职责</li>
+<li>建立基础SOP、手术日核查和患者教育材料</li>
+<li>建立医保与费用边界说明、随访和异常升级路径</li>
+</ul>
+</article>
+<article class="level-card excellence">
+<span class="level-number">LEVEL 2</span>
+<h2>二级能力证明</h2>
+<h3>PLS进阶诊疗能力中心</h3>
+<b>体系已经稳定运行并持续改进</b>
+<p>医院能够以真实运行记录呈现临床质量、患者体验、复杂病例管理和持续改进，并完成分层培训与能力评估。</p>
+<ul>
+<li>核心路径连续运行并形成稳定记录</li>
+<li>建立统一质控、复杂病例MDT及关键数据追溯</li>
+<li>患者教育、共同决策和术后体验进入质量复盘</li>
+<li>不满意病例闭环，并完成至少一轮PDSA改进验证</li>
+</ul>
+</article>
+<article class="level-card center">
+<span class="level-number">LEVEL 3</span>
+<h2>三级能力证明</h2>
+<h3>PLS卓越诊疗能力中心</h3>
+<b>能够长期达标、带教、示范和改进</b>
+<p>少数标杆中心能够持续稳定运行体系，形成年度质量报告，开展教学和病例复盘，并分享经过验证的实践经验。</p>
+<ul>
+<li>连续多周期稳定运行PLS体系</li>
+<li>具备复杂病例评估、会诊和转诊协作能力</li>
+<li>形成年度质量与患者体验报告</li>
+<li>能够开展教学培训，并以去标识化数据推动改进</li>
+</ul>
+</article>
+</section>
+<section class="panel certification-modules">
+<div class="panel-head">
+<div>
+<span class="eyebrow">NINE PATIENT JOURNEY STAGES</span>
+<h2>患者全流程九环节与评价覆盖</h2>
+</div>
+<span class="badge">所有级别共同框架</span>
+</div>
+<div class="module-grid"><article><b>01 引流／预约</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>02 到院分流</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>03 IDEAL评估</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>04 全面检查</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>05 医生诊断</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>06 方案确定</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>07 手术执行</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>08 术后随访</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article><article><b>09 持续改进</b><p>按对应九环节核查岗位职责、工具、交接和异常升级。</p><small>能力评价维度为跨环节核查，不替代患者九环节顺序。</small></article></div>
+</section>
+<div class="certification-columns">
+<section class="panel">
+<h2>如何核查</h2>
+<p>医院自评、项目团队材料预审、外部临床专家核查与评分复核后，由评价委员会审议等级。专家披露利益关系并回避直接利益相关医院的等级决定；证明有效期建议12个月，三级增加半年中期复核。委员会与标准正式发布前仅开展试评，不自动发证。</p>
+<p>一级：总分≥60、完成率≥90%、各模块≥50%；二级：≥75、≥95%、各模块≥60%；三级：≥90、100%、各模块≥75%，医学评估、共同决策、手术交付、异常处理及团队数据模块≥80%。五项闸门一级均≥2，二级还须至少两项为3，三级均为3。证据等级、连续运行时间与红线条件同时核查。</p>
+<a class="outline" href="tools/国际PLS诊疗中心核查评估系统/国际PLS诊疗中心核查评估系统.html" target="_blank" rel="noopener">打开PLS诊疗体系建设能力评价表</a>
+<ol class="certification-check">
+<li>
+<b>文件审阅</b>
+<span>查看制度、SOP、患者材料、随访和改进记录。</span>
+</li>
+<li>
+<b>病例抽查</b>
+<span>以去标识化病例验证患者路径是否真实闭环。</span>
+</li>
+<li>
+<b>现场走查</b>
+<span>沿真实患者动线观察每个环节如何运行。</span>
+</li>
+<li>
+<b>团队访谈</b>
+<span>确认不同岗位知道责任、边界和异常升级方法。</span>
+</li>
+</ol>
+</section>
+<section class="panel">
+<h2>年度复评</h2>
+<ol class="certification-check">
+<li>
+<b>回顾承诺</b>
+<span>检查上一年度改进行动是否完成。</span>
+</li>
+<li>
+<b>汇总数据</b>
+<span>复盘临床质量、患者体验和随访指标。</span>
+</li>
+<li>
+<b>看见问题</b>
+<span>抽查典型及不满意病例，不只展示成绩。</span>
+</li>
+<li>
+<b>形成计划</b>
+<span>明确下一年度改进事项、责任人和验证方式。</span>
+</li>
+</ol>
+</section>
+</div>
+<section class="certification-redlines">
+<div>
+<span class="eyebrow">NON-NEGOTIABLE BOUNDARIES</span>
+<h2>能力评价红线</h2>
+</div>
+<ul>
+<li>不得表述为官方资质或疗效保证</li>
+<li>不得与某一IOL、设备或产品绑定宣传</li>
+<li>不得贬低基础诊疗路径或以医保属性评价患者</li>
+<li>不得用证书诱导患者选择自费方案</li>
+<li>不得缺少医生适应证判断和共同决策记录</li>
+<li>不得用手术数量、收入或某类IOL占比作为核心依据</li>
+</ul>
+</section>
+<div class="certification-foot">
+<p>
+<b>页面用途：</b>帮助医院理解三级成长路径并准备评估证据。当前演示系统中的自评、考试和六大支柱数据不能自动获得或授予任何能力认证。</p>
+<button class="primary" type="button" data-go="capability">继续医院PLS能力建设 →</button>
+</div>
+</section>
+    <section id="ceo" class="view page" aria-labelledby="ceoTitle">
+<section class="education-pathway-entry"><div><h2>收费与交付成本复盘</h2><p>核对实际平均收费、交付成本、单例贡献、取消退费和患者费用疑问。正式测算使用本院实际数据。</p></div><button class="outline" type="button" data-pricing-tool>查看PLS方案与费用说明 →</button></section>
+<div class="page-head">
+<div>
+<span class="eyebrow">LEADERSHIP DASHBOARD</span>
+<h1 id="ceoTitle">CEO驾驶舱</h1>
+<p>在第30、60和90天，同时查看医疗质量、患者价值、服务体验和经营健康，判断项目是否值得继续扩大。</p>
+</div>
+<button class="outline" data-go="operations">← 返回行动计划</button>
+</div>
+<p class="feature-boundary">演示数据，仅保存在本浏览器；不是医院经营报表。</p>
+<section class="balanced-scorecard" aria-labelledby="balancedScorecardTitle">
+<div class="balanced-scorecard-head"><div><span class="eyebrow">BALANCED SCORECARD</span><h2 id="balancedScorecardTitle">不单看自费比例，先看四类结果是否同时成立</h2></div><strong>患者价值在前 · 合理增长在后</strong></div>
+<div class="balanced-scorecard-grid">
+<article class="medical"><span>医疗质量</span><strong id="scoreMedical">—</strong><p>检查完整、风险复核、医生确认和手术质量</p><small>红线指标出现异常时暂停扩张</small></article>
+<article class="patient"><span>患者价值</span><strong id="scorePatient">—</strong><p>需求记录、理解确认、自主选择与患者报告结果</p><small>不把方案选择率当作唯一成功标准</small></article>
+<article class="experience"><span>服务体验</span><strong id="scoreExperience">—</strong><p>岗位交接、随访完成、投诉响应和闭环</p><small>重点查看不满意病例而不只展示成绩</small></article>
+<article class="business"><span>经营健康</span><strong id="scoreBusiness">—</strong><p>患者来源、服务产能、行动落实与合理贡献</p><small>演示值仅表示行动完成度，不代表财务结果</small></article>
+</div>
+</section>
+<section class="review-sequence" aria-labelledby="reviewSequenceTitle">
+<div><span class="eyebrow">REVIEW BEFORE SCALE</span><h2 id="reviewSequenceTitle">CEO复盘先问执行，再问规模</h2><p>本周期做了什么 → 是否真正应用 → 患者和团队发生什么变化 → 哪些流程需要调整 → 下一周期由谁完成。</p></div>
+<button class="outline" type="button" data-go="certification">查看固化与认证 →</button>
+</section>
+<section class="concept-ceo-entry" aria-labelledby="ceoConceptTitle">
+<div><span class="eyebrow">PLS IN 30 SECONDS</span><h2 id="ceoConceptTitle">在看经营数据之前，先回答：PLS到底是啥？</h2><p><strong>中文名称：PLS晶状体卓越诊疗体系。</strong>它围绕白内障与屈光性透明晶体置换（包括老视矫正），建设从患者评估、共同决策、精准手术到术后管理的全流程医院专业能力，不是单一产品或高价IOL项目。</p></div>
+<button class="outline" type="button" data-go="concept">查看完整解释 →</button>
+</section>
+<section class="pathway-boundary-entry" aria-labelledby="ceoPathwayBoundaryTitle">
+<div><span class="eyebrow">TWO PATHWAYS · ONE MEDICAL BASELINE</span><h2 id="ceoPathwayBoundaryTitle">基础医保路径与PLS路径不是高低之分</h2><p>基础医保路径守住安全复明与可及性；PLS路径在安全基础上回应适合患者的个体化视觉需求。管理层应同时确保两条路径规范、透明、可选择。</p></div>
+<button class="outline" type="button" data-qa="21">查看路径边界 →</button>
+</section>
+<section class="ceo-partnership-entry" aria-labelledby="ceoPartnershipTitle">
+<div><span class="eyebrow">WHY J&J VISION SUPPORTS PLS</span><h2 id="ceoPartnershipTitle">眼力健的商业身份与PLS的医院价值可以同时讲清楚</h2><p>眼力健期待在合规、合理的医学应用中获得业务发展，但PLS不绑定Odyssey、PureSee、Catalys或任何指定产品。合理增长应当是患者价值、医生能力和医院体系改善后的结果。</p></div>
+<div class="ceo-partnership-actions"><strong>PLS能力属于医院 · 临床决策属于医生 · 最终选择属于充分知情的患者</strong><button class="outline" type="button" data-qa="23">查看完整回答 →</button></div>
+</section>
+<div id="ceoMetrics" class="feature-metrics">
+</div>
+<div class="feature-columns">
+<section class="panel">
+<h2>患者与质控</h2>
+<div id="ceoQuality">
+</div>
+</section>
+<section class="panel">
+<h2>六大支柱</h2>
+<div id="ceoPillars">
+</div>
+</section>
+</div>
+<div class="feature-columns">
+<section class="panel">
+<h2>MDT 学习与考核</h2>
+<div id="ceoTraining">
+</div>
+</section>
+<section class="panel">
+<h2>30/60/90天行动</h2>
+<div id="ceoActions">
+</div>
+</section>
+</div>
+<section class="revenue-entry" aria-labelledby="ceoRevenueTitle">
+<div>
+<span class="eyebrow">12-MONTH BUSINESS SCENARIOS</span>
+<h2 id="ceoRevenueTitle">未来12个月PLS经营情景</h2>
+<p>在医学适配、患者自主选择和医院安全交付能力的边界内，比较审慎、基准与进取三种营收情景。</p>
+</div>
+<div class="revenue-entry-points"><span>高端白内障PLS</span><span>CLE/RLE老视矫正</span><span>产能约束</span></div>
+<button class="primary" type="button" data-go="revenue">进入完整测算器 →</button>
+</section>
+<section class="complaint-loop" aria-labelledby="complaintLoopTitle"><div><span class="eyebrow">SERVICE RECOVERY</span><h2 id="complaintLoopTitle">一次投诉，是检验PLS体系是否真实存在的时刻</h2><p>倾听与安抚 → 排查危险信号 → 医生复查 → 查找可逆原因 → 对照术前记录与预期 → 制定处理方案 → 主动随访 → MDT复盘。</p></div><button class="outline" type="button" data-go="education" data-education-tab="support">进入投诉回应流程 →</button></section>
+<section class="gdp-decision-card" aria-labelledby="gdpDecisionTitle">
+<div><span class="eyebrow">MARKET POTENTIAL · DECISION Q&A</span><h2 id="gdpDecisionTitle">县市经济水平较低，就不适合开展PLS吗？</h2><p>人均GDP是参考变量，不是决定变量。应同时判断患者基数、支付能力、视觉需求、医院能力和区域患者流动性。</p></div>
+<button class="outline" type="button" data-qa="20">查看完整回答 →</button>
+</section>
+</section>
+    <section id="revenue" class="view page revenue-page" aria-labelledby="revenueTitle">
+<section class="education-pathway-entry"><div><h2>先统一收费口径，再做经营测算</h2><p>方案A、B、C的30,000、50,000、80,000元/眼仅为内部设计示例。测算应采用本院审核后的价格和实际方案构成，核对单眼／双眼口径、共用检查、退款和交付成本。测算器与费用确认书不自动同步。</p></div><button class="outline" type="button" data-pricing-tool>查看方案与费用依据 →</button></section>
+<div class="page-head">
+<div><span class="eyebrow">PLS BUSINESS SCENARIO PLANNING</span><h1 id="revenueTitle">未来12个月PLS经营情景测算</h1><p>先确认质量与安全交付能力，再讨论经营规模和资源配置。</p></div>
+<button class="outline" type="button" data-go="ceo">← 返回CEO驾驶舱</button>
+</div>
+<p class="revenue-boundary"><strong>使用边界：</strong>测算结果不是收入承诺、销售目标或利润预测，不得用于放宽医学适应证、诱导患者选择自费方案或要求医生完成特定PLS数量。所有结果均以患者真实需求、充分知情、自主选择、收费合规及医院安全交付能力为前提。</p>
+<section class="economics-frame" aria-labelledby="economicsFrameTitle"><div><span class="eyebrow">VALUE BEFORE VOLUME</span><h2 id="economicsFrameTitle">经营测算必须同时纳入交付成本和质量约束</h2><p>营业额只能回答“可能有多大”，不能回答“是否值得做、能否稳定做”。正式决策还应核算检查与咨询工时、医生和手术室产能、获客成本、取消与退款、额外复诊、投诉补救及随访成本。</p></div><div class="economics-points"><span>患者基数与医学适配</span><span>服务产能与人员工时</span><span>单例直接成本</span><span>暂缓与取消原因</span><span>投诉与补救成本</span><span>转介绍与长期口碑</span></div></section>
+<section class="hospital-segmentation" aria-labelledby="hospitalSegmentationTitle">
+<div class="hospital-segmentation-head"><div><span class="eyebrow">BEFORE CALCULATION</span><h2 id="hospitalSegmentationTitle">测算前先判断医院所处阶段</h2></div><button class="text-button" type="button" data-qa="20">为什么不能只看人均GDP？→</button></div>
+<div class="hospital-segmentation-grid"><article><b>A类 · 重点建设型</b><p>患者基础、医院能力和区域辐射较强，可建设完整PLS与IDEAL体系。</p></article><article><b>B类 · 培育型</b><p>经济水平一般但存在目标患者，先从筛选、共同决策和小规模试点开始。</p></article><article><b>C类 · 暂缓型</b><p>患者基础、支付能力和医院能力均不足，现阶段优先提升基础白内障医疗。</p></article></div>
+<p class="segmentation-note">患者比例和数量必须由本院历史数据、患者访谈、医学适配和试点运行验证。任何示例比例都不代表医院目标或收入预测。</p>
+</section>
+<div class="revenue-frame-wrap">
+<iframe class="revenue-frame" src="tools/PLS未来12个月营收潜力测算器/index.html" title="PLS未来12个月营收潜力测算器" loading="lazy"></iframe>
+</div>
+<p class="revenue-footnote">工具数据独立保存在当前浏览器中，不与Digital PLS患者档案或医院系统同步。建议由院长、科主任、运营及财务负责人共同填写，并按季度复核。</p>
+</section>
+    <section id="funnel" class="view page" aria-labelledby="funnelTitle">
+<div class="page-head">
+<div>
+<span class="eyebrow">PATIENT JOURNEY DATA</span>
+<h1 id="funnelTitle">PLS患者价值旅程（本月）</h1>
+<p id="funnelPeriod">
+</p>
+</div>
+<button class="outline" data-go="operations">← 返回运营</button>
+</div>
+<p id="funnelDefinition" class="feature-boundary">
+</p>
+<p class="journey-metric-rule"><strong>看漏斗，也看原因：</strong>患者选择基础路径、暂缓或不手术并不等于失败。需要区分医学不适合、信息未完整、价值尚未理解、医院交付不足、费用疑问和患者自主选择。</p>
+<div id="funnelSummary" class="feature-metrics">
+</div>
+<section class="panel">
+<h2>阶段进展</h2>
+<div id="funnelRows">
+</div>
+</section>
+<section class="panel">
+<h2>暂缓原因</h2>
+<div id="funnelReasons">
+</div>
+</section>
+</section>
+    <section id="education" class="view page" aria-labelledby="educationTitle">
+<div class="page-head">
+<div>
+<span class="eyebrow">PATIENT EDUCATION</span>
+<h1 id="educationTitle">患者教育</h1>
+<p>帮助患者与家属理解视觉变化、手术过程和术后求助路径。</p>
+</div>
+<button class="outline" data-go="journey">查看患者路径 →</button>
+</div>
+<section class="education-pathway-entry" aria-labelledby="educationPathwayTitle">
+<div><span class="eyebrow">EXPLAIN CHOICES WITHOUT LABELS</span><h2 id="educationPathwayTitle">先说清两条路径，再说明个体化方案</h2><p>基础诊疗路径不是“低配”，PLS视觉质量深度评估也不是每位患者的必选。咨询师应先说明基础治疗能够解决什么，再结合医生判断说明个体化视觉方案的收益、局限、风险、费用和替代选择；医保资格与报销范围另行核对。</p></div>
+<button class="outline" type="button" data-qa="21">查看统一话术 →</button>
+</section>
+<section class="education-pathway-entry" aria-labelledby="consentPreparationTitle"><div><h2 id="consentPreparationTitle">告知与签署准备</h2><p>完成医生诊断、方案比较、风险及逐项费用解释后，请患者复述主要取舍，再由医院组织正式签署。白内障与老视矫正CLE/RLE分别使用相应版本；患者可暂缓或改选方案。</p></div><button class="outline" type="button" data-consent-tool>查看知情同意与费用确认模板 →</button></section>
+<section class="value-conversation" aria-labelledby="valueConversationTitle"><div><span class="eyebrow">VALUE CONVERSATION</span><h2 id="valueConversationTitle">价值沟通不是说服患者买贵，而是帮助患者作出适合自己的决定</h2></div><div class="value-conversation-grid"><article><b>先问生活</b><p>哪些视觉任务最重要？目前的困难造成了什么影响？</p></article><article><b>再讲医学</b><p>检查说明了什么？哪些方案适合，哪些不适合？</p></article><article><b>平衡比较</b><p>收益、局限、风险、费用、替代方案和术后戴镜可能性。</p></article><article><b>确认理解</b><p>请患者复述主要取舍，并保留暂缓、改选和第二意见的权利。</p></article></div></section>
+<section class="education-pathway-entry"><div><h2>了解方案与费用</h2><p>核对每眼总价、共同包含项、3个月复查范围、双眼计费和另计项目。</p></div><button class="outline" type="button" data-pricing-tool>查看PLS方案与费用说明 →</button></section>
+<section class="education-pathway-entry" aria-labelledby="patientDecisionEducationTitle"><div><h2 id="patientDecisionEducationTitle">理解患者的选择动机</h2><p>团队学习：从生活任务、自主生活、信任、家庭预算和风险取舍理解选择。通过访谈确认每项动机，付款意愿不能替代患者理解。</p></div><button class="outline" type="button" data-qa="24">查看提问方法与沟通提示 →</button></section>
+<div class="education-tabs" role="tablist" aria-label="患者教育主题">
+<button type="button" role="tab" data-education-tab="vision" aria-selected="true">视觉体验</button>
+<button type="button" role="tab" data-education-tab="surgery" aria-selected="false">手术如何进行</button>
+<button type="button" role="tab" data-education-tab="support" aria-selected="false">术后支持与投诉</button>
+<button type="button" role="tab" data-education-tab="record" aria-selected="false">讲解记录</button>
+</div>
+<div id="educationExperience">
+</div>
+<div id="educationRecord" hidden>
+<div class="feature-toolbar">
+<label>演示患者 <select id="educationPatient">
+</select>
+</label>
+<label>患教使用时段（九环节的分组） <select id="educationStageFilter">
+<option value="all">全部阶段</option>
+<option value="术前">IDEAL评估／全面检查（3—4）</option>
+<option value="方案讨论">医生诊断／方案确定（5—6）</option>
+<option value="术后">手术执行的出院交接／术后随访（7—8）</option>
+</select>
+</label>
+</div>
+<p class="feature-boundary">内容仅作流程演示；讲解记录不等于知情同意，诊疗与术后建议以医生意见为准。</p>
+<div id="educationGrid" class="education-grid">
+</div>
+<p id="educationStatus" class="muted">
+</p>
+</div>
+</section>
   </main>
-
   <footer>
-    <p>更新日期：2026-08-16。此入口页仅汇总本文件夹内现有静态网页工具；各工具内容和交互仍保留在原页面中。</p>
-  </footer>
-
-  <script>
-    const search = document.getElementById('search');
-    const cards = Array.from(document.querySelectorAll('.tool-card'));
-    const groups = [
-      ['第3环节 · IDEAL评估',['全自费白内障手术术前视觉需求问卷']],
-      ['第4环节 · 全面检查',['IOL计算公式导航与临床选择']],
-      ['第5环节 · 医生诊断',['全自费患者人工晶体匹配决策树','JJSV IOL、Phaco、FLACS和LipiFlow概览']],
-      ['第6环节 · 方案确定',['全自费白内障手术术前心理红线评估量表','PLS方案与费用说明','PLS知情同意与费用选择确认书']],
-      ['第8环节 · 术后随访',['AIOLIS PCIOL RLE术后护理随访SOP记录表']],
-      ['全程支撑 · 医院体系建设',['PLS项目目标医院遴选工具','全国民营眼科医院PLS项目运营辅导研讨会议程模板','PLS诊疗体系建设能力评价','PLS项目初步共识议题与90天建议行动表','六大支柱核心内容逐层展开网页']]
-    ];
-    const grid=document.getElementById('toolGrid');
-    for(const [label,titles] of groups){
-      const section=document.createElement('section');section.className='journey-group';
-      const heading=document.createElement('h2');heading.textContent=label;
-      const list=document.createElement('div');list.className='journey-group-grid';
-      for(const title of titles){const card=cards.find(item=>item.querySelector('h2').textContent===title);if(card){const marker=document.createElement('span');marker.className='journey-stage';marker.textContent=label;card.prepend(marker);list.appendChild(card)}}
-      heading.appendChild(document.createElement('small')).textContent=`${list.children.length} 个工具`;
-      section.append(heading,list);grid.appendChild(section);
-    }
-    const buttons = Array.from(document.querySelectorAll('.filter-btn'));
-    const empty = document.getElementById('emptyState');
-    let activeFilter = 'all';
-
-    function normalize(value){
-      return value.toLowerCase().replace(/\s+/g,'');
-    }
-
-    function update(){
-      const q = normalize(search.value.trim());
-      let visibleCount = 0;
-      cards.forEach(card => {
-        const categories = card.dataset.category.split(' ');
-        const haystack = normalize(card.innerText + ' ' + card.dataset.keywords);
-        const categoryMatch = activeFilter === 'all' || categories.includes(activeFilter);
-        const searchMatch = !q || haystack.includes(q);
-        const visible = categoryMatch && searchMatch;
-        card.style.display = visible ? '' : 'none';
-        if(visible) visibleCount += 1;
-      });
-      document.querySelectorAll('.journey-group').forEach(group=>{group.style.display=Array.from(group.querySelectorAll('.tool-card')).some(card=>card.style.display!=='none')?'':'none'});
-      empty.style.display = visibleCount ? 'none' : 'block';
-    }
-
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        buttons.forEach(item => item.classList.remove('active'));
-        button.classList.add('active');
-        activeFilter = button.dataset.filter;
-        update();
-      });
-    });
-
-    search.addEventListener('input', update);
-  </script>
+<span>眼科医院PLS能力建设数字工作站 · 上海Happy卓越眼科医院单院示例</span>
+<span>IDEAL：个体化视觉设计 · 六大支柱：医院能力基础</span>
+<button type="button" class="text-button" data-go="intro">项目介绍</button>
+</footer>
+  <div id="toast" role="status" aria-live="polite">
+</div>
 </body>
 </html>
