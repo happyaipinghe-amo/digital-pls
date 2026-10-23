@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>全自费白内障手术术前心理红线评估量表</title>
+<title>术前心理红线评估量表</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Microsoft YaHei','PingFang SC','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#1A252F;background:#f4f5f7;padding:20px;}
@@ -95,6 +95,16 @@
   .btn-reset{background:#ECF0F1;color:#5D6D7E;}
   .btn-print{background:#2E4057;color:#fff;}
   .btn-reset:hover,.btn-print:hover{opacity:.85;}
+  .interview-guide{margin:20px 32px 30px;border-top:3px solid #7B241C;padding-top:20px;line-height:1.7;}
+  .interview-guide h2{font-size:21px;color:#7B241C;margin-bottom:8px;}
+  .interview-guide>p{font-size:14px;color:#34495E;margin-bottom:16px;}
+  .guide-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  .guide-item{border:1px solid #DEE2E6;border-radius:6px;padding:14px;break-inside:avoid;}
+  .guide-item h3{font-size:15px;color:#7B241C;margin-bottom:8px;}
+  .guide-item p{font-size:13px;margin:5px 0;}
+  .guide-item strong{color:#1A5276;}
+  .guide-note{background:#EBF5FB;border-left:4px solid #2E86C1;padding:12px 15px;margin-top:16px;font-size:13px;}
+  @media(max-width:760px){.interview-guide{margin:20px 16px 26px}.guide-list{grid-template-columns:1fr;}}
 
   /* ── Print ── */
   @media print{
@@ -115,7 +125,7 @@
 
   <!-- Header -->
   <div class="page-header">
-    <h1>全自费白内障手术术前心理红线评估量表</h1>
+    <h1>术前心理红线评估量表</h1>
     <p>Cataract Surgery Pre-operative Psychological Red-Line Assessment &nbsp;｜&nbsp; Version 1.0 &nbsp;｜&nbsp; 适用：全自费高端IOL（PureSee / Synergy / Odyssey）+ FLACS手术</p>
   </div>
   <div class="subtitle-bar">
@@ -164,7 +174,7 @@
     <ol>
       <li>① &nbsp;初评：由宣教护士于术前宣教环节完成，逐项询问并勾选评估结果；</li>
       <li>② &nbsp;复核：主诊医生在最终方案确认前独立审阅，对每项「预警」深入追问，对任何「拦截」项须专项记录；</li>
-      <li>③ &nbsp;决策：任何一项触发「拦截」，视为手术相对禁忌证——须加强沟通、调整IOL方案或建议暂缓，不得直接越过；</li>
+      <li>③ &nbsp;复核：任何一项触发「拦截」，先暂停最终方案确认，由主诊医生核实原因、记录处理意见；量表结果不能单独决定手术适应证；</li>
       <li>④ &nbsp;归档：签署完成后附入病历档案，作为知情同意过程的组成部分。</li>
     </ol>
   </div>
@@ -267,8 +277,8 @@
         <tr>
           <td class="td-no">C-06</td>
           <td class="td-item">未理解「全自费升级」含义</td>
-          <td class="td-probe">询问：「您知道本次您放弃了医保报销的基础IOL方案，改为全自费高端IOL，是吗？」<br>观察：不清楚自己放弃了什么，或误以为高端IOL也在医保范围内；对两种方案价差无概念者。</td>
-          <td class="td-flag"><div class="flag-int">不理解全自费升级的实质内容，判定【拦截】</div></td>
+          <td class="td-probe">询问：「您知道本院有哪些合理方案？每种方案中哪些费用可能由医保支付，哪些需要自己支付？」<br>观察：对方案、费用组成或本地医保政策有误解；以本院正式费用说明为准。</td>
+          <td class="td-flag"><div class="flag-int">仍不清楚方案与费用边界：暂停费用选择确认，重新解释并请医生复核。</div></td>
           <td class="td-result"><div class="radio-group">
             <label><input type="radio" name="c06" value="0" onchange="calc()"> 正常</label>
             <label><input type="radio" name="c06" value="1" onchange="calc()"> 预警</label>
@@ -322,8 +332,8 @@
       </tbody>
     </table>
 
-    <!-- Domain 3: 心理稳定性与人格特征 -->
-    <div class="domain-header">第三域 &nbsp; 心理稳定性与人格特征</div>
+    <!-- Domain 3: 心理状态与沟通支持 -->
+    <div class="domain-header">第三域 &nbsp; 心理状态与沟通支持</div>
     <table class="items">
       <thead><tr>
         <th>编号</th><th>评估项目</th><th>询问 / 观察要点</th><th>判定标准</th><th>评估结果</th>
@@ -331,9 +341,9 @@
       <tbody>
         <tr>
           <td class="td-no">C-11</td>
-          <td class="td-item">焦虑症 / 抑郁症现病史或近期复发</td>
-          <td class="td-probe">询问：「近半年是否在服用抗焦虑或抗抑郁药物？」<br>观察：情绪明显不稳、就诊时泪目、反复纠结同一问题、言语逻辑混乱者。</td>
-          <td class="td-flag"><div class="flag-int">现症期精神科用药未停稳，判定【拦截】</div></td>
+          <td class="td-item">近期心理健康与支持需要</td>
+          <td class="td-probe">询问：「最近的睡眠、心情和身体状态，会影响您理解信息或做决定吗？有需要医生知道的治疗或用药吗？」<br>只记录患者自述及支持需要；不要凭用药或情绪表现自行诊断。</td>
+          <td class="td-flag"><div class="flag-int">若当前难以理解信息或作自主决定，暂停方案确认并请医生评估；用药史本身不是自动拦截条件。</div></td>
           <td class="td-result"><div class="radio-group">
             <label><input type="radio" name="c11" value="0" onchange="calc()"> 正常</label>
             <label><input type="radio" name="c11" value="1" onchange="calc()"> 预警</label>
@@ -342,9 +352,9 @@
         </tr>
         <tr>
           <td class="td-no">C-12</td>
-          <td class="td-item">强迫型 / 完美主义人格</td>
-          <td class="td-probe">询问：「您平时对细节要求高吗？轻微的不完美会困扰很久吗？」<br>观察：反复追问同一细节，就诊3次以上仍无法决策，要求书面承诺手术效果者。</td>
-          <td class="td-flag"><div class="flag-int">极端完美主义且无法接受解释，判定【预警/拦截】</div></td>
+          <td class="td-item">对细节及结果的要求</td>
+          <td class="td-probe">询问：「若术后总体改善，但某些场景未达到最理想效果，您最在意哪一点？」<br>观察：关注点是否具体、是否需要更清楚的解释；不根据提问次数判断人格。</td>
+          <td class="td-flag"><div class="flag-int">若仍要求保证结果且无法理解局限，交医生进一步沟通；不作人格诊断。</div></td>
           <td class="td-result"><div class="radio-group">
             <label><input type="radio" name="c12" value="0" onchange="calc()"> 正常</label>
             <label><input type="radio" name="c12" value="1" onchange="calc()"> 预警</label>
@@ -355,7 +365,7 @@
           <td class="td-no">C-13</td>
           <td class="td-item">对视觉波动的极度敏感史</td>
           <td class="td-probe">询问：「配镜时是否因轻微度数偏差而多次退换？既往做过屈光手术且因轻微不适强烈不满者？」<br>观察：主诉对任何视觉变化极度敏感，适应期异常漫长者。</td>
-          <td class="td-flag"><div class="flag-int">有明确视觉低耐受历史，判定【拦截】</div></td>
+          <td class="td-flag"><div class="flag-int">记录既往具体经历，交医生结合眼部检查评估；不能仅凭病史直接排除。</div></td>
           <td class="td-result"><div class="radio-group">
             <label><input type="radio" name="c13" value="0" onchange="calc()"> 正常</label>
             <label><input type="radio" name="c13" value="1" onchange="calc()"> 预警</label>
@@ -409,7 +419,7 @@
           <td class="td-no">C-17</td>
           <td class="td-item">对医疗团队的不信任</td>
           <td class="td-probe">观察：反复质疑医生资质、设备品牌、医院动机；本院有投诉或纠纷记录。<br>询问：「您是否信任我们的手术团队？」</td>
-          <td class="td-flag"><div class="flag-int">显著不信任或有明确投诉史，判定【拦截】</div></td>
+          <td class="td-flag"><div class="flag-int">逐项回应并核实疑虑；若关键问题未澄清，暂停方案确认。质疑或投诉史本身不是排除条件。</div></td>
           <td class="td-result"><div class="radio-group">
             <label><input type="radio" name="c17" value="0" onchange="calc()"> 正常</label>
             <label><input type="radio" name="c17" value="1" onchange="calc()"> 预警</label>
@@ -440,7 +450,7 @@
         <tr>
           <td class="td-no">C-19</td>
           <td class="td-item">用药依从性存疑</td>
-          <td class="td-probe">询问：「术后须严格按时滴眼药4-6周，您能做到吗？」<br>观察：有慢性病用药不规律史；高龄独居无人辅助用药者。</td>
+          <td class="td-probe">询问：「若术后需要按医嘱滴眼药，您自己操作方便吗？需要家人帮忙吗？」<br>观察：手部操作、药瓶说明阅读、记忆及家庭支持；用药时间以医生医嘱为准。</td>
           <td class="td-flag"><div class="flag-warn">依从性明显不足，判定【预警】</div></td>
           <td class="td-result"><div class="radio-group">
             <label><input type="radio" name="c19" value="0" onchange="calc()"> 正常</label>
@@ -451,7 +461,7 @@
         <tr>
           <td class="td-no">C-20</td>
           <td class="td-item">对术后视觉适应期缺乏心理准备</td>
-          <td class="td-probe">询问：「高端IOL植入后可能需要2-4周甚至3个月适应新视觉，您有这个心理准备吗？」<br>观察：不接受任何视觉适应期，期望「手术当天就完全清晰」；选多焦点/全视程IOL但拒绝接受适应期者。</td>
+          <td class="td-probe">询问：「如果术后视觉一开始与预想不同，您希望医院怎样帮助您？出现什么情况会立即联系我们？」<br>观察：是否了解视觉变化存在个体差异；异常症状先请医生检查，不承诺固定适应期限。</td>
           <td class="td-flag"><div class="flag-int">完全拒绝接受视觉适应期，判定【预警/拦截】</div></td>
           <td class="td-result"><div class="radio-group">
             <label><input type="radio" name="c20" value="0" onchange="calc()"> 正常</label>
@@ -495,9 +505,9 @@
   <!-- Legend -->
   <div class="legend">
     <span style="font-weight:600;color:#5D6D7E;">图例：</span>
-    <span class="leg-item"><span class="leg-dot" style="background:#1E8449;"></span>正常 = 无明显心理风险，手术可推进</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#1E8449;"></span>正常 = 本项沟通未发现待核实问题，仍须医生综合判断</span>
     <span class="leg-item"><span class="leg-dot" style="background:#E67E22;"></span>预警 = 存在潜在风险，须术前强化沟通并记录</span>
-    <span class="leg-item"><span class="leg-dot" style="background:#C0392B;"></span>拦截 = 相对禁忌证，须经医生专项干预后重新评估</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#C0392B;"></span>拦截 = 暂停方案确认，交医生专项核实并记录</span>
   </div>
 
   <div class="footer-note">本量表 V1.0 ｜ 适用产品：Tecnis PureSee / Synergy / Odyssey / Odyssey散光 ｜ Catalys白力士（FLACS）｜ 制订：JJSV培训部</div>
@@ -507,6 +517,34 @@
     <button class="btn btn-reset" onclick="resetAll()">重置所有评估</button>
     <button class="btn btn-print" onclick="window.print()">打印 / 导出PDF</button>
   </div>
+
+  <section class="interview-guide" aria-labelledby="interviewGuideTitle">
+    <h2 id="interviewGuideTitle">20项提问与观察指引</h2>
+    <p>先开放提问，再解释选择和局限，最后请患者用自己的话复述。记录患者原话、已解释内容及待医生核实事项；观察仅记录具体事实，不据此诊断人格或心理疾病。本指引供宣教护士、咨询师初评及主诊医生复核使用。</p>
+    <div class="guide-list">
+      <article class="guide-item"><h3>C-01 手术目标</h3><p><strong>提问：</strong>“术后，您最希望哪三件日常事情变得容易？您预计能改善到什么程度？”</p><p><strong>观察：</strong>是否期待恢复年轻时的全部视觉能力；解释后能否说出最看重的改善目标。</p></article>
+      <article class="guide-item"><h3>C-02 光晕、眩光接受度</h3><p><strong>提问：</strong>“您晚上开车或看灯光多吗？如果术后看灯时出现光圈、星芒，最担心影响什么？”</p><p><strong>观察：</strong>夜间驾驶频率和安全要求；能否理解不同晶体的光学取舍。</p></article>
+      <article class="guide-item"><h3>C-03 戴镜预期</h3><p><strong>提问：</strong>“看小字或长时间阅读时仍可能需要眼镜，哪些场景您可以接受戴镜？”</p><p><strong>观察：</strong>是否把少戴镜理解为任何时候绝不戴镜；说明后想法是否变化。</p></article>
+      <article class="guide-item"><h3>C-04 飞秒激光预期（仅拟选FLACS者）</h3><p><strong>提问：</strong>“您选择飞秒激光辅助手术，最看重什么？您认为它能保证什么结果？”</p><p><strong>观察：</strong>是否认为设备能保证零风险、零误差或一定获得更好的术后视力。</p></article>
+      <article class="guide-item"><h3>C-05 职业视觉要求</h3><p><strong>提问：</strong>“您的工作需要夜间驾驶、辨色、精细近距离操作，或通过特定视力体检吗？有书面标准吗？”</p><p><strong>观察：</strong>取得实际要求，交医生核对；不凭口头印象保证通过体检。</p></article>
+      <article class="guide-item"><h3>C-06 自费方案理解</h3><p><strong>提问：</strong>“有哪些可选方案？每种方案哪些费用可能由医保支付，哪些需要自己支付？您理解的费用差别是什么？”</p><p><strong>观察：</strong>能否区分临床选择与支付安排；是否拿到本院适用的书面明细，不能预设所有地区均需放弃医保。</p></article>
+      <article class="guide-item"><h3>C-07 晶体特点与局限</h3><p><strong>提问：</strong>“请用自己的话说说，医生建议的晶体主要希望改善哪些距离的视觉？有什么局限？”</p><p><strong>观察：</strong>是否把产品名称当成效果保证；能否复述适用条件和取舍。</p></article>
+      <article class="guide-item"><h3>C-08 FLACS及耗材费用（仅拟选FLACS者）</h3><p><strong>提问：</strong>“飞秒激光辅助部分及相关耗材怎样收费？您理解它们包含在哪张费用单里吗？”</p><p><strong>观察：</strong>收费项目、眼别、次数和自费金额是否清楚；犹豫时留出提问和考虑时间。</p></article>
+      <article class="guide-item"><h3>C-09 手术风险理解</h3><p><strong>提问：</strong>“医生讲过的风险里，您印象最深的是哪些？术后若突然疼痛或视力下降，怎样联系医院？”</p><p><strong>观察：</strong>能否复述与本人相关的主要风险及紧急联系方法；必要时重新用通俗语言解释。</p></article>
+      <article class="guide-item"><h3>C-10 残余度数预期</h3><p><strong>提问：</strong>“如果术后仍有一点近视、远视或散光，某些时候需要眼镜或进一步评估，您怎么看？”</p><p><strong>观察：</strong>是否把目标屈光度误解为结果保证；医生是否说明个体差异。</p></article>
+      <article class="guide-item"><h3>C-11 近期心理健康与支持需要</h3><p><strong>提问：</strong>“最近的睡眠、心情和身体状态会影响您理解信息或做决定吗？有需要医生知道的治疗或用药吗？”</p><p><strong>观察：</strong>只记录患者自述和支持需要；用药或既往诊断本身不能自动判定不适合，必要时由医生评估。</p></article>
+      <article class="guide-item"><h3>C-12 对细节及结果的要求</h3><p><strong>提问：</strong>“如果术后总体比现在好，但有一两个场景未达到最理想效果，您最在意哪一点？”</p><p><strong>观察：</strong>关注点是否具体、能否讨论；反复提问可能表示解释不足，不能据此判断人格类型。</p></article>
+      <article class="guide-item"><h3>C-13 既往视觉适应经历</h3><p><strong>提问：</strong>“以前换眼镜、戴隐形眼镜或接受眼部治疗时，有没有难以适应的视觉变化？当时是什么情况？”</p><p><strong>观察：</strong>记录具体症状、持续时间、原因与解决过程，交医生结合眼部检查判断。</p></article>
+      <article class="guide-item"><h3>C-14 手术恐惧与配合</h3><p><strong>提问：</strong>“手术中您最害怕什么？我们怎样说明或安排，会让您更安心？”</p><p><strong>观察：</strong>能否完成必要检查，是否需要家属陪同或额外解释；明显不适时请医生评估。</p></article>
+      <article class="guide-item"><h3>C-15 本人意愿</h3><p><strong>提问：</strong>“这次手术和晶体选择，您自己希望怎么做？如果家人意见不同，您最想先弄清什么？”</p><p><strong>观察：</strong>尽量让患者本人表达，确认是否被催促或由他人代替决定。</p></article>
+      <article class="guide-item"><h3>C-16 费用带来的压力</h3><p><strong>提问：</strong>“看过完整费用和其他合理方案后，您希望现在决定，还是带回去和家人商量？”</p><p><strong>观察：</strong>是否知道可选方案、是否需要更多时间；不要询问无关收入细节或施压升级。</p></article>
+      <article class="guide-item"><h3>C-17 对医疗团队的疑虑</h3><p><strong>提问：</strong>“关于医院、医生、手术或费用，您还有哪些不放心？希望我们提供什么信息？”</p><p><strong>观察：</strong>逐项核实疑虑和沟通是否一致；提出质疑或曾投诉不应自动视为不适合。</p></article>
+      <article class="guide-item"><h3>C-18 复诊安排</h3><p><strong>提问：</strong>“术后医生安排复诊时，您来院方便吗？若人在外地，怎样联系到您并安排检查？”</p><p><strong>观察：</strong>交通、陪同、联系方式及可执行的复诊计划；具体时间以医嘱为准。</p></article>
+      <article class="guide-item"><h3>C-19 用药支持</h3><p><strong>提问：</strong>“如果术后需要按医嘱滴眼药，您自己操作方便吗？需要家人帮助吗？”</p><p><strong>观察：</strong>手部活动、阅读药瓶说明、记忆及家庭支持；疗程以实际医嘱为准。</p></article>
+      <article class="guide-item"><h3>C-20 术后适应与求助</h3><p><strong>提问：</strong>“若术后一开始觉得与预想不同，您希望医院怎样帮助您？出现什么情况会立即联系我们？”</p><p><strong>观察：</strong>能否区分需及时就医的异常与需复查、解释的适应问题；不承诺固定适应期限。</p></article>
+    </div>
+    <div class="guide-note"><strong>交接记录：</strong>患者原话、已解释内容、患者复述、待医生核实事项。重大误解、本人意愿不清或职业要求未核实时，暂停最终方案确认。量表不替代眼部检查、临床适应证评估和正式知情同意。</div>
+  </section>
 
 </div><!-- /page -->
 
@@ -561,23 +599,23 @@ function calc() {
   if (intercepts === 0 && warns === 0) {
     vEl.className = 'verdict verdict-pass';
     vEl.style.background = ''; vEl.style.color = '';
-    vEl.textContent = '✅ 通过，可推进手术';
-    sumV.innerHTML = '<strong style="color:#1E8449;">✅ 通过，可推进手术</strong><br><span style="font-size:12px;color:#5D6D7E;">全部'+TOTAL_ITEMS+'项均为正常，无心理禁忌，可按计划推进全自费白内障手术。</span>';
+    vEl.textContent = '沟通筛查已完成';
+    sumV.innerHTML = '<strong style="color:#1E8449;">沟通筛查已完成</strong><br><span style="font-size:12px;color:#5D6D7E;">本表未记录预警或拦截项；仍需主诊医生结合检查、适应证与知情同意作最终判断。</span>';
   } else if (intercepts === 0 && warns > 0) {
     vEl.className = 'verdict verdict-caution';
     vEl.style.background = ''; vEl.style.color = '';
-    vEl.textContent = '⚠️ 有条件通过（' + warns + '项预警）';
-    sumV.innerHTML = '<strong style="color:#E67E22;">⚠️ 有条件通过</strong><br><span style="font-size:12px;color:#5D6D7E;">存在 '+warns+' 项预警，须在术前完成专项沟通并记录后方可推进手术。</span>';
+    vEl.textContent = '需复核（' + warns + '项预警）';
+    sumV.innerHTML = '<strong style="color:#E67E22;">需医生复核</strong><br><span style="font-size:12px;color:#5D6D7E;">存在 '+warns+' 项预警，请追问并记录患者原话，由主诊医生确认下一步。</span>';
   } else if (intercepts === 1) {
     vEl.className = 'verdict verdict-stop';
     vEl.style.background = ''; vEl.style.color = '';
     vEl.textContent = '🚫 拦截（' + intercepts + '项）须专项沟通';
-    sumV.innerHTML = '<strong style="color:#C0392B;">🚫 触发拦截（1项）——需加强沟通或调整方案</strong><br><span style="font-size:12px;color:#5D6D7E;">存在1项拦截，视为相对禁忌证，须由主诊医生进行专项沟通并记录，必要时调整IOL选择或暂缓手术。</span>';
+    sumV.innerHTML = '<strong style="color:#C0392B;">触发拦截（1项）——暂停最终方案确认</strong><br><span style="font-size:12px;color:#5D6D7E;">由主诊医生核实原因并记录处理意见，再决定是否需要调整方案或暂缓。</span>';
   } else {
     vEl.className = 'verdict verdict-stop';
     vEl.style.background = ''; vEl.style.color = '';
-    vEl.textContent = '🚫 建议暂缓（' + intercepts + '项拦截）';
-    sumV.innerHTML = '<strong style="color:#C0392B;">🚫 建议暂缓手术（'+intercepts+'项拦截）</strong><br><span style="font-size:12px;color:#5D6D7E;">存在多项拦截，风险等级高。建议本次暂缓手术，经多学科会诊或心理干预后重新评估。</span>';
+    vEl.textContent = '暂停方案确认（' + intercepts + '项拦截）';
+    sumV.innerHTML = '<strong style="color:#C0392B;">暂停最终方案确认（'+intercepts+'项拦截）</strong><br><span style="font-size:12px;color:#5D6D7E;">请主诊医生逐项核实，并按实际情况决定是否需其他专业支持、调整方案或暂缓。</span>';
   }
 }
 
