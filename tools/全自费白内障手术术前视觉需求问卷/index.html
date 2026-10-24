@@ -327,533 +327,176 @@
 </style>
   <script src="../../pls-brand.js" defer></script>
 <script src="../../journey-data.js" defer></script>
-</head>
-<body>
-<div class="page">
+<style>
+.info-input{min-width:0;width:100%}.note{margin:16px 28px;padding:14px;background:#F0F6FC;line-height:1.8;font-size:14px}.part{padding:18px 28px;background:#1B3A6B;color:white;margin-top:24px;line-height:1.6}.hint{font-size:13px;color:#555;line-height:1.7;padding-bottom:8px}.print-answer{display:none;white-space:pre-wrap;overflow-wrap:anywhere;min-height:42px;padding:8px;border:1px solid #aaa}.status{padding:12px;line-height:1.7}.missing{outline:2px solid #C0392B;outline-offset:3px}.text-area textarea{overflow:hidden}.section-header{break-after:avoid}.q-title{break-after:avoid}.q-item{break-inside:avoid}.info-item label{display:contents}
+@media(max-width:600px){.note{margin:12px 16px}.part{padding:16px}.btn-print{margin:12px 0 0}.info-label{min-width:100px}.info-item:nth-last-child(2){border-bottom:1px solid var(--border)}}
+@media print{@page{size:A4;margin:14mm}.page{max-width:none}.part,.section-header{print-color-adjust:exact;-webkit-print-color-adjust:exact}.text-area textarea,.info-input{display:none}.print-answer{display:block}.info-item .print-answer{border:0;flex:1;min-width:0}.note{margin:12px 0}.q-block{padding:0}.part{margin-top:16px}.section-header{padding:8px 12px}.q-title{padding-top:9px}.options{padding-bottom:8px}.status{display:none}.missing{outline:none}.page-header,.title-block{padding:12px}.info-grid{margin:12px 0}.q-item{break-inside:avoid}}
+</style><style>@media print{.page-header{background:white}.page-header h1,.page-header .en{color:#1B3A6B}.journey-reference{display:none!important}.page-footer{padding:6px;font-size:10px;break-inside:avoid}.q-title{padding-top:7px}.options.single label,.options.multi label{padding-top:3px;padding-bottom:3px}}</style></head>
 
-  <!-- Header -->
-  <div class="page-header">
-    <div>
-      <h1>全自费白内障手术 · 术前视觉需求评估问卷</h1>
-      <div class="en">Pre-operative Visual Needs Assessment for Premium Cataract Surgery</div>
-    </div>
-    <div class="brand">Johnson &amp; Johnson<br>Surgical Vision</div>
-  </div>
-
-  <!-- Title block -->
-  <div class="title-block">
-    <h2>全自费白内障手术  术前视觉需求评估问卷</h2>
-    <div class="sub-en">Pre-operative Visual Needs Assessment for Premium Cataract Surgery</div>
-    <p class="intro">尊敬的患者：此问卷帮助我们全面了解您的视觉症状、用眼习惯与生活期望，从而为您推荐最适合的人工晶体（IOL）方案。<br>请根据真实情况作答，全程约 8–12 分钟，所有信息严格保密。</p>
-  </div>
-
-  <!-- Patient info -->
-  <div class="info-grid">
-    <div class="info-item"><span class="info-label">患者姓名</span><input class="info-input" type="text" placeholder="请填写"></div>
-    <div class="info-item"><span class="info-label">性别</span><input class="info-input" type="text" placeholder="男 / 女"></div>
-    <div class="info-item"><span class="info-label">年龄（岁）</span><input class="info-input" type="number" placeholder="请填写"></div>
-    <div class="info-item"><span class="info-label">职业 / 用眼场景</span><input class="info-input" type="text" placeholder="请填写"></div>
-    <div class="info-item"><span class="info-label">就诊日期</span><input class="info-input" type="date"></div>
-    <div class="info-item"><span class="info-label">病案号 / 预约编号</span><input class="info-input" type="text" placeholder="请填写"></div>
-  </div>
-
-  <!-- ═══ Section 1 ═══ -->
-  <div class="section-header">
-    <div class="sec-title">1 &nbsp; 白内障症状与就诊动机</div>
-    <div class="sec-en">Cataract Symptoms &amp; Chief Motivation</div>
-  </div>
-  <div class="q-block">
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">1.</span> 您出现视力下降或白内障相关症状大约多久了？<span class="required">【必填】</span></div>
-      <div class="options single inline">
-        <label><input type="radio" name="q1" value="a">不到半年</label>
-        <label><input type="radio" name="q1" value="b">半年–1年</label>
-        <label><input type="radio" name="q1" value="c">1–3年</label>
-        <label><input type="radio" name="q1" value="d">3年以上</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">2.</span> 白内障对您日常生活的影响程度？<span class="required">【必填】</span></div>
-      <div class="options single">
-        <label><input type="radio" name="q2" value="a">轻微——偶尔不便</label>
-        <label><input type="radio" name="q2" value="b">中度——影响日常工作效率</label>
-        <label><input type="radio" name="q2" value="c">明显——每天困扰生活</label>
-        <label><input type="radio" name="q2" value="d">严重——已无法独立出行或驾驶</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">3.</span> 您目前最主要的视觉困扰是什么？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q3" value="a">看远模糊</label>
-        <label><input type="checkbox" name="q3" value="b">看近困难</label>
-        <label><input type="checkbox" name="q3" value="c">强光/阳光下视力下降</label>
-        <label><input type="checkbox" name="q3" value="d">夜间眩光严重</label>
-        <label><input type="checkbox" name="q3" value="e">颜色偏黄 / 对比度减弱</label>
-        <label><input type="checkbox" name="q3" value="f">频繁换镜仍不清晰</label>
-        <label><input type="checkbox" name="q3" value="g">单眼复视 / 重影</label>
-        <label><input type="checkbox" name="q3" value="h">开车有安全顾虑</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">4.</span> 您来院就诊的主要动机是？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q4" value="a">尽快改善视力</label>
-        <label><input type="checkbox" name="q4" value="b">摘掉眼镜（近视/老花）</label>
-        <label><input type="checkbox" name="q4" value="c">选择高端人工晶体提升生活品质</label>
-        <label><input type="checkbox" name="q4" value="d">同时矫正散光</label>
-        <label><input type="checkbox" name="q4" value="e">医生 / 朋友推荐</label>
-        <label><input type="checkbox" name="q4" value="f">职业需求</label>
-        <label><input type="checkbox" name="q4" value="g">听说飞秒激光更安全精准</label>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ═══ Section 2 ═══ -->
-  <div class="section-header">
-    <div class="sec-title">2 &nbsp; 日常用眼习惯与职业需求</div>
-    <div class="sec-en">Daily Visual Habits &amp; Occupational Demands</div>
-  </div>
-  <div class="q-block">
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">5.</span> 您每天使用手机 / 平板的时间？<span class="required">【必填】</span></div>
-      <div class="options single inline">
-        <label><input type="radio" name="q5" value="a">少于1小时</label>
-        <label><input type="radio" name="q5" value="b">1–3小时</label>
-        <label><input type="radio" name="q5" value="c">3–6小时</label>
-        <label><input type="radio" name="q5" value="d">6小时以上</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">6.</span> 您每天使用电脑 / 办公的时间？<span class="required">【必填】</span></div>
-      <div class="options single inline">
-        <label><input type="radio" name="q6" value="a">几乎不用</label>
-        <label><input type="radio" name="q6" value="b">1–3小时</label>
-        <label><input type="radio" name="q6" value="c">3–6小时</label>
-        <label><input type="radio" name="q6" value="d">6小时以上</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">7.</span> 您工作/生活中各视觉距离的重要程度评分<span class="required">【1分=不重要，5分=非常重要，每行选1个】</span></div>
-      <table class="rating-table">
-        <thead>
-          <tr>
-            <th class="label-col">视觉距离 / 场景</th>
-            <th>①<br>不重要</th><th>②</th><th>③</th><th>④</th><th>⑤<br>非常重要</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="label-col">远距离（&gt;3米）驾驶 / 看电视 / 户外运动</td>
-            <td><input type="radio" name="q7r" value="1"></td>
-            <td><input type="radio" name="q7r" value="2"></td>
-            <td><input type="radio" name="q7r" value="3"></td>
-            <td><input type="radio" name="q7r" value="4"></td>
-            <td><input type="radio" name="q7r" value="5"></td>
-          </tr>
-          <tr>
-            <td class="label-col">中距离（60–80cm）电脑 / 厨房 / 仪表盘</td>
-            <td><input type="radio" name="q7m" value="1"></td>
-            <td><input type="radio" name="q7m" value="2"></td>
-            <td><input type="radio" name="q7m" value="3"></td>
-            <td><input type="radio" name="q7m" value="4"></td>
-            <td><input type="radio" name="q7m" value="5"></td>
-          </tr>
-          <tr>
-            <td class="label-col">近距离（&lt;40cm）阅读 / 手机 / 针线 / 精细操作</td>
-            <td><input type="radio" name="q7n" value="1"></td>
-            <td><input type="radio" name="q7n" value="2"></td>
-            <td><input type="radio" name="q7n" value="3"></td>
-            <td><input type="radio" name="q7n" value="4"></td>
-            <td><input type="radio" name="q7n" value="5"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">8.</span> 您有以下哪些特殊视觉需求？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q8" value="a">夜间驾驶</label>
-        <label><input type="checkbox" name="q8" value="b">精细手工 / 绘画</label>
-        <label><input type="checkbox" name="q8" value="c">户外运动 / 球类</label>
-        <label><input type="checkbox" name="q8" value="d">摄影</label>
-        <label><input type="checkbox" name="q8" value="e">阅读乐谱</label>
-        <label><input type="checkbox" name="q8" value="f">外科 / 口腔医师</label>
-        <label><input type="checkbox" name="q8" value="g">暗光环境工作</label>
-        <label><input type="checkbox" name="q8" value="h">长期户外劳动</label>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ═══ Section 3 ═══ -->
-  <div class="section-header">
-    <div class="sec-title">3 &nbsp; 当前视力矫正状况</div>
-    <div class="sec-en">Current Vision Correction Status</div>
-  </div>
-  <div class="q-block">
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">9.</span> 您目前使用哪种视力矫正方式？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q9" value="a">不戴任何眼镜</label>
-        <label><input type="checkbox" name="q9" value="b">近视框架眼镜</label>
-        <label><input type="checkbox" name="q9" value="c">老花镜（阅读镜）</label>
-        <label><input type="checkbox" name="q9" value="d">渐进多焦点眼镜</label>
-        <label><input type="checkbox" name="q9" value="e">隐形眼镜</label>
-        <label><input type="checkbox" name="q9" value="f">已有一眼做过白内障手术</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">10.</span> 您对目前视力矫正方案的满意程度？<span class="required">【必填】</span></div>
-      <div class="options single inline">
-        <label><input type="radio" name="q10" value="a">非常满意</label>
-        <label><input type="radio" name="q10" value="b">基本满意</label>
-        <label><input type="radio" name="q10" value="c">不满意</label>
-        <label><input type="radio" name="q10" value="d">非常不满意</label>
-        <label><input type="radio" name="q10" value="e">未矫正</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">11.</span> 您是否曾经接受过眼部手术？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q11" value="a">从未手术</label>
-        <label><input type="checkbox" name="q11" value="b">近视激光手术（LASIK / PRK / SMILE）</label>
-        <label><input type="checkbox" name="q11" value="c">白内障手术（另一眼）</label>
-        <label><input type="checkbox" name="q11" value="d">视网膜手术</label>
-        <label><input type="checkbox" name="q11" value="e">青光眼手术</label>
-        <label><input type="checkbox" name="q11" value="f">其他眼科手术</label>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ═══ Section 4 ═══ -->
-  <div class="section-header">
-    <div class="sec-title">4 &nbsp; 视觉期望与人工晶体偏好</div>
-    <div class="sec-en">Visual Expectations &amp; IOL Preference</div>
-  </div>
-  <div class="q-block">
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">12.</span> 手术后，您对「脱镜」的期望是？<span class="required">【必填】</span></div>
-      <div class="options single">
-        <label><input type="radio" name="q12" value="a">完全脱镜——各距离都不想戴眼镜</label>
-        <label><input type="radio" name="q12" value="b">绝大多数情况不戴镜</label>
-        <label><input type="radio" name="q12" value="c">主要脱近视镜即可，偶尔配老花镜可接受</label>
-        <label><input type="radio" name="q12" value="d">脱镜不是首要目标，清晰舒适更重要</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">13.</span> 以下场景，您最希望术后「裸眼看清」的重要程度<span class="required">【1=不重要，5=非常重要】</span></div>
-      <table class="rating-table">
-        <thead>
-          <tr>
-            <th class="label-col">场景</th>
-            <th>①</th><th>②</th><th>③</th><th>④</th><th>⑤</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="label-col">驾驶 / 看远（&gt;3米）</td>
-            <td><input type="radio" name="q13a" value="1"></td><td><input type="radio" name="q13a" value="2"></td><td><input type="radio" name="q13a" value="3"></td><td><input type="radio" name="q13a" value="4"></td><td><input type="radio" name="q13a" value="5"></td>
-          </tr>
-          <tr>
-            <td class="label-col">电脑办公（60–80cm）</td>
-            <td><input type="radio" name="q13b" value="1"></td><td><input type="radio" name="q13b" value="2"></td><td><input type="radio" name="q13b" value="3"></td><td><input type="radio" name="q13b" value="4"></td><td><input type="radio" name="q13b" value="5"></td>
-          </tr>
-          <tr>
-            <td class="label-col">手机 / 阅读（&lt;40cm）</td>
-            <td><input type="radio" name="q13c" value="1"></td><td><input type="radio" name="q13c" value="2"></td><td><input type="radio" name="q13c" value="3"></td><td><input type="radio" name="q13c" value="4"></td><td><input type="radio" name="q13c" value="5"></td>
-          </tr>
-          <tr>
-            <td class="label-col">夜间驾驶 / 弱光户外</td>
-            <td><input type="radio" name="q13d" value="1"></td><td><input type="radio" name="q13d" value="2"></td><td><input type="radio" name="q13d" value="3"></td><td><input type="radio" name="q13d" value="4"></td><td><input type="radio" name="q13d" value="5"></td>
-          </tr>
-          <tr>
-            <td class="label-col">精细近距离操作（穿针、看乐谱等）</td>
-            <td><input type="radio" name="q13e" value="1"></td><td><input type="radio" name="q13e" value="2"></td><td><input type="radio" name="q13e" value="3"></td><td><input type="radio" name="q13e" value="4"></td><td><input type="radio" name="q13e" value="5"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">14.</span> 对于人工晶体（IOL）的选择，您更倾向于哪种类型？<span class="required">【必填】</span></div>
-      <div class="options iol-options" style="padding: 6px 0 14px;">
-        <label><input type="radio" name="q14" value="a">单焦晶体——远视力最清晰，看近需戴老花镜，光学干扰最少</label>
-        <label><input type="radio" name="q14" value="b">EDOF 连续视程晶体——远中视力好，近处偶尔戴镜，光学干扰少 <span class="iol-tag">Tecnis PureSee 臻无级</span></label>
-        <label><input type="radio" name="q14" value="c">全视程晶体——全程清晰、脱镜率高，少数人夜间有光晕 <span class="iol-tag">Tecnis Odyssey 奥德赛</span></label>
-        <label><input type="radio" name="q14" value="d">多焦点晶体——全程视力好，脱镜率高，需适应期 <span class="iol-tag">Tecnis Synergy 跃无级</span></label>
-        <label><input type="radio" name="q14" value="e">不了解，请医生根据检查结果推荐</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">15.</span> 您对手术后视觉质量的整体期望？<span class="required">【必填】</span></div>
-      <div class="options single">
-        <label><input type="radio" name="q15" value="a">完美清晰——各距离都要非常清楚</label>
-        <label><input type="radio" name="q15" value="b">非常好——偶有瑕疵可接受</label>
-        <label><input type="radio" name="q15" value="c">够用就好——主要视距清楚即可</label>
-        <label><input type="radio" name="q15" value="d">只要视力改善即满足，不追求脱镜</label>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ═══ Section 5 ═══ -->
-  <div class="section-header">
-    <div class="sec-title">5 &nbsp; 夜间视觉与光敏感度评估</div>
-    <div class="sec-en">Night Vision &amp; Photosensitivity Assessment</div>
-  </div>
-  <div class="q-block">
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">16.</span> 您目前在夜间驾驶或弱光环境下，是否感到不适？<span class="required">【必填】</span></div>
-      <div class="options single">
-        <label><input type="radio" name="q16" value="a">无不适</label>
-        <label><input type="radio" name="q16" value="b">轻微眩光 / 光晕（可能与白内障有关）</label>
-        <label><input type="radio" name="q16" value="c">明显不适，已影响夜间驾驶</label>
-        <label><input type="radio" name="q16" value="d">已不敢夜间驾驶</label>
-        <label><input type="radio" name="q16" value="e">从不夜间驾驶</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">17.</span> 部分高端 IOL（多焦点/全视程）在夜间可能出现光晕或星芒，通常 4–8 周内适应。您对此的接受程度？<span class="required">【必填】</span></div>
-      <div class="options single">
-        <label><input type="radio" name="q17" value="a">完全可以接受，愿意经历适应期</label>
-        <label><input type="radio" name="q17" value="b">可以接受，只要大多数情况正常</label>
-        <label><input type="radio" name="q17" value="c">有些担心，希望尽量减少</label>
-        <label><input type="radio" name="q17" value="d">难以接受，夜间视觉质量对我非常重要</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">18.</span> 您是否有以下对夜间视觉要求极高的职业或习惯？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q18" value="a">职业司机 / 长途驾驶</label>
-        <label><input type="checkbox" name="q18" value="b">航空 / 航海相关</label>
-        <label><input type="checkbox" name="q18" value="c">夜班工作者</label>
-        <label><input type="checkbox" name="q18" value="d">以上均无</label>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ═══ Section 6 ═══ -->
-  <div class="section-header">
-    <div class="sec-title">6 &nbsp; 心理预期与适应能力</div>
-    <div class="sec-en">Psychological Readiness &amp; Adaptability</div>
-  </div>
-  <div class="q-block">
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">19.</span> 是否有兴趣了解飞秒激光辅助白内障手术（FLACS / 白力士 Catalys）？<span class="required">【必填】</span></div>
-      <div class="options single">
-        <label><input type="radio" name="q19" value="a">非常感兴趣，希望进一步了解</label>
-        <label><input type="radio" name="q19" value="b">有些兴趣，需要更多信息再决定</label>
-        <label><input type="radio" name="q19" value="c">暂无兴趣，希望常规超乳手术</label>
-        <label><input type="radio" name="q19" value="d">完全由医生决定</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">20.</span> 白内障手术后需要一段视觉适应期（单焦约1–2周，高端 IOL 约 4–8 周），您的态度是？<span class="required">【必填】</span></div>
-      <div class="options single">
-        <label><input type="radio" name="q20" value="a">完全理解，有耐心等待</label>
-        <label><input type="radio" name="q20" value="b">可以接受，会配合复查</label>
-        <label><input type="radio" name="q20" value="c">有些担心，希望尽快见效</label>
-        <label><input type="radio" name="q20" value="d">很担心，希望术后立即清楚</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">21.</span> 您对此次手术的整体心理状态？<span class="required">【必填】</span></div>
-      <div class="options single inline">
-        <label><input type="radio" name="q21" value="a">非常期待，信心十足</label>
-        <label><input type="radio" name="q21" value="b">期待，有轻微紧张</label>
-        <label><input type="radio" name="q21" value="c">紧张，还在考虑</label>
-        <label><input type="radio" name="q21" value="d">非常担心，需要更多了解</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">22.</span> 如果术后某个视距的视力不如预期，您愿意配合哪种处理方式？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q22" value="a">特定场合配戴辅助镜片</label>
-        <label><input type="checkbox" name="q22" value="b">激光微调手术</label>
-        <label><input type="checkbox" name="q22" value="c">视觉康复训练</label>
-        <label><input type="checkbox" name="q22" value="d">继续等待神经适应</label>
-        <label><input type="checkbox" name="q22" value="e">希望一次手术就达到最佳效果</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">23.</span> 您是否了解过人工晶体相关知识？</div>
-      <div class="options single">
-        <label><input type="radio" name="q23" value="a">深入了解，知道单焦 / EDOF / 全视程 / 多焦点区别</label>
-        <label><input type="radio" name="q23" value="b">大致了解，知道有单焦和高端 IOL 之分</label>
-        <label><input type="radio" name="q23" value="c">了解很少，主要听医生推荐</label>
-        <label><input type="radio" name="q23" value="d">完全不了解</label>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ═══ Section 7 ═══ -->
-  <div class="section-header">
-    <div class="sec-title">7 &nbsp; 眼科及全身病史</div>
-    <div class="sec-en">Ocular &amp; Medical History</div>
-  </div>
-  <div class="q-block">
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">24.</span> 您是否有以下眼部症状或诊断？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q24" value="a">干眼症（异物感 / 干涩 / 易疲劳）</label>
-        <label><input type="checkbox" name="q24" value="b">青光眼或高眼压</label>
-        <label><input type="checkbox" name="q24" value="c">黄斑病变（AMD）</label>
-        <label><input type="checkbox" name="q24" value="d">角膜疾病（圆锥角膜 / 角膜移植史）</label>
-        <label><input type="checkbox" name="q24" value="e">视网膜疾病</label>
-        <label><input type="checkbox" name="q24" value="f">弱视或斜视史</label>
-        <label><input type="checkbox" name="q24" value="g">以上均无</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">25.</span> 您是否有以下全身疾病？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q25" value="a">糖尿病</label>
-        <label><input type="checkbox" name="q25" value="b">高血压</label>
-        <label><input type="checkbox" name="q25" value="c">甲状腺疾病</label>
-        <label><input type="checkbox" name="q25" value="d">自身免疫性疾病（如类风湿）</label>
-        <label><input type="checkbox" name="q25" value="e">服用影响凝血或免疫的药物</label>
-        <label><input type="checkbox" name="q25" value="f">以上均无</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">26.</span> 您目前长期服用的药物（如有）</div>
-      <div class="text-area">
-        <textarea name="q26" placeholder="请列举处方药或保健品，无则填「无」"></textarea>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">27.</span> 您的家人中，是否有青光眼或其他遗传性眼病的病史？<span class="required">【必填】</span></div>
-      <div class="options single inline">
-        <label><input type="radio" name="q27" value="a">无</label>
-        <label><input type="radio" name="q27" value="b">有（请说明）</label>
-        <label><input type="radio" name="q27" value="c">不清楚</label>
-      </div>
-      <div class="text-area">
-        <textarea name="q27detail" placeholder="如有，请填写（如：父亲青光眼）" style="min-height:50px"></textarea>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ═══ Section 8 ═══ -->
-  <div class="section-header">
-    <div class="sec-title">8 &nbsp; 其他问题与补充说明</div>
-    <div class="sec-en">Additional Information</div>
-  </div>
-  <div class="q-block">
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">28.</span> 您对手术费用的态度？</div>
-      <div class="options single">
-        <label><input type="radio" name="q28" value="a">只要效果最好，费用不是首要考虑</label>
-        <label><input type="radio" name="q28" value="b">可接受较高费用，希望效果优秀</label>
-        <label><input type="radio" name="q28" value="c">希望效果与费用平衡</label>
-        <label><input type="radio" name="q28" value="d">比较注重控制费用</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">29.</span> 您是如何了解或找到我院的？<span class="required">【可多选】</span></div>
-      <div class="options multi inline">
-        <label><input type="checkbox" name="q29" value="a">朋友 / 亲属推荐</label>
-        <label><input type="checkbox" name="q29" value="b">其他医生转介</label>
-        <label><input type="checkbox" name="q29" value="c">微信公众号 / 视频号</label>
-        <label><input type="checkbox" name="q29" value="d">网络搜索</label>
-        <label><input type="checkbox" name="q29" value="e">义诊 / 健康讲座</label>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">30.</span> 您最希望在本次就诊中获得什么帮助？</div>
-      <div class="text-area">
-        <textarea name="q30" placeholder="请自由填写您的期望、疑问或特别关注的问题"></textarea>
-      </div>
-    </div>
-
-    <div class="q-item">
-      <div class="q-title"><span class="q-num">31.</span> 是否有家属陪同参与决策？</div>
-      <div class="options single inline">
-        <label><input type="radio" name="q31" value="a">有（配偶 / 子女陪同）</label>
-        <label><input type="radio" name="q31" value="b">本人独立决策</label>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Submit -->
-  <div class="submit-area">
-    <button class="btn-submit" type="button" onclick="submitForm()">提交问卷</button>
-    <button class="btn-print" type="button" onclick="window.print()">打印 / 保存PDF</button>
-  </div>
-
-  <!-- Footer -->
-  <div class="page-footer">
-    本问卷仅用于辅助术前医患沟通，不构成诊断依据 | 最终 IOL 方案需结合精密检查结果由主诊医师制定<br>
-    V1.0 &nbsp;|&nbsp; Johnson &amp; Johnson Surgical Vision 培训部
-  </div>
-
+<body><main class="page"><header class="page-header"><div><h1>全自费白内障手术 · 术前视觉需求评估问卷</h1><div class="en">Pre-operative Visual Needs Assessment</div></div></header><div class="title-block"><h2>先了解您的生活，再讨论适宜方案</h2><p class="intro">本问卷帮助患者、团队和医生共同了解真实困扰、用眼目标及决策条件。请按实际情况填写，不清楚的地方可以留待面谈。需求与支付意愿不代表适合某种手术或晶体；手术指征、风险及方案适宜性须由医生评估。</p></div><div class="note">填写顺序：患者填写第一部分；团队协助完成第二部分；医生解释具体方案后完成第三部分。您可以选择医保等适宜路径、暂缓决定或寻求第二意见。<br>本页不向医院发送或自动保存答案，关闭或刷新可能丢失。请在医院认可的环境中填写，完成后打印或保存PDF并妥善交接。</div><div class="info-grid">
+<div class="info-item"><label><span class="info-label">患者姓名</span><input class="info-input" name="patientName" aria-label="患者姓名" type="text"></label></div>
+<div class="info-item"><label><span class="info-label">年龄（岁）</span><input class="info-input" name="age" aria-label="年龄（岁）" type="number"></label></div>
+<div class="info-item"><label><span class="info-label">职业 / 日常角色</span><input class="info-input" name="occupation" aria-label="职业 / 日常角色" type="text"></label></div>
+<div class="info-item"><label><span class="info-label">就诊日期</span><input class="info-input" name="visitDate" aria-label="就诊日期" type="date"></label></div>
+<div class="info-item"><label><span class="info-label">病案 / 预约编号</span><input class="info-input" name="recordId" aria-label="病案 / 预约编号" type="text"></label></div>
+<div class="info-item"><label><span class="info-label">协助填写人</span><input class="info-input" name="recorder" aria-label="协助填写人" type="text"></label></div>
 </div>
-
-<script>
-function submitForm() {
-  // Validate required fields
-  var required = ['q1','q2','q5','q6','q10','q12','q15','q16','q17','q14','q19','q20','q21','q27'];
-  var missing = [];
-  required.forEach(function(name) {
-    var els = document.querySelectorAll('input[name="' + name + '"]:checked');
-    if (els.length === 0) missing.push(name);
-  });
-  if (missing.length > 0) {
-    alert('请完成所有【必填】题目后再提交。');
-    return;
-  }
-  // Collect answers
-  var data = {};
-  var inputs = document.querySelectorAll('input, textarea');
-  inputs.forEach(function(el) {
-    if (!el.name) return;
-    if (el.type === 'radio' || el.type === 'checkbox') {
-      if (el.checked) {
-        if (!data[el.name]) data[el.name] = [];
-        data[el.name].push(el.value);
-      }
-    } else if (el.value) {
-      data[el.name] = el.value;
-    }
-  });
-  console.log('问卷数据：', JSON.stringify(data, null, 2));
-  alert('问卷已提交！感谢您的配合，请将此页面交给接诊护士。');
-}
-</script>
-</body>
-</html>
+<h2 class="part">第一部分 · 患者填写</h2><div class="note">可以由团队逐题朗读并按您的原话记录。“核心问题”用于提醒补充沟通，不是手术资格判断；暂不清楚也可如实填写。</div>
+<h3 class="section-header"><span class="sec-title">一、当前困扰与就诊动机</span></h3>
+<div class="q-block"><div class="q-item" id="item-q1" data-core="true"><div class="q-title" id="label-q1"><span class="q-num">1.</span> 现在眼睛最影响您做哪一件事？请举一个最近的例子。<span class="required">【核心问题】</span></div>
+<div class="text-area"><textarea name="q1" aria-labelledby="label-q1" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q2"><div class="q-title" id="label-q2"><span class="q-num">2.</span> 这些困扰持续多久，对工作、生活或独立活动有什么影响？</div>
+<div class="text-area"><textarea name="q2" aria-labelledby="label-q2" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q3" data-core="true"><div class="q-title" id="label-q3"><span class="q-num">3.</span> 为什么现在考虑就诊或手术？主要是谁希望推进？<span class="required">【核心问题】</span></div>
+<p class="hint">请说明是本人需要、医生建议、家属推动或其他原因；如本人尚未决定，也请注明。</p>
+<div class="text-area"><textarea name="q3" aria-labelledby="label-q3" rows="3"></textarea></div>
+</div></div>
+<h3 class="section-header"><span class="sec-title">二、真实用眼场景</span></h3>
+<div class="q-block"><div class="q-item" id="item-q4" data-core="true"><div class="q-title" id="label-q4"><span class="q-num">4.</span> 请描述一天中最常做的三件用眼事情。<span class="required">【核心问题】</span></div>
+<p class="hint">每件请写：做什么、每天多久、实际距离（可用厘米或米估计）、光线及目前困难。不适用的场景无需填写。</p>
+<div class="text-area"><textarea name="q4" aria-labelledby="label-q4" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q5"><div class="q-title" id="label-q5"><span class="q-num">5.</span> 您夜间驾驶或在暗光下工作的实际情况？</div>
+<div class="options single" role="group" aria-labelledby="label-q5">
+<label><input type="radio" name="q5" value="不涉及">不涉及</label>
+<label><input type="radio" name="q5" value="偶尔涉及">偶尔涉及</label>
+<label><input type="radio" name="q5" value="每周多次">每周多次</label>
+<label><input type="radio" name="q5" value="几乎每天">几乎每天</label>
+<label><input type="radio" name="q5" value="职业驾驶或暗光工作">职业驾驶或暗光工作</label>
+<label><input type="radio" name="q5" value="暂不清楚">暂不清楚</label>
+</div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q6"><div class="q-title" id="label-q6"><span class="q-num">6.</span> 如涉及夜间驾驶、精细操作、运动等，请补充频率、时长、现有困难及不能轻易改变的要求。</div>
+<div class="text-area"><textarea name="q6" aria-labelledby="label-q6" rows="3"></textarea></div>
+</div></div>
+<h3 class="section-header"><span class="sec-title">三、改善目标与优先顺序</span></h3>
+<div class="q-block"><div class="q-item" id="item-q7" data-core="true"><div class="q-title" id="label-q7"><span class="q-num">7.</span> 最希望改善的三件事是什么？请按第一、第二、第三排序。<span class="required">【核心问题】</span></div>
+<p class="hint">请用具体生活任务表达，例如看电脑、看手机、夜间出行，不必填写晶体名称。</p>
+<div class="text-area"><textarea name="q7" aria-labelledby="label-q7" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q8" data-core="true"><div class="q-title" id="label-q8"><span class="q-num">8.</span> 如果只能优先改善一件事，您选什么？为什么？<span class="required">【核心问题】</span></div>
+<div class="text-area"><textarea name="q8" aria-labelledby="label-q8" rows="3"></textarea></div>
+</div></div>
+<h3 class="section-header"><span class="sec-title">四、戴镜习惯与初始取舍意愿</span></h3>
+<div class="q-block"><div class="q-item" id="item-q9"><div class="q-title" id="label-q9"><span class="q-num">9.</span> 目前如何戴镜？哪些地方方便，哪些地方困扰您？</div>
+<p class="hint">可说明近视镜、老花镜、渐进镜、隐形眼镜或不戴镜，以及看远看近是否摘戴。</p>
+<div class="text-area"><textarea name="q9" aria-labelledby="label-q9" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q10" data-core="true"><div class="q-title" id="label-q10"><span class="q-num">10.</span> 哪些场景特别希望少戴镜？哪些场景可以接受戴镜？<span class="required">【核心问题】</span></div>
+<p class="hint">这是目前的愿望，尚不表示某种方案能够实现。</p>
+<div class="text-area"><textarea name="q10" aria-labelledby="label-q10" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q11"><div class="q-title" id="label-q11"><span class="q-num">11.</span> 减少戴镜与清晰、舒适及夜间视觉之间，您目前最看重什么？</div>
+<div class="options single" role="group" aria-labelledby="label-q11">
+<label><input type="radio" name="q11" value="更看重减少戴镜">更看重减少戴镜</label>
+<label><input type="radio" name="q11" value="更看重清晰、舒适或夜间视觉">更看重清晰、舒适或夜间视觉</label>
+<label><input type="radio" name="q11" value="需要结合具体方案再权衡">需要结合具体方案再权衡</label>
+<label><input type="radio" name="q11" value="暂时说不清">暂时说不清</label>
+</div>
+</div></div>
+<h3 class="section-header"><span class="sec-title">五、预期、顾虑与信息来源</span></h3>
+<div class="q-block"><div class="q-item" id="item-q12" data-core="true"><div class="q-title" id="label-q12"><span class="q-num">12.</span> 您想象术后会达到什么状态？有没有一定要达到、否则难以接受的结果？<span class="required">【核心问题】</span></div>
+<p class="hint">请如实表达，包括是否期待所有距离都清楚、完全不戴镜或立即恢复；这些期待需与医生讨论。</p>
+<div class="text-area"><textarea name="q12" aria-labelledby="label-q12" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q13" data-core="true"><div class="q-title" id="label-q13"><span class="q-num">13.</span> 您最担心的是什么？决定之前，还希望获得哪些解释或帮助？<span class="required">【核心问题】</span></div>
+<div class="text-area"><textarea name="q13" aria-labelledby="label-q13" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q14"><div class="q-title" id="label-q14"><span class="q-num">14.</span> 您已经听说或倾向某种手术方案、晶体或品牌吗？信息来自哪里？希望它解决什么问题？</div>
+<p class="hint">可以填写“没有”或“不了解”。广告、亲友经历及既往就医信息都可记录；此处不要求选择产品。</p>
+<div class="text-area"><textarea name="q14" aria-labelledby="label-q14" rows="3"></textarea></div>
+</div></div>
+<h3 class="section-header"><span class="sec-title">六、费用理解与决策参与</span></h3>
+<div class="q-block"><div class="q-item" id="item-q15"><div class="q-title" id="label-q15"><span class="q-num">15.</span> 费用方面，您目前最需要了解什么？</div>
+<div class="options multi" role="group" aria-labelledby="label-q15">
+<label><input type="checkbox" name="q15" value="医保等适宜路径与自费边界">医保等适宜路径与自费边界</label>
+<label><input type="checkbox" name="q15" value="单眼与双眼总费用">单眼与双眼总费用</label>
+<label><input type="checkbox" name="q15" value="包含项目、另收费项目及后续费用">包含项目、另收费项目及后续费用</label>
+<label><input type="checkbox" name="q15" value="希望先了解方案，再考虑费用">希望先了解方案，再考虑费用</label>
+<label><input type="checkbox" name="q15" value="其他或暂不清楚">其他或暂不清楚</label>
+</div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q16"><div class="q-title" id="label-q16"><span class="q-num">16.</span> 如您愿意，可填写可承担的费用范围，并注明单眼或双眼；也可填“暂不清楚”或“暂不提供”。</div>
+<p class="hint">自愿填写，不用于判断医疗适宜性；较高费用不代表一定有更好结果。</p>
+<div class="text-area"><textarea name="q16" aria-labelledby="label-q16" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q17" data-core="true"><div class="q-title" id="label-q17"><span class="q-num">17.</span> 您希望谁参与讨论？由谁承担费用？还有哪些问题需一起商量？<span class="required">【核心问题】</span></div>
+<p class="hint">可独立决定，也可在您同意后邀请家属或其他支持者；陪同不等于代替您作决定。</p>
+<div class="text-area"><textarea name="q17" aria-labelledby="label-q17" rows="3"></textarea></div>
+</div></div>
+<h3 class="section-header"><span class="sec-title">七、手术时机与后续配合条件</span></h3>
+<div class="q-block"><div class="q-item" id="item-q18"><div class="q-title" id="label-q18"><span class="q-num">18.</span> 如医生评估适合且您决定手术，时间安排上有哪些要求或困难？</div>
+<p class="hint">请说明工作、旅行、照顾家人及双眼安排方面的考虑；此处不是确认手术日期。</p>
+<div class="text-area"><textarea name="q18" aria-labelledby="label-q18" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q19" data-core="true"><div class="q-title" id="label-q19"><span class="q-num">19.</span> 陪护、交通、用药或复查方面，需要什么帮助？<span class="required">【核心问题】</span></div>
+<p class="hint">没有困难可写“暂无”；尚不清楚可写“需了解复查安排后确认”。</p>
+<div class="text-area"><textarea name="q19" aria-labelledby="label-q19" rows="3"></textarea></div>
+</div></div>
+<h2 class="part">第二部分 · 团队补充访谈与交接</h2><div class="note">按患者原话补充，不以预算、期待或答案得分推荐晶体。以下病史仅为沟通线索，须交医生核实，不能替代完整病史与检查。</div>
+<h3 class="section-header"><span class="sec-title">八、相关经历与病史线索</span></h3>
+<div class="q-block"><div class="q-item" id="item-q20"><div class="q-title" id="label-q20"><span class="q-num">20.</span> 既往眼部手术、眼病、全身疾病及长期用药有哪些？有无不清楚、需提供病历的情况？</div>
+<p class="hint">可记录既往近视或白内障手术、眼表及眼底疾病、糖尿病等线索；完整病史由临床团队采集核实。</p>
+<div class="text-area"><textarea name="q20" aria-labelledby="label-q20" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q21"><div class="q-title" id="label-q21"><span class="q-num">21.</span> 如果已有一眼手术或其他视觉矫正经历，实际体验如何？哪些满意、哪些困扰？</div>
+<p class="hint">如无请写“不适用”；既往方案和检查资料交医生核实。</p>
+<div class="text-area"><textarea name="q21" aria-labelledby="label-q21" rows="3"></textarea></div>
+</div></div>
+<h3 class="section-header"><span class="sec-title">九、患者需求摘要 · 由团队整理并与患者核对</span></h3>
+<div class="q-block"><div class="q-item" id="item-q22"><div class="q-title" id="label-q22"><span class="q-num">22.</span> 需求摘要</div>
+<p class="hint">逐项记录：①最困扰的一件事；②前三个目标及第一优先；③希望少戴镜/可接受戴镜的场景；④夜间视觉及其他取舍关注；⑤最大顾虑与待澄清预期；⑥费用、家庭、时间及随访未决事项。</p>
+<div class="text-area"><textarea name="q22" aria-labelledby="label-q22" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q23"><div class="q-title" id="label-q23"><span class="q-num">23.</span> 患者核对情况</div>
+<div class="options single" role="group" aria-labelledby="label-q23">
+<label><input type="radio" name="q23" value="已与患者核对，患者认可上述记录">已与患者核对，患者认可上述记录</label>
+<label><input type="radio" name="q23" value="患者提出补充或更正，需继续完善">患者提出补充或更正，需继续完善</label>
+<label><input type="radio" name="q23" value="尚未核对">尚未核对</label>
+</div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q24"><div class="q-title" id="label-q24"><span class="q-num">24.</span> 补充、更正及需要交给医生重点讨论的问题；记录人和日期。</div>
+<div class="text-area"><textarea name="q24" aria-labelledby="label-q24" rows="3"></textarea></div>
+</div></div>
+<h2 class="part">第三部分 · 医生解释后确认</h2><div class="note">先结合检查讨论适宜路径、可能获益、局限、风险及不确定性，再记录患者理解。此部分不替代病历、正式知情同意或费用说明，也不构成效果保证。</div>
+<h3 class="section-header"><span class="sec-title">十、医生复核与共同讨论</span></h3>
+<div class="q-block"><div class="q-item" id="item-q25"><div class="q-title" id="label-q25"><span class="q-num">25.</span> 医生复核：需求与检查结果的关系、医学适宜性及尚需检查或评估的事项。</div>
+<div class="text-area"><textarea name="q25" aria-labelledby="label-q25" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q26"><div class="q-title" id="label-q26"><span class="q-num">26.</span> 已讨论的适宜路径与取舍</div>
+<p class="hint">记录备选方案、预计可改善及可能不能改善之处、仍需戴镜的场景、可能的视觉现象和恢复差异；不承诺统一适应期限或现象必然消失。</p>
+<div class="text-area"><textarea name="q26" aria-labelledby="label-q26" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q27"><div class="q-title" id="label-q27"><span class="q-num">27.</span> 请患者用自己的话复述：最主要的区别、可能的局限或风险，以及自己最在意的取舍。</div>
+<p class="hint">由患者表达、团队按原话记录；不能仅勾选“已理解”。</p>
+<div class="text-area"><textarea name="q27" aria-labelledby="label-q27" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q28"><div class="q-title" id="label-q28"><span class="q-num">28.</span> 解释后患者对戴镜、夜间视觉及其他取舍的看法；与最初愿望有何变化？</div>
+<div class="text-area"><textarea name="q28" aria-labelledby="label-q28" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q29"><div class="q-title" id="label-q29"><span class="q-num">29.</span> 如果术后体验与期待有差距，患者最担心什么？已解释哪些联系、复查、评估及费用安排？</div>
+<p class="hint">进一步处理需查明原因后由医生评估，不提前承诺激光微调、训练或再次手术。</p>
+<div class="text-area"><textarea name="q29" aria-labelledby="label-q29" rows="3"></textarea></div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q30"><div class="q-title" id="label-q30"><span class="q-num">30.</span> 当前决定状态</div>
+<div class="options single" role="group" aria-labelledby="label-q30">
+<label><input type="radio" name="q30" value="继续了解，尚未决定">继续了解，尚未决定</label>
+<label><input type="radio" name="q30" value="希望与家属或支持者讨论">希望与家属或支持者讨论</label>
+<label><input type="radio" name="q30" value="倾向某适宜方案，待完成后续确认">倾向某适宜方案，待完成后续确认</label>
+<label><input type="radio" name="q30" value="选择医保等其他适宜路径">选择医保等其他适宜路径</label>
+<label><input type="radio" name="q30" value="暂缓决定或寻求第二意见">暂缓决定或寻求第二意见</label>
+<label><input type="radio" name="q30" value="其他">其他</label>
+</div>
+</div></div>
+<div class="q-block"><div class="q-item" id="item-q31"><div class="q-title" id="label-q31"><span class="q-num">31.</span> 尚未解决的问题、下一步安排，以及主诊医生、复核日期。</div>
+<div class="text-area"><textarea name="q31" aria-labelledby="label-q31" rows="3"></textarea></div>
+</div></div>
+<div class="submit-area"><button type="button" class="btn-submit" id="checkButton">检查核心问题填写情况</button><button type="button" class="btn-print" id="printButton">打印 / 保存PDF交接</button><p class="status" id="status" role="status" aria-live="polite">填写检查只提示缺项，不判断医学适宜性，也不会发送答案。</p></div><footer class="page-footer">仅辅助需求探索与医患沟通，不是经过验证的临床量表，不计分、不自动推荐晶体，不替代病历或知情同意。<br>V2.0 · 2026-10-24 | 患者填写 → 团队访谈 → 医生解释后确认</footer></main><script>
+window.addEventListener('load',function(){var logo=document.querySelector('.pls-site-brandbar img');if(logo&&!logo.naturalWidth)logo.src='../../assets/PLS晶状体卓越诊疗体系-logo-Odyssey配色版-透明背景.png';});
+function syncPrint(){document.querySelectorAll('textarea,.info-input').forEach(function(el){var out=el.parentElement.querySelector('.print-answer');if(!out){out=document.createElement('div');out.className='print-answer';el.insertAdjacentElement('afterend',out);}out.textContent=el.value||'（未填写）';});}
+document.querySelectorAll('textarea').forEach(function(el){el.addEventListener('input',function(){el.style.height='auto';el.style.height=el.scrollHeight+'px';});});
+document.getElementById('checkButton').addEventListener('click',function(){var missing=[];document.querySelectorAll('[data-core]').forEach(function(item){var filled=Array.from(item.querySelectorAll('textarea,input')).some(function(el){return el.type==='radio'||el.type==='checkbox'?el.checked:el.value.trim();});item.classList.toggle('missing',!filled);if(!filled)missing.push(item);});document.getElementById('status').textContent=missing.length?'还有 '+missing.length+' 个核心问题待补充。暂不清楚可如实填写，或留待面谈；仍可打印交接。':'患者部分核心问题已有记录。请继续由团队核对、医生复核；这不代表完成医学评估或知情同意。';if(missing.length){missing[0].scrollIntoView({behavior:'smooth',block:'center'});missing[0].querySelector('textarea,input').focus({preventScroll:true});}});
+document.getElementById('printButton').addEventListener('click',function(){syncPrint();window.print();});window.addEventListener('beforeprint',syncPrint);
+</script></body></html>
