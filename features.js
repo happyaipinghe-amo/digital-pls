@@ -50,18 +50,64 @@ function renderCourseMap(){
   $('#courseGap').innerHTML=`<div><b>自评结果</b>${selfScore===null?'尚未完成岗位自评':`${selfScore}分 · ${selfScore>=80?'巩固并进入中级培养':'优先补强低分能力项'}`}</div><div><b>知识短测</b>${quiz===undefined?'尚未参加岗位短测':`${quiz}分 · ${quiz>=80?'知识基础达标':'建议先完成初级课程'}`}</div><div><b>系统建议</b>${selfScore!==null&&selfScore<80?'先完成初级必修与场景演练':quiz!==undefined&&quiz>=80?'结合在岗观察选择中级课程':'完成评估后生成更精确建议'}</div>`;
   $('#courseGrid').innerHTML=rows.map(({courseLevel,index,course})=>{const [title,intro,content,format,assessment]=course,key=courseProgressKey(selected,courseLevel,index),done=!!state.courseProgress[key];return `<article class="course-card ${courseLevel}"><header><h3>${esc(title)}</h3><span class="course-level">${courseLevel==='junior'?'初级':'中级'}</span></header><p>${esc(intro)}</p><div class="course-meta"><span><b>主要内容：</b>${esc(content)}</span><span><b>学习形式：</b>${esc(format)}</span><span><b>达标要求：</b>${esc(assessment)}</span></div><div class="course-action"><label><input type="checkbox" data-course-progress="${esc(key)}" ${done?'checked':''}> 标记演示学习完成</label>${title.includes('IOL')?'<button type="button" class="outline" data-open-iol-tool>打开IOL公式工具 →</button>':''}</div></article>`}).join('');
 }
+const ceoSuccessKpis = [
+  {
+    "number": "01",
+    "title": "个性化视觉目标达成率",
+    "question": "患者最在意的生活需求解决了吗？",
+    "definition": "术前记录并由医生确认主要视觉目标，术后在约定时间逐项核对。主要目标达成人数 ÷ 按期完成有效目标评价人数，同时报告应评人数和评价覆盖率。",
+    "review": "结合患者报告的视觉质量、生活场景与必要的客观评估，不以视力表替代生活获益。目标与达成尺度在术前约定。",
+    "owner": "临床主诊医生、视觉质量评估、患者旅程管理师"
+  },
+  {
+    "number": "02",
+    "title": "满意度与再选率",
+    "question": "患者认可这次体验和治疗选择吗？",
+    "definition": "满意度按统一问卷及尺度统计；再选率为表示仍愿意选择同一治疗方案人数 ÷ 有效回答人数。分别呈现两项结果、应答人数与覆盖率。",
+    "review": "固定随访时间及问法。再次选择同一医院可另设问题，不能与治疗方案再选率合并。负向反馈与未应答情况一并复盘。",
+    "owner": "患者旅程管理师、运营与合规支持"
+  },
+  {
+    "number": "03",
+    "title": "关键流程与随访闭环率",
+    "question": "团队能否稳定交付并持续负责？",
+    "definition": "分别统计关键流程按标准完成人数 ÷ 应完成人数、按期完成专业随访人数 ÷ 到期应随访人数、按期处置闭环问题数 ÷ 到期应处置问题数。",
+    "review": "核对需求、医生方案、理解确认及交接证据。记录联系或提醒不等于专业随访完成，明确后续处置计划也须追踪执行。",
+    "owner": "项目负责人、患者旅程管理师、手术质量与护理协调"
+  },
+  {
+    "number": "04",
+    "title": "医学适合患者的分层转化率",
+    "question": "适合且有需求的患者在哪一步停下？",
+    "definition": "在同一队列中，依次看完成评估、完成方案沟通、选择方案、完成手术的人数与相邻阶段转化率。每层标明分母、统计时间及未选择原因。",
+    "review": "白内障与CLE分开，医疗适合性由医生确认。暂缓、转诊或选择基础方案不自动算服务失败，不能以建档到手术比例替代医学适合人群转化。",
+    "owner": "临床主诊医生、患者旅程管理师、运营与合规支持"
+  },
+  {
+    "number": "05",
+    "title": "全自费有效营收",
+    "question": "增长是否来自已完成的真实服务？",
+    "definition": "按院区、白内障／CLE、术式及方案统计，采用财务确认的已完成服务对应收入，扣除退费，同时列示手术量及例均收入，明确按眼或按例。",
+    "review": "与可比基线及预设目标对照，解释季节、价格、患者结构和获客投入变化。预收款及未来情景预测不等于已实现收入。",
+    "owner": "运营与合规支持，财务复核"
+  },
+  {
+    "number": "06",
+    "title": "项目贡献利润",
+    "question": "计入交付成本后，增长能持续吗？",
+    "definition": "按启动前约定的财务口径，以有效收入扣除相关成本，包括耗材、获客、增加的服务与随访、退费和补救等支出，避免重复扣减。",
+    "review": "一次性建设投入与持续运营成本分列，说明贡献利润与医院净利润的区别，按约定周期判断可持续性，不只看客单价。",
+    "owner": "项目负责人、运营与合规支持，财务复核"
+  }
+];
 function renderCeo() {
+  $('#ceoKpiCards').innerHTML=ceoSuccessKpis.map(k=>`<article class="ceo-kpi-card"><span class="eyebrow">${esc(k.number)} / 核心KPI</span><h3>${esc(k.title)}</h3><p class="ceo-kpi-question">${esc(k.question)}</p><p class="ceo-pending">实际值：待采集　基线：待确认　目标：待院方设定</p><p><b>统计口径：</b>${esc(k.definition)}</p><p><b>复盘时关注：</b>${esc(k.review)}</p><p class="ceo-kpi-owner">责任角色：${esc(k.owner)}</p></article>`).join('');
   const cohort=state.patients.filter(p=>monthOf(p.createdAt)===monthOf(localDate())), atRisk=state.patients.filter(p=>p.riskNote || (p.stage>=4&&p.checks.some(v=>!v))), doneTasks=state.tasks.filter(t=>t.done).length;
-  const completeChecks=state.patients.filter(p=>p.checks.every(Boolean)).length,understood=state.patients.filter(p=>p.teachBack).length,followed=state.patients.filter(p=>p.stage>=7).length;
-  $('#scoreMedical').textContent=`${completeChecks}/${state.patients.length}`;
-  $('#scorePatient').textContent=`${understood}/${state.patients.length}`;
-  $('#scoreExperience').textContent=`${followed}/${state.patients.length}`;
-  $('#scoreBusiness').textContent=`${doneTasks}/${state.tasks.length}`;
-  $('#ceoMetrics').innerHTML=[['本月演示入组',cohort.length,'按建档月份'],['进入手术环节',cohort.filter(p=>p.stage>=6).length,'本月入组患者'],['需复核',atRisk.length,'检查缺项或有复核问题'],['行动完成',`${doneTasks}/${state.tasks.length}`,'30/60/90天行动']].map(([label,value,note])=>`<div class="feature-metric"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`).join('');
-  $('#ceoQuality').innerHTML=`<div class="feature-row"><span>完整标记检查项</span><b>${state.patients.filter(p=>p.checks.every(Boolean)).length}/${state.patients.length}</b></div><div class="feature-row"><span>术后随访阶段</span><b>${state.patients.filter(p=>p.stage>=7).length}</b></div><div class="feature-row"><span>患者来源已记录</span><b>${state.patients.filter(p=>p.source).length}/${state.patients.length}</b></div><button class="wide-button" data-go="funnel">查看本月漏斗 →</button>`;
+  $('#ceoMetrics').innerHTML=[['本月演示建档',cohort.length,'仅表示建档记录'],['演示需复核记录',atRisk.length,'待医生核实，不是风险发生率'],['演示行动完成',`${doneTasks}/${state.tasks.length}`,'不代表项目结果达标']].map(([label,value,note])=>`<div class="feature-metric"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`).join('');
+  $('#ceoQuality').innerHTML=`<div class="feature-row"><span>演示检查项已全勾选</span><b>${state.patients.filter(p=>p.checks.every(Boolean)).length}/${state.patients.length}</b></div><div class="feature-row"><span>演示进入术后随访阶段</span><b>${state.patients.filter(p=>p.stage>=7).length}</b></div><div class="feature-row"><span>演示患者来源已记录</span><b>${state.patients.filter(p=>p.source).length}/${state.patients.length}</b></div><button class="wide-button" data-go="funnel">查看演示患者旅程</button>`;
   $('#ceoPillars').innerHTML=state.audit.map((status,i)=>`<div class="feature-row"><span>${esc(pillars[i][0])}</span><b>${esc(status)}</b></div>`).join('');
-  $('#ceoTraining').innerHTML=Object.keys(learningTopics).map(role=>`<div class="feature-row"><span>${esc(role)}</span><b>${trainingDone(role)?'演示达标':'待完成'}</b></div>`).join('')+'<button class="wide-button" data-go="capability">查看岗位能力 →</button>';
-  $('#ceoActions').innerHTML=state.tasks.filter(t=>!t.done).slice(0,5).map(t=>`<div class="feature-row"><span>${esc(t.title)}</span><b>${esc(t.owner)}</b></div>`).join('')||'<p class="muted">暂无未完成行动。</p>';
+  $('#ceoTraining').innerHTML=Object.keys(learningTopics).map(role=>`<div class="feature-row"><span>${esc(role)}</span><b>${trainingDone(role)?'演示学习已完成':'待完成'}</b></div>`).join('')+'<button class="wide-button" data-go="capability">查看岗位能力</button>';
+  $('#ceoActions').innerHTML=state.tasks.filter(t=>!t.done).slice(0,5).map(t=>`<div class="feature-row"><span>${esc(t.title)}</span><b>${esc(t.owner)}</b></div>`).join('')||'<p class="muted">演示中暂无未完成行动，仍需核验实际执行与结果。</p>';
 }
 function renderFunnel() {
   const cohort=state.patients.filter(p=>monthOf(p.createdAt)===monthOf(localDate())), total=cohort.length, surgery=cohort.filter(p=>p.stage>=6).length;
